@@ -215,3 +215,15 @@
 + 가상 메모리
 + Trashing
 + 캐시의 지역성
+
+<br>
+
+## :bulb: Algorithm & SQL [Link](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#algorithm--sql)
+
++ 코딩 테스트에서 사용하는 파이썬 API
++ 코딩 테스트에서 사용하는 파이썬 정규식
++ 코딩 테스트에서 사용하는 자바 API
++ 프로그래머스 알고리즘
++ 리트코드 알고리즘
++ 프로그래머스 SQL
++ HackerRank SQL
