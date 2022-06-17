@@ -8,14 +8,14 @@
 
 ## :memo: Table of Contents
 
-+ [코딩 테스트에서 사용하는 파이썬 API](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%ED%8C%8C%EC%9D%B4%EC%8D%AC-api)
-+ [코딩 테스트에서 사용하는 파이썬 정규식](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%A0%95%EA%B7%9C%EC%8B%9D)
-+ [코딩 테스트에서 사용하는 자바 API](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9E%90%EB%B0%94-api)
-+ [프로그래머스 알고리즘 Level 1]()
-+ [프로그래머스 알고리즘 Level 2]()
++ [코딩 테스트에서 사용하는 파이썬 API](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%ED%8C%8C%EC%9D%B4%EC%8D%AC-api-link)
++ [코딩 테스트에서 사용하는 파이썬 정규식](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%A0%95%EA%B7%9C%EC%8B%9D-link)
++ [코딩 테스트에서 사용하는 자바 API](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EC%9E%90%EB%B0%94-api-link)
++ [프로그래머스 알고리즘 Level 1](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-level-1)
++ [프로그래머스 알고리즘 Level 2](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-level-2)
 + [리트 코드 알고리즘](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%EB%A6%AC%ED%8A%B8-%EC%BD%94%EB%93%9C-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)
-+ [프로그래머스 SQL]()
-+ [HackerRank SQL]()
++ [프로그래머스 SQL](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-sql)
++ [HackerRank SQL](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#hackerrank-sql)
 
 <br>
 
@@ -164,141 +164,52 @@
 <br>
 
 ## 리트 코드 알고리즘
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
-+ 
++ [(Python, Java) 리트코드 - valid palindrome](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20valid%20palindrome.md)
++ [(Python, Java) 리트코드 - reverse string](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20reverse%20string.md)
++ [(Python, Java) 리트코드 - reorder data in log files](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20reorder%20data%20in%20log%20files.md)
++ [(Python, Java) 리트코드 - most common word](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20most%20common%20word.md)
++ [(Python, Java) 리트코드 - group anagrams](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20group%20anagrams.md)
++ [(Python, Java) 리트코드 - logneset palindromic substring](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20logneset%20palindromic%20substring.md)
++ [(Python, Java) 리트코드 - two sum](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20two%20sum.md)
++ [(Python, Java) 리트코드 - 3 sum](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%203%20sum.md)
++ [(Python, Java) 리트코드 - array partition 1](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20array%20partition%201.md)
++ [(Python, Java) 리트코드 - product of array except self](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20product%20of%20array%20except%20self.md)
++ [(Python, Java) 리트코드 - best time to buy and sell stock](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20best%20time%20to%20buy%20and%20sell%20stock.md)
++ [(Python, Java) 리트코드 - Valid Parentheses](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Valid%20Parentheses.md)
++ [(Python, Java) 리트코드 - Remove Duplicate Letters](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Remove%20Duplicate%20Letters.md)
++ [(Python, Java) 리트코드 - Daily Temperatures](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Daily%20Temperatures.md)
++ [(Java) 리트코드 - Implement Stack using Queues](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Implement%20Stack%20using%20Queues.md)
++ [(Java) 리트코드 - Implement Queue using Stacks](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Implement%20Queue%20using%20Stacks.md)
++ [(Java) 리트코드 - Merge k Sorted Lists](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Merge%20k%20Sorted%20Lists.md)
++ [(Python, Java) 리트코드 - Jewels and Stones](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Jewels%20and%20Stones.md)
++ [(Python, Java) 리트코드 - Longest Substring Without Repeating Characters](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Longest%20Substring%20Without%20Repeating%20Characters.md)
++ [(Python, Java) 리트코드 - Top K Frequent Elements](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Top%20K%20Frequent%20Elements.md)
++ [(Java) 리트코드 - Number of Islands](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Number%20of%20Islands.md)
++ [(Python, Java) 리트코드 - Letter Combinations of a Phone Number](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Letter%20Combinations%20of%20a%20Phone%20Number.md)
++ [(Python, Java) 리트코드 - Combination Sum](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Combination%20Sum.md)
++ [(Python, Java) 리트코드 - Subsets](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Subsets.md)
++ [(Java) 리트코드 - Reconstruct Itinerary](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Reconstruct%20Itinerary.md)
++ [(Python, Java) 리트코드 - Course Schedule](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Course%20Schedule.md)
++ [(Python, Java) 리트코드 - Network Delay Time](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Network%20Delay%20Time.md)
++ [(Python, Java) 리트코드 - Maximum Depth of Binary Tree](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Maximum%20Depth%20of%20Binary%20Tree.md)
++ [(Python, Java) 리트코드 - Diameter of Binary Tree](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Diameter%20of%20Binary%20Tree.md)
++ [(Python, Java) 리트코드 - Binary Search](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Binary%20Search.md)
++ [(Python, Java) 리트코드 - Intersection of Two Arrays](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Intersection%20of%20Two%20Arrays.md)
++ [(Python, Java) 리트코드 -  Largest Number](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20%20Largest%20Number.md)
++ [(Python, Java) 리트코드 - Two Sum II - Input Array Is Sorted](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Two%20Sum%20II%20-%20Input%20Array%20Is%20Sorted.md)
++ [(Python, Java) 리트코드 - Search a 2D Matrix II](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Search%20a%202D%20Matrix%20II.md)
++ [(Python, Java) 리트코드 - Longest Repeating Character Replacement](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Longest%20Repeating%20Character%20Replacement.md)
++ [(Python, Java) 리트코드 - Best Time to Buy and Sell Stock II](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Best%20Time%20to%20Buy%20and%20Sell%20Stock%20II.md)
++ [(Python, Java) 리트코드 - Queue Reconstruction by Height](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Queue%20Reconstruction%20by%20Height.md)
++ [(Python, Java) 리트코드 - Task Scheduler](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Task%20Scheduler.md)
++ [(Python, Java) 리트코드 - Gas Station](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Gas%20Station.md)
++ [(Python, Java) 리트코드 - Assign Cookies](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Assign%20Cookies.md)
++ [(Python, Java) 리트코드 - Majority Element](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Majority%20Element.md)
++ [(Python, Java) 리트코드 - Different Ways to Add Parentheses](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Different%20Ways%20to%20Add%20Parentheses.md)
++ [(Python, Java) 리트코드 - Fibonacci Number](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Fibonacci%20Number.md)
++ [(Python, Java) 리트코드 - Maximum Subarray](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Maximum%20Subarray.md)
++ [(Python, Java) 리트코드 - Climbing Stairs](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20Climbing%20Stairs.md)
++ [(Python, Java) 리트코드 - House Robber](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/algorithm/leetcode/(Python%2C%20Java)%20%EB%A6%AC%ED%8A%B8%EC%BD%94%EB%93%9C%20-%20House%20Robber.md)
 
 
 <br>
