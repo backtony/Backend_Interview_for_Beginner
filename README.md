@@ -29,6 +29,7 @@
 + [Database](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/Database.md)
 + [Network](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/Network.md)
 + [Operating System](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/OS.md)
++ [Algorithm & SQL](https://github.com/backtony/Backend_Interview_for_Beginner/tree/master/algorithm#algorithm--sql)
 
 
 <Br>
