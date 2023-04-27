@@ -1182,6 +1182,8 @@ ManyToOne의 경우 애초에 Many에 One을 끼워넣기 때문에 최대 Many�
 이를 해결하기 위해서는 쿼리에 distinct를 명시하면 된다.  
 DB단에서는 당연히 행 데이터가 서로 다르기 때문에 distinct가 동작하지 않지만 애플리케이션 단으로 데이터가 넘어오면 JPA에서 distinct로 식별자가 같은 것을 걸러서 컬렉션으로 꽂아주는 기능을 제공해준다.  
 따라서 OneToMany 관계에서 fetch join을 사용한다면 반드시 distinct를 명시해야 한다.  
+   
+> spring data jpa 2.1버전 부터 중복을 방지한 distinct 옵션이 기본값으로 사용되도록 변경되었으므로 OneToMany 관계를 가져올 때 중복된 데이터가 발생하지 않는다.
 
 </details>
 
