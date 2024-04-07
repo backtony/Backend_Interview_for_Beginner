@@ -17,7 +17,7 @@
 
 
 
-[**📌 2022 상반기 네이버 웹툰 신입 공채 합격 회고**](https://velog.io/@backtony/2022-%EC%83%81%EB%B0%98%EA%B8%B0-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C-%EC%B7%A8%EC%97%85-%ED%9A%8C%EA%B3%A0)
+[**📌 2022 상반기 네이버 웹툰 신입 공채 합격 회고**](https://backtony.tistory.com/3)
 
 
 <br>
