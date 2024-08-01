@@ -2,36 +2,9 @@
 <br>
 
 -----------------------
-### Python vs Java vs Kotlin
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-+ Python
-    - 인터프리터 언어로 한 줄씩 컴파일링 된다.
-    - 데이터 타입이 동적으로 입력된다.
-    - 문법이 직관적이고 매우 간단하다.
-
-+ Java
-    - 컴파일링 언어로 한 번에 컴파일링 된다.
-    - 정적인 데이터 타입 명시가 필요하다.
-    - JVM으로 실행돼서 OS에 관계없이 동작한다.(운영체제 독립성)
-
-+ Kotlin 장점
-    - 컴파일 타임에 null값에 대한 잘못된 접근을 감지 -> null 안전성
-    - val, var 타입을 통한 타입 선언 불필요
-    - data class를 통해 Java에서 사용하는 보일러플레이트 코드를 줄일 수 있다.
 
 
-</details>
-
------------------------
-
-<br>
-
-### Java 장단점
+### Java의 장단점
 
 <details>
    <summary> 예비 답안 보기 (👈 Click)</summary>
@@ -48,10 +21,102 @@
 + 단점
     + 비교적 느림
         - 한번의 컴파일링으로 실행 가능한 기계어가 만들어지지 않고 JVM에 의해 기계어로 번역되고 실행되는 과정을 거치기 때문에 조금 느리다.
-    
+
 </details>
 
 -----------------------
+
+<br>
+
+### Kotlin의 장단점
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
++ 장점
+    - 위 Java의 장점 동일 + 데이터 타입 명시 없이 val, var로 타입 추론 & 불변, 가변 지정
+    - 가독성 : 자바에 비해 간결한 코드, 다양한 kotlinDsl(특히 collection)
+    - NPE 안전 기능 내장 : 컴파일 타임에 null값에 대한 잘못된 접근을 감지
+    - data class를 통해 Java에서 사용하는 보일러플레이트 코드 제거(Java는 17부터 Record 타입 등장)
+    - 코루틴 지원
++ 단점
+  - 컴파일 속도가 느리다. (컴파일 시 자바로 변환 후 바이트 코드로 변환하기 때문)
+  - 자바에 비해 비교적 적은 생태계
+  - 숨은 비용?(알고 써야한다.)
+    - Int = int, Int? = Integer 으로 박싱 언박싱
+    - 확장함수는 Java의 static function
+
+> __코루틴은 경량 쓰레드__ <br>
+> 쓰레드는 같은 프로세스에 소속되어 있기 때문에 heap 영역은 공유하지만 스레드마다 고유한 stack 영역을 가지고 있기 때문에 컨텍스트 스위칭 시에는 비용이 발생한다. 코루틴은 Heap 영역에 할당되어 특정 쓰레드에 종속되지 않는다. 따라서 하나의 스레드가 다수의 코루틴을 수행할 수 있고 컨텍스트 스위칭이 필요 없기 때문에 경량 쓰레드라고 부른다. 
+> 실제로 스레드는 기본적으로 1MB의 자체 스택을 갖는 반면 간단한 코루틴은 힙 메모리에서 몇십바이트만 차지한다.
+
+* [Why kotlin coroutines are considered light weight?](https://stackoverflow.com/questions/63719766/why-kotlin-coroutines-are-considered-light-weight)
+* [코틀린 코루틴](https://blog.naver.com/joymrk/222268630742)
+
+
+</details>
+
+-----------------------
+
+<br>
+
+### 코루틴 CPS 패턴이란?
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
+Kotlin 은 비동기 프로그래밍을 지원을 위해 CSP(Communicating Sequential Process) 기법을 사용합니다. Suspend 함수는 Suspension point(중단점)을 제공하여 함수가 중단될 수 있도록 하며, 이를 통하여 blocking 로직으로부터 벗어나서 비동기로 동작할 수 있도록 합니다. Kotlin 은 이 중단점을 제공하기 위해 Suspend 함수를 컴파일 할 때, 함수 마지막 인자로 Continuation 이라는 객체를 추가합니다.
+
+```kotlin
+// Kotlin 
+suspend fun makeHelloWorld(): String
+
+// 위 Kotlin 코드를 아래와 같은 Java 코드로 변환 
+
+// Java/JVM 
+fun makeHelloWorld(@NotNull `$completion`: Continuation?): Any? 
+```
+
+continuation은 다음과 같은 구조를 가지고 있습니다.
+
+```kotlin
+interface Continuation<in T> {
+	val context: CoroutineContext
+	fun resumeWith(result: Result<T>)
+}
+```
+continuation은 resumeWith 호출로 결과값을 전달해 원래 함수를 재개시키는 기능을 제공합니다. 함수를 일시중지 시키고 재개하려면 어디까지 진행했고 어디서부터 다시 재개해야 하는지 알고 있어야 합니다. 이는 코틀린 컴파일러가 코드를 변환할 때 label을 두어 표시합니다.
+
+```kotlin
+suspend fun makeHelloWorld(): String {
+    val msg = "hello world"
+    delay(1000)
+    return msg
+}
+```
+위 코드는 디컴파일해보면 다음과 같습니다.
+
+![그림1](./image/java/cps-1.png)
+
+위 그림을 보면 중단되는 포인트(suspension point)마다 label을 통해 case로 나누고 해당 케이스마다 결과값들을 continuation에 저장하여 상태관리하는 것을 확인할 수 있습니다.
+
+그렇다면 이렇게 만들어진 함수는 continuation에서 어떻게 호출되는지를 Continuation 의 구현체인 BaseContinuationImpl의 resumeWith로 살펴보겠습니다.
+
+![그림2](./image/java/cps-2.png)
+
+invokeSuspend 함수 호출부가 바로 앞서 만들었던 makeHelloWorld 함수를 호출하는 부분입니다. 해당 함수의 리턴 값이 COROUTINE_SUSPENDED라면 해당 함수를 return해버립니다. 즉, 중단지점이 없는 경우라면 while문의 반복으로 앞선 switch case문들이 계속 돌아가면서 타겟함수의 수행이 완료되는 것이고, 중단지점이 존재한다면 COROUTINE_SUSPENDED를 리턴 받으면서  특정 switch문까지만 진행되고 일시중지되었다가 해당 작업이 완료되면 코루틴 프레임워크에 의해 자동으로 resumeWith가 호출되면서 다시 작업이 이어지는 것입니다.
+
+
+</details>
+
+-----------------------
+
 
 <Br>
 
@@ -109,52 +174,8 @@
 
 -----------------------
 
-<br>
-
-### 객체 지향 프로그래밍 vs 절차 지향 프로그래밍
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-+ 절차 지향 프로그래밍
-    - 실행하고자 하는 절차를 정하고, 순차적으로 프로그래밍 하는 방식으로 빠르다.
-    - 엄격하게 순서가 정해져 있기에 비효율적이고 유지보수가 어렵다.
-    - 목적을 달성하기 위한 일의 흐름에 중점을 둔다.
-+ 객체 지향 프로그래밍
-    - 구현해야할 객체들 사이의 상호작용을 프로그래밍하는 방식으로 상속, 다형성, 추상화, 캡슐화를 통해 결합도를 낮추고 응집도를 높일 수 있으며 코드의 재사용성도 높일 수 있다.
-
-</details>
-
------------------------
-
 
 <br>
-
-### JVM의 구성 요소
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-+ 자바 프로그램을 실행하는 역할
-    - 컴파일러를 통해 바이트 코드로 변환된 파일을 JVM에 로딩하여 실행
-+ Class Loader : JVM 내(Runtime Data Area)로 Class 파일을 로드하고 링크
-+ Execution Engine : 메모리(Runtime Data Area)에 적재된 클래스들을 기계어로 변경해 실행
-+ Garbage Collector : 힙 메모리에서 참조되지 않는 개체들 제거
-+ Runtime Data Area : 자바 프로그램을 실행할 때, 데이터를 저장
-
-
-</details>
-
------------------------
-
-<br>
-
 
 ### JVM 실행과정
 
@@ -184,18 +205,19 @@
 
 -----------------------
 
-![그림5](https://backtony.github.io/assets/img/post/interview/gc-5.PNG)  
+![jvm](./image/java/jvm.png)  
 + 메서드(static) 영역
     - 클래스가 사용되면 해당 클래스의 파일(.class)을 읽어들여, 클래스에 대한 정보(바이트 코드)를 메서드 영역에 저장
     - 클래스와 인터페이스, 메서드, 필드, static 변수, final 변수 등이 저장되는 영역입니다.
-+ JVM 스택 영역
-    - 스레드마다 존재하여 스레드가 시작할 때마다 할당
-    - 지역변수, 매개변수, 연산 중 발생하는 임시 데이터 저장
-    - 메서드 호출 시마다 개별적 스택 생성
 + JVM 힙 영역
     - 런타임 시 동적으로 할당하여 사용하는 영역
     - new 연산자로 생성된 객체와 배열 저장
     - 참조가 없는 객체는 GC(가비지 컬렉터)의 대상
++ JVM 스택 영역
+    - 스레드마다 존재하여 스레드가 시작할 때마다 할당
+    - 지역변수, 매개변수, 연산 중 발생하는 임시 데이터 저장
+    - 메서드 호출 시마다 개별적 스택 생성
+
 + pc register
     - 쓰레드가 현재 실행할 스택 프레임의 주소를 저장
 + Native Method Stack
@@ -216,7 +238,98 @@
 
 -----------------------
 
-[JVM 가비지 컬렉터](https://backtony.github.io/interview/java/2021-11-30-interview-12/)
+### 요약
+
++ 가비지 컬렉터는 동적으로 할당한 메로리 영역 중 사용하지 않는 영역을 탐지하여 해제하는 역할
++ 자바 가비지 컬렉터는 Mark And Sweep 알고리즘을 사용
+    - Java8 : Parallel GC 사용
+    - Java9 이상 : G1 GC 사용
+
+__동작 과정__
+1. 새로운 객체 생성은 Heap의 Eden 영역에 저장
+2. Eden 영역이 꽉차면 Minor GC가 수행되고, Reachable 객체는 Survival 0 영역으로 이동과 동시에 age-bit 1 상승
+3. 2번 과정이 반복되면서 Survival 1 -> 0 -> 1 이동이 반복
+4. age-bit가 일정 값 이상이 되면 해당 객체에 대해 promotion 과정이 진행되어 Old Generation 영역으로 이동
+5. Old Generation 영역이 꽉차면 Major GC가 발생
+
+
+<br>
+
+### 자세한 설명
+가비지 컬렉터는 __동적으로 할당한 메로리 영역 중 사용하지 않는 영역을 탐지하여 해제하는 역할__ 을 합니다.  
+![gc-1](./image/java/gc-1.PNG)  
+메인 메서드가 실행되면 스택에 num1, num2, sum 값이 쌓이게 되고, name은 Heap 영역에 쌓이고 스택에서는 이를 참조합니다.  
+메인 메서드가 끝나게 되면 스택이 전부 pop되고 Heap 영역에 객체 타입의 데이터만 남게 됩니다.  
+이런 객체를 __Unreachable Object__ 라고 표현하고 __가비지 컬렉터의 대상__ 이 됩니다.
+이런 자원을 해제하여 메모리의 누수를 방지합니다.
+
+#### 언제 수행되는가?
+![gc-3](./image/java/gc-3.PNG)
+위 그림은 JVM의 Heap 영역 구성입니다.  
+JVM의 Heap 영역은 크게 __Young Generation과 Old Generation__ 으로 나뉩니다.  
+Young Generation에서 발생하는 GC는 __Minor GC__ , Old Generation에서 발생하는 GC는 __Major GC__ 라고 부릅니다. young과 old가 모두 꽉차면 Full GC(minor GC + Major GC)가 발생합니다.  
+Young Generation은 __Eden, Survival 0, Survival 1__ 영역으로 나뉩니다.
++ Eden
+    - 새롭게 생성된 객체들이 할당되는 영역
++ Servival 0, 1
+    - Minor GC로부터 살아남은 객체들이 존재하는 영역
+    - 0 또는 1 둘중 하나는 반드시 비어있어햐 합니다.
+    - 둘로 나눠져 있는 이유는 __메모리의 단편화__ 를 막기 위해서 입니다.
+
+
+구성을 살펴보았으니 이제 어떻게 언제 수행되고 어떻게 동작하는지 순서대로 보겠습니다.  
+![gc-4](./image/java/gc-4.PNG)
+새로운 객체가 계속 생성되다가 Eden 영역이 꽉차는 순간 Minor GC가 발생합니다.  
+mark and sweep이 진행되고 Unreachable은 해제되고 Reachable이라고 판단되는 객체들은 Survival 0 역역으로 옮겨지면서 age-bit가 0에서 1로 증가합니다. age-bit는 Minor GC에서 살아남을 때마다 1씩 증가합니다.
+
+<br><Br>
+
+![gc-5](./image/java/gc-5.PNG)  
+시간이 지나 Eden 영역이 꽉차게 되면 다시 Minor GC가 발생합니다.  
+이번에는 Reachable이라고 판단된 객체들이 Survival 1 영역으로 이동합니다.
+<br><br>
+
+![gc-6](./image/java/gc-6.PNG)
+시간이 지나 Eden 영역이 꽉차게 되면 다시 Minor GC가 발생합니다.  
+이번에는 Reachable이라고 판단된 객체들이 Survival 0 영역으로 이동합니다.  
+<br><Br>
+
+![gc-7](./image/java/gc-7.PNG)  
+JVM GC에서는 일정 수준의 age-bit를 넘어가면 오래도록 참조될 객체라고 판단하여 해당 객체를 Old Generation으로 넘겨주는데 이 과정을 __Promotion__ 이라고 합니다.  
+java8 Parallel GC 사용 기준 age-bit가 15가 되면 promotion이 진행됩니다.  
+<br><Br>
+
+![gc-8](./image/java/gc-8.PNG)
+언젠가 Old Generation 영역이 꽉차게되면 이때는 __Major GC__ 가 발생합니다.  
+Mark And Sweep 방식을 통해 필요없는 메모리를 비워줍니다.  
+Major GC는 Minor GC보다 더 오래 걸립니다.
+
+
+### Young Generation과 Old Generation
+![gc-9](./image/java/gc-9.PNG)
+heap 영역을 두 영역으로 나눈데는 이유가 있습니다.  
+GC 개발자들이 애플리케이션을 분석해보니 대부분의 객체들의 수명이 짧다는 것을 확인했습니다.  
+GC도 결국 비용이므로 메모리의 특정 부분만을 탐색하여 해제하면 효율적이기 때문에 Young Generation에서 최대한 처리하도록 나눴다고 합니다.
+
+#### 어떻게 애플리케이션과 병행되는가?
+---
++ Stop The World
+    - GC를 실행하기 위해 JVM이 애플리케이션 실행을 멈추는 것을 의미합니다.
+    - 모든 GC는 STW를 발생시키는데 Minor GC는 객체의 수명이 짧고 많은 객체를 검사하지 않기 때문에 매우 빨라 애플리케이션에 거의 영향을 주지 않습니다. __반면에 Major GC의 경우 살아있는 모든 객체를 검사해야 하기 때문에 오랜 시간이 걸립니다.__
+
+### Parallel GC
+![gc-11](./image/java/gc-11.PNG)  
+__Parallel GC는 여러 개의 쓰레드로 GC를 실행하는 방식입니다.__  
+여러 개의 쓰레드를 사용하므로 Stop The World 시간이 짧아지고, 멀티 코어 환경에서 애플리케이션 처리 속도를 향상시키기 위해 사용됩니다.  
+Java 8에서 기본으로 사용되는 방식입니다.
+
+### G1 GC
+![gc-13](./image/java/gc-13.PNG)
+G1는 Garbage First의 줄임말으로 Heap을 일정 크기의 Region으로 나눠서 어떤 영역은 Young Generation, 어떤 영역은 Old Generation으로 활용합니다.  
+런타임에 G1 GC가 필요에 따라 영역별 Region 개수를 튜닝합니다.  
+이에 따라 Stop The World를 최소화 할수 있게 되어 __Java9 이상부터는 G1 GC를 기본 GC를 기본 실행방식__ 으로 사용합니다.
+
+
 
 </details>
 
@@ -384,7 +497,8 @@ double|Double
 char|Character
 boolean|Boolean
 
-래퍼 클래스는 각각 타입에 해당하는 데이터를 인수로 전달받아, 해당 값을 가지는 객체로 만들어준다.  
+래퍼 클래스는 각각 타입에 해당하는 데이터를 인수로 전달받아, 해당 값을 가지는 객체로 만들어준다.
+**primitive와 래퍼 타입의 가장 큰 차이점은 래퍼 타입은 null을 허용한다는 것과 비교시에 equals를 사용해야된다는 점이다.**
 
 
 </details>
@@ -556,7 +670,7 @@ public class ResourceClose {
 <br>
 
 
-### 제네릭
+### 제네릭(kotlin)
 
 <details>
    <summary> 예비 답안 보기 (👈 Click)</summary>
@@ -568,11 +682,133 @@ public class ResourceClose {
 + 잘못된 타입이 들어올 수 있는 것을 컴파일 단계에서 방지할 수 있다.
 + 불필요한 타입 변환을 제거할 수 있다.
 
+```kotlin
+interface Hello<T> {
+  fun hello(): T
+}
+
+class Processor<T> {
+  fun process(value: T) {}
+}
+
+class Box<T> where T : Fruit, T: Red
+
+// 타입 파라미터의 상한 타입(upper bound)를 Animal으로 정하였다.
+fun <T: Animal> bark(animal: T) {}
+```
+마지막 함수처럼 제네릭에 `T: Animal`을 명시한다면 T 타입은 Animal 타입이거나 그 하위 타입만을 허용한다. 만약 제네릭 T에 여러가지 상한을 주고 싶다면 `where`로 명시할 수 있다.
+
+<br>
+
+
+
+#### 공변성, 반공변성, 무공변성
+* 공변성(out) : 기본적인 객체 타입은 상하관계(공변성)을 가지고 있다. 반공변성(in)은 상하관계의 역방향을 의미한다.
+  * 공변성은 다음과 같은 일반적인 관계가 성립함을 의미한다. 
+    * `Object > Number > Integer`
+    * `Collection<Integer> > List<Integer> > ArrayList<Integer>`
+* 무변성 : 제네릭은 상하관계가 성립하지 않는다.
+  * 제네릭의 경우에는 컬렉션의 타입값만 때놓고 봤을때 상하관계(공변성)을 가지고 있다고 하더라도 다음과 같은 관계는 성립되지 않는다. 
+    * `List<Object> > List<Number> > List<Integer>`
+
+제네릭의 경우 무공변성이므로 공변성, 반공변성을 주기 위해 한정자를 사용한다. 
+
+```kotlin
+class Box<out T>(val value: T)
+
+fun main() {
+    val stringBox: Box<String> = Box("Hello")
+    val anyBox: Box<Any> = stringBox // 공변성: Box<String>은 Box<Any>의 서브타입
+  println(anyBox.value)  // Hello
+}
+```
+제네릭은 무공변성이므로 위 코드에서 out을 제거하면 anyBox 부분에서 컴파일 에러가 발생한다. Box<String> 타입은 Box<Any>의 하위 타입이 아니기 때문이다. 하지만 out 키워드를 사용하므로서 공변성이 생기게 된다.
+
+```kotlin
+class Consumer<in T> {
+  fun consume(item: T) {
+    println(item)
+  }
+}
+
+fun main() {
+  val anyConsumer: Consumer<Any> = Consumer<Any>()
+  val stringConsumer: Consumer<String> = anyConsumer // 반공변성: Consumer<Any>는 Consumer<String>의 서브타입
+  stringConsumer.consume("Hello")  // Hello
+}
+```
+이것도 마찬가지로 in이 없었다면 stringConsumer 라인에서 컴파일 에러가 발생한다. 하지만 in 키워드를 사용하므로서 반공변성이 생긴다.
+
+참고로 out, in 한정자는 기본적으로 함수의 제네릭에는 사용할 수 없고 클래스나 인터페이스의 제네릭에 사용할 수 있다. 하지만 함수의 파라미터로 제네릭 타입을 받는 타입이 온다면 이에 대해서는 한정자를 허용한다.
+```kotlin
+// 불가능
+fun <in T> addItem(item: T) {}
+
+// 가능
+fun <T> addItem(list: MutableList<in T>) {
+  list.add(item)
+}
+```
+
+<br>
+
+그렇다면 in과 out은 어떨때 사용할까?
+
+컬렉션의 제네릭이 out E 인경우, 해당 컬렉션은 읽기만(꺼낼수만) 가능하다.컬렉션의 값을 읽을때는 이미 E타입인 것을 추론 가능하지만, 해당 컬렉션에 값을 넣을때는 이미 컬렉션에 어떤 타입이 들어가있는지 알 수 없기 때문에 값을 넣을 수 없다. 그래서 주로 읽기 전용 컬렉션이나 생산자(producer)에서 사용되고 해당 타입은 리턴 타입으로 사용된다.
+
+```kotlin
+public interface List<out E> : Collection<E> {}
+```
+
+
+반면에 in은 해당 타입 파라미터가 입력 타입으로(쓰기 전용) 사용될 수 있음을 의미합니다.
+```kotlin
+class Consumer<in T> {
+    fun consume(item: T) {
+        println("Consumed: $item")
+    }
+}
+```
+
+#### star projection 
+제네릭 타입 파라미터를 알 수 없거나 특정하지 않을 때 제네릭 타입을 다루는 방법으로 *를 사용한다.(java에서는 ?)
+
+```kotlin
+// 타입이 영원히 결정되지 못하므로 error
+val arrayList = arrayListOf<*>()
+
+// 어떤 타입으로 초기화될지 알 수 없으므로 error
+fun acceptStarList(list: ArrayList<*>) {
+  list.add("문자열") // error!
+  list.add(1)      // error!
+}
+
+// 어떤 타입이든 받아서 메서드안에서는 꺼내서 사용할 수 있지만 
+// 해당 리스트의 인자가 어떤 타입인지 알 수가 없기 때문에 인자를 추가할 수는 없다. 
+// 오로지 null만 삽입 가능 => <*>와 <Any> 는 다른것
+fun acceptStarList(list: List<*>) {
+  if (list.isNotEmpty()) {
+    val item = list.get(0) // IDE가 item을 Any? 타입으로 추정
+  }
+}
+```
+
+
+#### type erase & reified
+제네릭은 컴파일 후 런타임에는 삭제 되기때문에 제네릭 타입에 접근 할수 없다. 함수 내에서 해당 제네릭 타입을 사용하기 위해서는 함수의 매개변수로 제네릭 타입을 전달해야만 사용할 수 있다. 하지만 코틀린에서는 reified로 타입 매개변수 T를 지정하면 런타임에서도 접근 할 수 있다. reifeid 자료형은 인라인 함수에서만 사용할수 있습니다.
+
+```kotlin
+inline fun <reified T> fuc() {
+    print(T::class)
+}
+```
+
 </details>
 
 -----------------------
 
 <br>
+
     
     
 ### 직렬화와 역직렬화
@@ -632,24 +868,9 @@ public class ResourceClose {
 
 -----------------------
 
-+ 추상 메서드
-    - abstract 키워드와 함께 원형만 선언되고 코드는 작성하지 않은 메서드
-+ 추상 클래스
-    - 개념 : abstract 키워드로 선언된 클래스
-        - 추상 메서드가 최소 한 개 이상을 가진 abstract 클래스
-        - 추상 메서드 이외의 다른 것들도 추가 가능
-    - 목적
-        - __관련성이 높은 클래스 간의 코드를 공유하고 확장하고 싶은 목적__
-+ 인터페이스
-    - 개념 : default와 static 을 제외하고는 추상 메서드와 상수만을 포함하여, interface 키워드를 사용하여 선언
-        - 모든 메서드는 추상 메서드로, abstract public이 생략되어 있다.
-        - 상수 필드는 public static final이 생략되어 있다.
-        - 다중상속이 가능하다.
-    - 목적
-        - __관련성이 없는 클래스들의 논리적으로 같은 기능을 자신에 맞게 구현을 강제하는데 목적__ 
-
-정리하자면, 구조상 차이로 추상 클래스는 abstract 키워드가 붙고 추상 메서드뿐만 아니라 다른 변수, 메서드도 선언이 가능하고, 인터페이스는 추상 메서드와 상수만 선언 가능하다.(자바 8부터는 default 메서드 선언 가능)  
-목적의 차이로 추상 클래스는 관련성이 높은 클래스 간의 코드 공유(재사용)와 확장을 목적으로 하고, 인터페이스는 관련성이 없는 클래스들의 같은 기능을 자신에 맞게 구현하는데 목적이 있다.  
+실질 코드 관점에서 본다면 추상 클래스와 인터페이스 모두 구현을 강제하지만 추상 클래스의 추상 메서드는 default를 제공할 수 없고 인터페이스는 default를 제공할 수 있다.
+논리적인 관점으로 본다면 추상 클래스와 인터페이스 모두 다형성을 구현하기 위한 방법 중 하나이며, 추상 클래스는 상속을 통해 구현하기 때문에 더 엄격한 계층구조를 나타내기 위해서 사용한다.(상속은 한개만 가능)
+반면에 인터페이스의 경우, 여러 개를 구현할 수 있기 때문에 조금 더 유연하게 다형성을 구현하는 방법이다.
 
 </details>
 
@@ -667,7 +888,7 @@ public class ResourceClose {
 
 -----------------------
 
-![그림3](https://backtony.github.io/assets/img/post/interview/java-3.PNG)  
+![error](./image/java/error.png)  
 
 목록|Error|Exception
 ---|---|---
@@ -724,7 +945,7 @@ SQLException은 JDBC 기술이므로 service, controller는 JDBC에 의존하게
 
 -----------------------
 
-![그림1](https://backtony.github.io/assets/img/post/interview/java-1.PNG)  
+![collection-1](./image/java/collection-1.png)  
 __Set과 List는 Collection 인터페이스를 구현하고 있고 Map은 인터페이스를 구현하고 있지 않다.__
 + Map   
     - Key와 Value의 형태로 이루어진 데이터 집합
@@ -742,7 +963,7 @@ __Set과 List는 Collection 인터페이스를 구현하고 있고 Map은 인터
 
 <br>
 
-![그림2](https://backtony.github.io/assets/img/post/interview/java-2.PNG)  
+![collection-2](./image/java/collection-2.PNG)
 Collection 인터페이스 위에는 Iterable이라는 인터페이스가 있고 이 인터페이스는 iterator 라는 추상 메서드를 갖고 있다. 
 
 
@@ -917,12 +1138,12 @@ new 는 계속 새로운 객체를 생성해내는 반면에 ""의 경우는 이
 두 가지의 차이점은 __다른 주체가 작업할 때 자신이 코드를 실행할 제어권이 있는지 없는지로 판단__ 할 수 있다.  
 
 ### Blocking
-![그림1](https://backtony.github.io/assets/img/post/interview/block-1.PNG)  
+![block-1](./image/java/block-1.PNG)  
 Blocking 자신의 작업을 진행하다가 다른 주체의 작업이 시작되면 __제어권을 다른 주체로 넘긴다.__  
 따라서 자신은 제어권이 없기 때문에 실행할 수 없고, 다른 주체가 실행을 완료하고 제어권을 돌려줄 때까지 아무 작업도 할 수 없다.  
 
 ### Non-Blocking
-![그림2](https://backtony.github.io/assets/img/post/interview/block-2.PNG)  
+![block-2](./image/java/block-2.PNG)
 Non-Blocking은 다른 주체의 작업에 __관련없이 자신이 제어권을 갖고 있다.__  
 따라서, 자신은 계속 작업을 수행할 수 있다.  
 
@@ -1045,7 +1266,7 @@ Non-Blocking은 다른 주체의 작업에 __관련없이 자신이 제어권을
 
 -----------------------
 
-![그림4](https://backtony.github.io/assets/img/post/interview/java-4.PNG)  
+![pork-join-1](./image/java/pork-join-1.PNG)  
 Java7에서 새로 지원하는 fork-join 풀을 기본적으로 큰 업무를 작은 업무로 나눠 배분하여, 일을 한 후에 일을 취합하는 형태이다.  
 분할 정복 알고리즘과 비슷하다고 보면 된다.  
 자바에서 풀을 관리하는 ThreadPoolExecutor와 마찬가지로 ForJoinPool도 내부에 inbound queue 라는 편지함이 하나 있다.  
@@ -1053,7 +1274,7 @@ Java7에서 새로 지원하는 fork-join 풀을 기본적으로 큰 업무를 �
 <br>
 
 
-![그림5](https://backtony.github.io/assets/img/post/interview/java-5.PNG)  
+![pork-join-2](./image/java/pork-join-2.PNG)
 왼쪽에서 업무를 submit하면 하나의 inbound queue에 누적되고 그걸 A와 B 스레드가 가져다가 일을 처리한다.  
 A와 B는 각자 큐가 있으며, 자신의 큐에 업무가 없으면 상대방의 큐에서 업무를 가져와서 처리한다.  
 최대한 노는 스레드가 없게 하기 위한 알고리즘이다.  
@@ -1268,39 +1489,4 @@ ExecutorService executor = Executors.newScheduledThreadPool(int n);
 
 -----------------------
 
-<br>
 
-
-### Synchronized와 Lock & Condition 동기화
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-
-[synchronized 동기화](https://backtony.github.io/java/2022-05-04-java-50/)
-
-
-</details>
-
------------------------
-
-<br>
-
-### Atomic 동기화
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-[동시성 이슈와 Atomic 사용법](https://backtony.github.io/java/2022-05-27-java-51/)
-
-</details>
-
------------------------
-
-<br>
