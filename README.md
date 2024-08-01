@@ -37,11 +37,12 @@
 
 ## :bulb: Java [Link](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/Java.md)
 
-+ Python vs Java vs Kotlin
 + Java 장단점
++ Kotlin 장단점
++ 코루틴 CPS 패턴
 + OOP(객체 지향 프로그래밍) 특징
 + SOLID 원칙
-+ 객체 지향 프로그래밍 vs 절차 지향 프로그래밍
++ JVM 실행과정
 + JVM 구조
 + 가비지 컬렉터
 + 접근 제한자
@@ -76,8 +77,6 @@
 + 함수형 프로그래밍
 + 멀티스레드 프로그래밍
 + Java 동기화 방식
-+ Synchronized와 Lock & Condition 동기화
-+ Atomic 동기화
 
 <br>
 
