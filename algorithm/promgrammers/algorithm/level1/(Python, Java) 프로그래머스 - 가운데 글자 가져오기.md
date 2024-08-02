@@ -20,3 +20,18 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): String {
+        val half = s.length / 2
+        return when (isOdd(s.length)) {
+            true -> { s[half].toString()}
+            false -> { s.substring(half-1, half+1)}
+        }
+    }
+
+    private fun isOdd(x: Int) = x % 2 != 0
+}
+```

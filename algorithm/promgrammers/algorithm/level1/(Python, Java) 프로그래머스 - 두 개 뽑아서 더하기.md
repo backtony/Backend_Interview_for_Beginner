@@ -32,3 +32,25 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(numbers: IntArray): IntArray {
+        var answer = mutableSetOf<Int>()
+
+        val numberCntMap = numbers.groupBy { it }.map { it.key to it.value.size }.toMap()
+        val numberSet = numbers.toMutableSet()
+
+        for (i in numberSet) {
+            for (j in numberSet) {
+                if (i == j && numberCntMap[j] == 1) {
+                    break
+                }
+                answer.add(i + j)
+            }
+        }
+        return answer.sorted().toIntArray()
+    }
+}
+```

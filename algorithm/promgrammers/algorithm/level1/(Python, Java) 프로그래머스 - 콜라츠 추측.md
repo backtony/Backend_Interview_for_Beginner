@@ -33,3 +33,18 @@ class Solution {
 }
 ```
 3배하는 과정에서 int 범위를 초과하는 경우가 있기 때문에 long으로 형변환을 한 뒤에 진행해야 한다.
+
+## Kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(num: Int): Int = collatzAlgorithm(num.toLong(), 0)
+
+    tailrec fun collatzAlgorithm(num: Long, cnt: Int): Int =
+        when {
+            cnt > 500 -> -1
+            num == 1L -> cnt
+            else -> collatzAlgorithm(if (num % 2 == 0L) num / 2 else (num * 3) + 1, cnt + 1)
+        }
+}
+```
+tailrec은 꼬리재귀 일때 사용한다. 컴파일 시에 while 대신 for 루프로 처리해주기 때문에 재귀함수가 호출되면서 소비되는 스택을 아낄 수 있다.

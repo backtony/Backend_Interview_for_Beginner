@@ -25,3 +25,16 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(n: Long): Long {
+        val sqrt = Math.sqrt(n.toDouble())
+        if (sqrt % 1.0 == 0.0) {
+            return (sqrt + 1).pow(2).toLong()
+        }
+        return -1
+    }
+}
+```

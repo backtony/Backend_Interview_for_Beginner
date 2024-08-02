@@ -24,3 +24,17 @@ class Solution {
     }
 }
 ```
+
+## Kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(arr: IntArray, divisor: Int): IntArray {
+        val result = arr.filter { it % divisor == 0 }.sorted().toIntArray()
+
+        if (result.isEmpty()) {
+            return listOf(-1).toIntArray()
+        }
+        return result
+    }
+}
+```

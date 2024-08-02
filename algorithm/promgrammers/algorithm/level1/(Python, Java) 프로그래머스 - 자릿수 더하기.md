@@ -21,3 +21,17 @@ public class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(n: Int): Int {
+        var result = 0
+        for (num in n.toString()) {
+            result += num.toString().toInt()
+        }
+
+        return result
+    }
+}
+```

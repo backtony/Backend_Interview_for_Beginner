@@ -20,3 +20,16 @@ class Solution {
     }
 }
 ```
+
+## Kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(n: Long): Long {
+        return n.toString()
+            .map { it.digitToInt() }
+            .sortedDescending()
+            .joinToString("")
+            .toLong()
+    }
+}
+```

@@ -30,3 +30,21 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(price: Int, money: Int, count: Int): Long {
+        var total = 0L
+        for (i in 1..count) {
+            total += price * i
+        }
+        
+        return if (total < money) {
+            0
+        } else {
+            total.minus(money)
+        }
+    }
+}
+```

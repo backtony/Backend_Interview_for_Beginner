@@ -45,3 +45,22 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(arr1: Array<IntArray>, arr2: Array<IntArray>): Array<IntArray> {
+        return arr1.zip(arr2)
+            .map {
+                var innerMatrix = mutableListOf<Int>()
+
+                for (idx in 0..it.first.lastIndex) {
+                    innerMatrix.add(it.first[idx] + it.second[idx])
+                }
+
+                innerMatrix.toIntArray()
+            }
+            .toTypedArray()
+    }
+}
+```

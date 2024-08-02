@@ -46,3 +46,22 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(n: Int): Int {
+        val sqrt = Math.sqrt(n.toDouble()).toInt()
+        var result = 0
+        for (i in 1..sqrt) {
+            if (i * i == n) {
+                result += i
+            } else if (n % i == 0) {
+                result += i
+                result += n / i
+            }
+        }
+        return result
+    }
+}
+```

@@ -62,3 +62,30 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(n: Int, lost: IntArray, reserve: IntArray): Int {
+        val intersectionHolder = reserve.intersect(lost.toSet())
+        val reserveHolder = (reserve.toSet() - intersectionHolder).toMutableSet()
+        val lostUser = (lost.toSet() - intersectionHolder).sorted()
+        var answer = 0
+
+        lostUser.forEach {
+            if (it - 1 in reserveHolder) {
+                reserveHolder.remove(it - 1)
+                return@forEach
+            }
+
+            if (it + 1 in reserveHolder) {
+                reserveHolder.remove(it + 1)
+                return@forEach
+            }
+            answer += 1
+        }
+
+        return n - answer
+    }
+}
+```

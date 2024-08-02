@@ -93,3 +93,37 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(N: Int, stages: IntArray): IntArray {
+        val stageUserCnt = stages.groupBy { it }.map { it.key to it.value.size }.toMap()
+        val stageFailurePercent = calculatePercent(stageUserCnt, N)
+
+        return stageFailurePercent.entries.sortedWith(
+            compareByDescending<Map.Entry<Int, Double>> { it.value }.thenBy { it.key }
+        ).map { it.key }.toIntArray()
+    }
+
+    private fun calculatePercent(
+        stageUserCnt: Map<Int, Int>,
+        stageCnt: Int,
+    ): Map<Int, Double> {
+        var stageFailurePercent = mutableMapOf<Int, Double>()
+        var total = stageUserCnt.getOrDefault(stageCnt + 1, 0)
+
+        for (stage in stageCnt downTo 1) {
+            val currentStageUserCnt = stageUserCnt.getOrDefault(stage, 0)
+            total += currentStageUserCnt
+            var percent = 0.0
+            if (total != 0) {
+                percent = currentStageUserCnt.toDouble() / total
+            }
+            stageFailurePercent[stage] = percent
+        }
+
+        return stageFailurePercent
+    }
+}
+```

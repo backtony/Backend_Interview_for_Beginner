@@ -27,3 +27,20 @@ class Solution {
     }
 }
 ```
+
+## Kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(absolutes: IntArray, signs: BooleanArray): Int {
+        var result = 0
+        absolutes.zip(signs.toList()) { absolute, sign ->
+            when (sign) {
+                true -> result += absolute
+                false -> result -= absolute
+            }
+        }
+        
+        return result
+    }
+}
+```

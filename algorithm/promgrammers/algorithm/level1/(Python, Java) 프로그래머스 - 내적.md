@@ -22,3 +22,14 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(a: IntArray, b: IntArray): Int {
+        return a.zip(b){ first, second ->
+            second.times(first)
+        }.sum()
+    }
+}
+```

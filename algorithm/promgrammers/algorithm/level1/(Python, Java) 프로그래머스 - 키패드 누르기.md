@@ -117,3 +117,89 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+import kotlin.math.absoluteValue
+
+class Solution {
+    fun solution(numbers: IntArray, hand: String): String {
+        var answer = ""
+        val numPad = generateNumPad()
+        val left = Pad(0, -3, "*")
+        val right = Pad(-2, -3, "#")
+
+        numbers.forEach { num ->
+            val pad = numPad.first { it.value == num.toString() }
+
+
+            val leftCnt = left.calculateDistance(pad)
+            val rightCnt = right.calculateDistance(pad)
+            val hand = calculateHand(leftCnt, rightCnt, hand, pad)
+            moveHand(hand, left, pad, right)
+            answer += hand
+        }
+
+        return answer
+    }
+
+    private fun moveHand(hand: String, left: Pad, pad: Pad, right: Pad) {
+        if (hand == "L") {
+            left.update(pad)
+        } else {
+            right.update(pad)
+        }
+    }
+
+    private fun calculateHand(leftCnt: Int, rightCnt: Int, hand: String, pad: Pad): String {
+        if(pad.value in listOf("1","4","7")) {
+            return "L"
+        }
+
+        if(pad.value in listOf("3","6","9")) {
+            return "R"
+        }
+
+        return if (leftCnt < rightCnt) {
+            "L"
+        } else if (leftCnt > rightCnt) {
+            "R"
+        } else {
+            if (hand == "right") {
+                "R"
+            } else {
+                "L"
+            }
+        }
+    }
+
+    private fun generateNumPad(): List<Pad> {
+        var pads = mutableListOf<Pad>()
+        for (y in 0..2) {
+            for (x in 0..2) {
+                pads.add(Pad(-x, -y, (x + y + (y * 2) + 1).toString()))
+            }
+        }
+        pads.add(Pad(0, -3, "*"))
+        pads.add(Pad(-1, -3, "0"))
+        pads.add(Pad(-2, -3, "#"))
+        return pads
+    }
+
+    class Pad(
+        var x: Int,
+        var y: Int,
+        var value: String,
+    ) {
+        fun update(pad: Pad) {
+            this.x = pad.x
+            this.y = pad.y
+            this.value = pad.value
+        }
+
+        fun calculateDistance(target: Pad): Int {
+            return (target.y.absoluteValue - this.y.absoluteValue).absoluteValue + (target.x.absoluteValue - this.x.absoluteValue).absoluteValue
+        }
+    }
+}
+```

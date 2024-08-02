@@ -77,3 +77,38 @@ public class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(board: Array<IntArray>, moves: IntArray): Int {
+        val dollsMap = mutableMapOf<Int, MutableList<Int>>()
+        val stack = mutableListOf<Int>()
+        var answer = 0
+
+        // mack board
+        board.reversed().forEach { dolls ->
+            dolls.forEachIndexed { index, doll ->
+                if (doll != 0) {
+                    dollsMap[index + 1] = dollsMap.getOrDefault(index + 1, mutableListOf())
+                        .apply { add(doll) }
+                }
+            }
+        }
+        
+        // pick
+        moves.forEach { idx ->
+            val doll = dollsMap[idx]!!.removeLastOrNull() ?: return@forEach
+
+            if (stack.size != 0 && stack.last() == doll) {
+                stack.removeLast()
+                answer += 2
+            } else {
+                stack.add(doll)
+            }
+        }
+
+        return answer
+    }
+}
+```

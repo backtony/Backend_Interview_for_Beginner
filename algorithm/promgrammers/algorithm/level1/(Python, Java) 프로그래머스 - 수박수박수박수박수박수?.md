@@ -23,3 +23,21 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(n: Int): String {
+        val half = n / 2
+        if (half == 0) return "수"
+        var answer = "수박".repeat(half)
+        if (isOdd(n)) {
+            answer = answer.plus("수")
+        }
+
+        return answer
+    }
+
+    private fun isOdd(x: Int) = x % 2 != 0
+}
+```

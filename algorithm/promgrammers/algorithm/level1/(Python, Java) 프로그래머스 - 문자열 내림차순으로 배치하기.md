@@ -27,3 +27,14 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): String {
+        return s.toCharArray()
+            .sortedDescending()
+            .joinToString("")
+    }
+}
+```

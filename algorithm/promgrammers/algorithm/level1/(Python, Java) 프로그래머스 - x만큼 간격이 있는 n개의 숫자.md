@@ -21,3 +21,19 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(x: Int, n: Int): LongArray {
+        var result = mutableListOf<Long>()
+        var num = x.toLong()
+        for (i in 0 until n) {
+            result.add(num)
+            num += x
+        }
+
+        return result.toLongArray()
+    }
+}
+```

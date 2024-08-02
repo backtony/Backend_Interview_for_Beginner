@@ -15,3 +15,12 @@ class Solution {
     }
 }
 ```
+
+## Kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): Int {
+        return s.toInt()
+    }
+}
+```

@@ -22,3 +22,25 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+import kotlin.math.max
+import kotlin.math.min
+
+class Solution {
+    fun solution(a: Int, b: Int): Long {
+        if (a == b) return a.toLong()
+
+        val min = min(a, b)
+        val max = max(a,b)
+
+        var result = 0.toLong()
+        for (num in min .. max) {
+            result += num
+        }
+
+        return result
+    }
+}
+```

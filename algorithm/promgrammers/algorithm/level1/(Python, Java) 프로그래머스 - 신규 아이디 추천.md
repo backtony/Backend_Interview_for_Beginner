@@ -67,3 +67,30 @@ class Solution {
 자바 정규식은 파이썬 정규식과 달리 \\\\ 이스케이프 문자를 2개 사용해야 \로 인식한다.  
 [] 괄호는 문자 클래스로 안에 있는 것들은 문자로 인식한다.  
 문자 클래스 안에서 -는 사이값을 의미하므로 -문자를 포함하고 싶다면 맨 마지막에 넣거나 이스케이프 처리해야한다.
+
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(new_id: String): String {
+        var answer = new_id.lowercase()
+        answer = answer.replace(Regex("[^a-z\\d_.-]+"), "")
+        answer = answer.replace(Regex("\\.+"), ".")
+        answer = answer.replace(Regex("^[.]|[.]$"), "")
+        if (answer.isBlank()) {
+            answer = "a"
+        }
+
+        if (answer.length >= 16) {
+            answer = answer.substring(0, 15)
+        }
+        answer = answer.replace(Regex("[.]$"), "")
+
+        while (answer.length <= 2) {
+            answer += answer.last()
+        }
+
+        return answer
+    }
+}
+```

@@ -61,3 +61,33 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(answers: IntArray): IntArray {
+        var answer = mutableMapOf<Int, Int>()
+        val one = listOf(1, 2, 3, 4, 5)
+        val two = listOf(2, 1, 2, 3, 2, 4, 2, 5)
+        val three = listOf(3, 3, 1, 1, 2, 2, 4, 4, 5, 5)
+
+        answers.forEachIndexed { index, ans ->
+
+            if (ans == one[index % 5]) {
+                answer[1] = answer.getOrDefault(1, 0) + 1
+            }
+
+            if (ans == two[index % 8]) {
+                answer[2] = answer.getOrDefault(2, 0) + 1
+            }
+
+            if (ans == three[index % 10]) {
+                answer[3] = answer.getOrDefault(3, 0) + 1
+            }
+
+        }
+
+        return answer.entries.filter { it.value == answer.values.maxOrNull() }.map { it.key }.sorted().toIntArray()
+    }
+}
+```

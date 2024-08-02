@@ -137,3 +137,38 @@ class Solution {
 }
 ```
 python을 사용하면 조합, 순열을 라이브러리가 만들어줘서 편했는데 java는 제공되지 않아 조합 알고리즘을 익혀둘 필요가 있어 보인다.
+
+## kotlin 풀이
+```kotlin
+import kotlin.math.sqrt
+
+class Solution {
+    fun solution(nums: IntArray): Int {
+        var answer = 0
+
+        for (i in 0..nums.lastIndex - 2) {
+            for (j in i + 1..nums.lastIndex - 1) {
+                for (k in j + 1..nums.lastIndex) {
+                    val sum = nums[i] + nums[j] + nums[k]
+                    if (isPrime(sum)) {
+                        answer += 1
+                    }
+                }
+            }
+        }
+
+        return answer
+    }
+
+    private fun isPrime(num: Int): Boolean {
+        val sqrt = sqrt(num.toDouble())
+
+        for (i in 2..sqrt.toInt()) {
+            if (num % i == 0) {
+                return false
+            }
+        }
+        return true
+    }
+}
+```

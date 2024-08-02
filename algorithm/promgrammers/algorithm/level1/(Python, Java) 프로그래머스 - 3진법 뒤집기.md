@@ -52,3 +52,13 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+    fun solution(n: Int): Int {
+        return n.toString(3)
+            .reversed()
+            .toInt(3)
+    }
+}
+```

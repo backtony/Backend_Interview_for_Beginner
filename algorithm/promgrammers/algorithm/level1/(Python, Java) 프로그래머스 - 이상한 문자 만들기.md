@@ -50,3 +50,24 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): String {
+        return s.split(" ")
+            .map { letters ->
+                letters.mapIndexed { index, alpha ->
+                    when {
+                        isOdd(index) -> {alpha.lowercase() }
+                        else -> { alpha.uppercase()}
+                    }
+                }.joinToString("")
+            }
+            .joinToString(" ")
+
+    }
+
+    private fun isOdd(x: Int) = x % 2 != 0
+}
+```

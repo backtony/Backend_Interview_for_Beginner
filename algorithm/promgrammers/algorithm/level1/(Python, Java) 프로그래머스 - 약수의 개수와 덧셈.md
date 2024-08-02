@@ -67,3 +67,30 @@ class Solution {
 
 }
 ```
+
+## kotlin 풀이
+```kotlin
+import kotlin.math.sqrt
+
+class Solution {
+    fun solution(left: Int, right: Int): Int {
+        var answer = 0
+
+        for (target in left..right) {
+            if (isOdd(target)) {
+                answer -= target
+            } else {
+                answer += target
+            }
+        }
+
+        return answer
+    }
+
+    private fun isOdd(target: Int): Boolean {
+        val sqrt = sqrt(target.toDouble())
+
+        return target % sqrt == 0.0
+    }
+}
+```

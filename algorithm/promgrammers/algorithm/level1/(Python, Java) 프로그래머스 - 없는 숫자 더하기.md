@@ -24,3 +24,14 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+import java.util.stream.IntStream
+
+class Solution {
+    fun solution(numbers: IntArray): Int {
+        return IntStream.range(1,10).filter { numbers.contains(it).not() }.sum()
+    }
+}
+```

@@ -15,3 +15,12 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(arr: IntArray): Double {
+        return arr.average()
+    }
+}
+```

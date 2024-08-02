@@ -79,3 +79,31 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(lottos: IntArray, win_nums: IntArray): IntArray {
+        var correctCnt = 0
+        var zeroCnt = 0
+        lottos.forEach { lotto ->
+            if (lotto == 0) {
+                zeroCnt += 1
+                return@forEach
+            }
+
+            if (lotto in win_nums) {
+                correctCnt += 1
+            }
+        }
+        var max = rank(7 - (correctCnt + zeroCnt))
+        var min = rank(7 - correctCnt)
+
+        return listOf(max, min).toIntArray()
+    }
+
+    private fun rank(x: Int): Int {
+        return if (x > 6) 6 else x
+    }
+}
+```
