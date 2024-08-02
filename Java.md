@@ -1390,30 +1390,6 @@ __cf) 기존 date의 문제점__
 <br>
 
 
-
-### Java 8 -> Java 11
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-+ __default GC가 Paralle GC에서 G1GC로 변경__
-+ strip(), stripLeading(), stripTrailing(), isBlank(), repeat(n) 과 같은 __String 클래스에 새로운 메서드 추가__
-+ writeString, readString, isSameFile 과 같은 __File관련 새로운 메서드 추가__
-+ 컬렉션의 toArray() 메서드를 오버로딩하는 메서드가 추가되어 원하는 타입의 배열을 선택하여 반환할 수 있게 되었다.
-    - sampleList.toArray(String[]::new)
-+ Predicate 인터페이스에 부정을 나타내는 not() 메서드 추가
-+ __람다에서 로컬 변수 var이 사용 가능__
-+ Javac를 통해 컴파일하지 않고도 바로 java 파일을 실행할 수 있게 되었다.
-
-</details>
-
------------------------
-
-<br>
-
-
 ### 함수형 프로그래밍
 
 <details>
