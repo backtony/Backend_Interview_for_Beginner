@@ -81,7 +81,7 @@
 
 ## :bulb: Spring & JPA [Link](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/Spring%20%26%20JPA.md)
 
-+ 프레임워크란
++ 프레임워크와 라이브러리
 + Spring 정의 및 장점
 + DI (Dependency Injection)
     - 주입 방식

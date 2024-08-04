@@ -508,7 +508,8 @@ HTTP 1.1부터는 defualt로 keep-alive를 지원한다.
     - 클라이언트는 각 요청에 대한 응답을 기다리지 않고 여러개의 요청을 연속적으로 보낸다.(파이프라이닝) 하지만 각 응답의 처리는 순차적으로 처리된다.
 
 __cf) 파이프라이닝__  
-![그림1](https://backtony.github.io/assets/img/post/interview/network-1.PNG)  
+
+![pipeline](./image/network/pipeline.PNG)  
 
 </details>
 
@@ -530,17 +531,17 @@ __cf) 파이프라이닝__
 + Header의 내용과 중복되는 필드를 재전송하지 않아 데이터를 절약한다.
 
 ### Multiplexed Streams
-![그림2](https://backtony.github.io/assets/img/post/interview/network-2.PNG)  
+![multiplex](./image/network/multiplex.PNG)  
 HTTP/2.0은 한 커넥션에서 여러개의 메시지를 주고받을 수 있으며, 응답은 순서에 상관없이 stream으로 주고받는다.  
 위 그림을 보면 하나의 커넥션에서 여러 병렬 스트림(3개)가 존재한다. Stream이 뒤섞여서 전송될 경우, 수신측에서 stream number을 이용해 재조합한다.  
 
 ### Server Push
-![그림3](https://backtony.github.io/assets/img/post/interview/network-3.PNG)  
+![multiplex](./image/network/push.PNG)    
 서버는 클라이언트 요청에 대해 요청하지 않은 리소스도 보낼 수 있다.  
 HTTP/1.1에서는 HTML문서를 요청하고 받은뒤 그 안에 css,image 파일이 있다면 서버로 재요청했으나, HTTP/2.0에서는 Server Push 기능으로 클라이언트에서 요청하지 않은 (HTML문서에 포함된 리소스) 리소스를 Push 해주는 방법으로 클라이언트의 요청을 최소화하여 성능을 향상시킨다.
 
 ### Header Compression
-![그림4](https://backtony.github.io/assets/img/post/interview/network-4.PNG)      
+![multiplex](./image/network/compress.PNG)        
 Header의 내용과 중복되는 필드를 재전송하지 않도록 하여, 데이터를 절약한다.  
 기존에 HTTP Header가 Plain Text(평문)이었지만, HTTP/2에서는 Hash Table과 Huffman Coding을 사용하는 HPACK이라는 Header 압축방식을 이용하여 데이터 전송 효율을 높였다.  
 
@@ -567,7 +568,9 @@ Header의 내용과 중복되는 필드를 재전송하지 않도록 하여, 데
 브라우저는 보안상의 이유로, 스크립트에서 시작한 교차 출처 HTTP 요청을 제한한다.  
 예를 들면, domain-a.com <-> domain-b.com 간의 요청은 CORS정책 위반으로, 브라우저에서 요청을 제한한다.  
 따라서 다른 출처의 리소스를 불러오기 위해서는, 그 출처에서 교차 출처 리소스 공유에 대한 헤더(CORS)를 응답 시 반환해주어야 한다. 기본적으로는 다음과 같이 동작한다.  
-![그림5](https://backtony.github.io/assets/img/post/interview/network-5.PNG)  
+
+![cors](./image/network/cors.PNG)   
+
 1. 실제 요청을 보내기 전에 Preflight라는 예비 요청을 보낸다. 이때 HTTP의 OPTIONS 메서드를 이용해 서버에 보낸다.
 2. 서버는 예비 요청이 CORS를 위반하고 있는지를 확인하고 정보를 클라이언트에게 보낸다.
 3. Preflight에 대해 서버 응답이 안전하다면 실제 요청을 보낸다.

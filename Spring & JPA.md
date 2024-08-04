@@ -3,7 +3,7 @@
 
 -----------------------
 
-### 프레임워크란
+### 프레임워크와 라이브러리
 
 <details>
    <summary> 예비 답안 보기 (👈 Click)</summary>
@@ -11,7 +11,11 @@
 
 -----------------------
 
-프레임워크란 응용 프로그램이나 소프트웨어 솔루션 개발을 수월하기 위해 __구조, 틀이 제공된 소프트웨어 환경__ 이다.
+* 프레임워크란 응용 프로그램이나 소프트웨어 솔루션 개발을 수월하기 위해 __구조, 틀이 제공된 소프트웨어 환경__ 이다.
+* 라이브러리란 특정 기능을 수행하는 코드의 집합이다.
+
+둘의 차이는 **제어 흐름에 대한 주도성이 어디에 있는 가**의 차이이다.  
+프레임워크의 경우 제어 흐름을 스스로 가지고 있는 반면에 라이브러리의 경우 제어 흐름을 개발자가 가지고 있다.
 
 </details>
 
@@ -377,8 +381,8 @@ Annotation은 프로그램에게 추가적인 정보를 제공하는 메타데�
 
 -----------------------
 
+![mvc](./image/spring/mvc.PNG)
 
-![그림3](https://backtony.github.io/assets/img/post/spring/mvc/3-3.PNG)  
 + 웹 서버
     - 정적 리소스 파일을 제공하는 서버
 + 웹 애플리케이션 서버(WAS)
@@ -404,7 +408,7 @@ Annotation은 프로그램에게 추가적인 정보를 제공하는 메타데�
 
 -----------------------
 
-![그림1](https://backtony.github.io/assets/img/post/interview/servlet-1.PNG)  
+![servlet](./image/spring/servlet.PNG)  
 서블릿은 WAS 안에서 __동적인 페이지를 만드는데 사용되는 서버 프로그램__ 이다.  
 서블릿이 존재하기 전에는 요청이 들어오면 HTTP 요청 메시지를 파싱하는 것부터 여러 부가 작업을 개발자가 수행해야 했다. 하지만 서블릿이 나오면서 부가적인 작업을 대신해주게 되었고, 개발자는 실직적인 메인 로직에만 집중 할 수 있게 되었다.
 
@@ -432,7 +436,7 @@ Annotation은 프로그램에게 추가적인 정보를 제공하는 메타데�
 
 ### 요청 시 동작 과정
 
-![그림3](https://backtony.github.io/assets/img/post/interview/spring-3.PNG)  
+![mvc](./image/spring/servlet.PNG)  
 1. 사용자가 URL을 클릭하면 HTTP Request를 Servlet Container로 보낸다.
 2. __Servlet Container는 쓰레드 풀에서 쓰레드를 꺼내 할당__ 해주고 HttpServletRequest, HttpServletResponse 두 객체를 생성한다.
 3. 사용자가 요청한 URL을 분석하여 어느 서블릿에 대한 요청인지 찾는다.
@@ -481,7 +485,7 @@ Annotation은 프로그램에게 추가적인 정보를 제공하는 메타데�
 
 -----------------------
 
-![그림6](https://backtony.github.io/assets/img/post/interview/servlet-6.PNG)  
+![mvc-1](./image/spring/mvc-1.PNG)  
 1. 핸들러 조회
     - 핸들러 매핑을 통해 요청 URL에 매핑된 핸들러(컨트롤러)를 조회한다.
 2. 핸들러 어댑터 조회
@@ -676,7 +680,7 @@ Spring에서는 __도메인과 비즈니스 로직을 수행하는 대상__ 이 
 
 -----------------------
 
-![그림2](https://backtony.github.io/assets/img/post/interview/spring-2.PNG)  
+![spring](./image/spring/spring.PNG)  
 + Filter
     - __Dispatcher Servlet에 요청이 전달되기 전/후에 url 패턴에 맞는 모든 요청에 대해 부가작업을 처리하는 기능을 제공하는 것__
     - __톰캣과 같은 웹 컨테이너(웹 애플리케이션 WAS 단)에서 동작__ 하기 때문에 Spring과 무관한 자원에 대해 동작
@@ -761,7 +765,7 @@ AOP와 Interceptor가 비슷한 기능을 수행한다고 할 수 있는데 이�
 -----------------------
 
 
-![그림5](https://backtony.github.io/assets/img/post/interview/spring-5.PNG)  
+![layered](./image/spring/layered.PNG)  
 Spring은 레이어드 아키텍처로 이루어져있다.  
 하나의 레이어는 자신의 고유 역할을 수행하고, 인접한 다른 레이어에 무언가를 요청하거나 응답한다.  
 그밖의 다른 레이어는 신경 쓸 필요가 없기 때문에 각 레이어는 자신의 역할에 충실할 수 있다.  
@@ -1164,7 +1168,7 @@ Batch Size는 N+1문제가 발생하던 것 처럼 프록시로 가져오고 학
 
 ManyToOne의 경우 애초에 Many에 One을 끼워넣기 때문에 최대 Many의 데이터 개수만큼만 조회된다.  
 반면에 OneToMany의 경우 One에 Many를 끼워넣기 때문에 기존 One의 개수 만큼의 데이터가 아니라 더 많은 데이터가 조회된다.(뻥튀기 된다.)  
-![그림1](https://backtony.github.io/assets/img/post/jpa/start/10-1.PNG)  
+![fetch](./image/spring/fetch.PNG)  
 
 팀A에 학생1, 학생2가 연관된 데이터가 DB에 있다고 했을 때, 개발자의 의도는 팀A에 연결된 모든 Member를 모두 꺼내오는 식으로 페이징을 1로 주고 쿼리를 oneToMany에서 fetch Join을 날리게 되면 DB단에서는 OneToMany이므로 Team쪽 데이터가 뻥튀기되면서 (팀A, 회원1), (팀A, 회원2)로 구성되고 여기서 페이징하게 되면 (팀A, 회원1)의 데이터만 나오게 된다.  
 따라서 JPA는 이를 판단할 수 없기 때문에 애초에 나가는 쿼리를 살펴보면 페이징 쿼리가 제거되서 나가고 연관된 데이터를 전부다 끌고오는 쿼리가 나가게 된다.  
@@ -1228,7 +1232,7 @@ Lazy Loading으로 인해 프록시로 땡겨온 부분을 접근할 때 Batch S
 
 OneToOne 양방향 관계에서는 연관관계 주인이 호출할 때는 Lazy가 동작하지만, 주인이 아닌 곳에서 호출하게 되면 Lazy가 먹히지 않는다.  
 이유는 프록시는 null을 감쌀 수 없기 때문에 프록시의 한계로 나타나는 문제이다.  
-![그림4](https://backtony.github.io/assets/img/post/interview/spring-4.PNG)  
+![lazy](./image/spring/lazy.PNG)  
 User과 Cart가 일대일 양방향관계이고 연관관계 주인은 User라고 가정해보자.  
 Cart 테이블을 보면 Cart는 User_Id 값을 알지 못한다. 알기 위해서는 User 테이블을 조회해야하는데 이렇게 되면 User 테이블을 조회해야하기 때문에 Lazy의 의미가 없어진다. 그래서 Lazy로 설정해도 Eager로 동작하는 것이다.  
 <Br>
