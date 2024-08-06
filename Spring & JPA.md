@@ -11,10 +11,12 @@
 
 -----------------------
 
+둘의 차이는 **제어 흐름에 대한 주도권이 어디에 있는 가**의 차이이다.
+
 * 프레임워크란 응용 프로그램이나 소프트웨어 솔루션 개발을 수월하기 위해 __구조, 틀이 제공된 소프트웨어 환경__ 이다.
 * 라이브러리란 특정 기능을 수행하는 코드의 집합이다.
 
-둘의 차이는 **제어 흐름에 대한 주도성이 어디에 있는 가**의 차이이다.  
+  
 프레임워크의 경우 제어 흐름을 스스로 가지고 있는 반면에 라이브러리의 경우 제어 흐름을 개발자가 가지고 있다.
 
 </details>
@@ -75,6 +77,27 @@ __클래스 사이의 의존관계를 빈 설정 정보를 바탕으로 컨테�
 <br>
 
 
+
+### IoC (Inverse of Control 제어의 역전)
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
+
+__객체의 생성부터 생명주기의 관리까지 모든 객체에 대한 제어권이 바뀐 것을 의미__ 한다.  
+개발자는 프레임워크에 필요한 부품을 개발하고 조립하는 방식으로 개발을 하고 최종 호출은 개발자가 아니라 프레임워크의 내부에서 결정된 대로 이뤄지게 되는데 이런 현상을 제어의 역전이라고 한다.
+
+</details>
+
+-----------------------
+
+<br>
+
+
+
 ### 주입 방식
 
 <details>
@@ -103,26 +126,6 @@ __클래스 사이의 의존관계를 빈 설정 정보를 바탕으로 컨테�
 
 <br>
 
-
-### IoC (Inverse of Control 제어의 역전)
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-
-__객체의 생성부터 생명주기의 관리까지 모든 객체에 대한 제어권이 바뀐 것을 의미__ 한다.  
-개발자는 프레임워크에 필요한 부품을 개발하고 조립하는 방식으로 개발을 하고 최종 호출은 개발자가 아니라 프레임워크의 내부에서 결정된 대로 이뤄지게 되는데 이런 현상을 제어의 역전이라고 한다.  
-
-</details>
-
------------------------
-
-<br>
-
-
 ### 스프링 컨테이너
 
 <details>
@@ -132,9 +135,9 @@ __객체의 생성부터 생명주기의 관리까지 모든 객체에 대한 �
 -----------------------
 
 
-__스프링 컨테이너는 자바 객체의 생명 주기를 관리하며, 생성된 자바 객체들에게 추가적인 기능을 제공하는 역할을 한다.__  
+__스프링 컨테이너는 자바 객체의 생명 주기를 관리하며, 생성된 자바 객체들에게 추가적인 기능을 제공하는 등 역할을 한다.__  
+간단하게, 등록된 빈의 생명주기를 관리하는 역할을 한다.  
 스프링 컨테이너의 종류에는 BeanFactory와 __ApplicationContext__ 가 있다.  
-둘 다 빈을 등록하고 생성하고 조회하고 돌려주는 등 빈을 관리하는 역할을 한다.  
 ApplicationContext가 BeanFactory의 빈 관리 기능들을 상속받았고, 그 외에 국제화 등의 추가적인 기능을 갖고 있어 스프링 컨테이너라고 하면 보통 ApplicationContext라고 한다.  
 
 </details>
@@ -152,7 +155,7 @@ ApplicationContext가 BeanFactory의 빈 관리 기능들을 상속받았고, �
 -----------------------
 
 
-+ __컨테이너 안에 들어있는 객체__
++ __스프링 컨테이너 안에서 관리되는 객체__
 + 컨테이너에 담겨있으며, 필요할 때 컨테이너에서 가져와서 사용
 + @Bean을 사용해 등록하거나 xml을 사용해 등록하고, Bean으로 등록된 객체는 쉽게 주입하여 사용 가능
 
@@ -193,7 +196,7 @@ ApplicationContext가 BeanFactory의 빈 관리 기능들을 상속받았고, �
 
 
 
-### 빈 스코프
+### Bean 스코프
 
 
 <details>
@@ -223,103 +226,6 @@ ApplicationContext가 BeanFactory의 빈 관리 기능들을 상속받았고, �
 
 <br>
 
-
-### 싱글톤 vs 스프링 싱글톤
-
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-### 싱글톤
-```java
-public class Person { 
-
-    private static Person instance; 
-
-    private Person() {
-         throw new IllegalStateException("Private Constructor"); 
-    } 
-
-    public static Person getInstance() {
-         if (instance == null) {
-              instance = new Person(); 
-              } 
-              return instance; 
-        }     
-    }
-}
-
-public class Singleton { 
-    private Singleton(){} 
-
-    public static Singleton getInstance() { 
-        return LazyHolder.INSTANCE; 
-    }
-
-    private static class LazyHolder { 
-        private static final Singleton INSTANCE = new Singleton(); 
-    } 
-}
-```
-위 코드는 자바 언어를 사용해 싱글톤 패턴은 구현하는 전형적인 코드이다.  
-싱글톤 패턴은 전역 상태를 이용할 수 있다는 장점이 있지만 다음과 같은 문제점으로 인해 안티 패턴으로도 불린다. 
-+ __private 생성자를 갖고 있어 상속이 불가능하다.__
-    - 싱글톤은 자신만이 객체를 생성할 수 있도록 private으로 제한한다. 하지만 상속을 통해 다형성을 적용하기 위해서는 기본 생성자가 필요하므로 private으로 인해 객체지향의 장점을 적용할 수 없다. 또한 싱글톤을 구현하기 위해서는 객체지향적이지 못한 static 필드와 static 메서드를 사용해야 한다.
-+ __테스트하기 힘들다.__
-    - 싱글톤은 생성 방식이 제한적이기 때문에 Mock 객체로 대체하기 어려우며, 동적으로 객체를 주입하기도 힘들다.
-+ __서버 환경에서는 싱글톤이 1개만 생성됨을 보장하지 못한다.__
-    - 서버에서 __클래스 로더__ 를 어떻게 구성하느냐에 따라 싱글톤 클래스임에도 불구하고 1개 이상의 객체가 만들어질 수 있다. 따라서 자바 언어를 이용한 싱글톤 기법은 서버 환경에서 싱글톤이 꼭 보장된다고 볼 수 없다. 또한 여러 개의 JVM에 분산돼서 설치되는 경우 독립적으로 객체가 생성된다.
-+ __전역 상태를 만들 수 있기 때문에 바람직하지 못하다.__
-    - 싱글톤의 정적 메서드를 사용하면 언제든지 해당 객체를 사용할 수 있고, 전역 상태로 사용되기 쉽다. 아무 객체나 자유롭게 접근하고 수정하며 공유되는 전역 상태는 객체지향 프로그래밍에서 권장하지 않는다.  
-
-
-### 스프링 싱글톤
-__객체의 생성을 스프링에 위임함으로써 스프링 컨테이너가 관리하여 자바 언어 레벨에서 직접 구현하기 위한 내용들이 모두 제거되어 앞선 싱글톤의 모든 단점들이 제거된다.__
-+ private 생성자가 필요 없어 상속이 가능해진다.
-+ 테스트하기 편하다.
-+ 프레임워크를 통해 1개의 객체 생성을 보장받을 수 있다.
-+ 객체지향적으로 개발할 수 있다.
-
-</details>
-
------------------------
-
-<br>
-
-
-### Annotation
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-
-Annotation은 프로그램에게 추가적인 정보를 제공하는 메타데이터이다.
-+ __자바 코드에 특별한 의미를 부여한 주석으로 컴파일러를 위한 정보를 제공하기 위한 용도__
-+ 동작 순서
-    - 애노테이션 정의
-    - 원하는 위치에 배치
-    - 코드가 실행되는 중에 Reflection을 이용하여 추가 정보를 획득하여 기능 실시
-+ Reflection
-    - Reflection을 사용하면 컴파일 타임에 인터페이스, 필드, 메소드의 이름을 알지 못해도 실행 중에 클래스, 인터페이스, 필드 및 메소드에 접근할 수 있다. 또한 새로운 객체의 인스턴스화 및 메소드 호출을 허용한다.
-    - __Annotation 자체는 아무런 동작을 가지지 않는 단순한 표식일 뿐이지만, Reflection을 이용하면 Annotation의 적용 여부와 엘리먼트 값을 읽고 처리할 수 있다.__
-    - __Spring 컨테이너(BeanFactory)에서 객체가 호출되면 객체의 인스턴스를 생성하게 되는데 이 때 필요하게 된다. 즉, 프레임워크에서 유연성있는 동작을 위해 쓰인다.__
-    - Reflection을 이용하면 Annotation 지정만으로도 원하는 클래스를 주입할 수 있다.
-
-</details>
-
------------------------
-
-<br>
-
-
-
-
 ### Spring Annotation
 
 <details>
@@ -328,6 +234,7 @@ Annotation은 프로그램에게 추가적인 정보를 제공하는 메타데�
 
 -----------------------
 
+Annotation은 프로그램에게 추가적인 정보를 제공하는 메타데이터이다.
 
 
 + __@ComponentScan__
@@ -588,11 +495,11 @@ __주요 용어__
     - 실질적인 부가 기능 로직을 정의하는 곳
     - 특정 조인 포인트에서 Aspect에 의해 취해지는 조치
 + Join point
-    - __추상적인 개념__ 으로 advice가 적용될 수 있는 모든 위치
+    - advice가 적용될 수 있는 모든 지점
     - ex) 메서드 실행 시점, 생성자 호출 시점, 필드 값 접근 시점 등등..
     - __스프링 AOP는 프록시 방식을 사용하므로 조인 포인트는 항상 메서드 실행 지점__
 + Pointcut
-    - 조인 포인트 중에서 advice가 적용될 위치를 선별하는 기능
+    - 하나 이상의 조인 포인트를 선별하는 표현식
     - __스프링 AOP는 프록시 기반이기 때문에 조인 포인트가 메서드 실행 시점 뿐이 없고 포인트컷도 메서드 실행 시점만 가능__
 + Advisor
     - 스프링 AOP에서만 사용되는 용어로 advice + pointcut 한 쌍
@@ -602,8 +509,21 @@ __주요 용어__
     - AOP 기능을 구현하기 위해 만든 프록시 객체
     - 스프링에서 AOP 프록시는 JDK 동적 프록시 또는 CGLIB 프록시
 
+</details>
 
-### AOP 적용 방식
+-----------------------
+
+<br>
+
+### AOP 적용 시점
+
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
 + 컴파일 시점
     - .java 파일을 컴파일러를 통해 .class를 만드는 시점에 부가 기능 로직을 추가
     - 모든 지점에 적용 가능
@@ -614,9 +534,8 @@ __주요 용어__
     - 특별한 옵션과 클래스 로더 조작기를 지정해야하므로 운영하기 어렵다.
 + __런타임 시점__
     - __스프링이 사용하는 방식__
-    - 컴파일이 끝나고 클래스 로더에 이미 다 올라가 자바가 실행된 다음에 동작하는 런타임 방식
-    - 실제 대상 코드는 그대로 유지되고 프록시를 통해 부가 기능이 적용
-    - __프록시는 메서드 오버라이딩 개념으로 동작하기 때문에 메서드에만 적용 가능__ -> __스프링 빈에만 AOP를 적용 가능__
+    - 런타임 시점에 프록시를 사용하여 실제 대상 코드는 그대로 유지되고 프록시를 통해 부가 기능이 적용 
+    - __프록시는 메서드 오버라이딩 개념으로 동작하기 때문에 메서드에만 적용 가능__
     - 특별한 컴파일러나, 복잡한 옵션, 클래스 로더 조작기를 사용하지 않아도 스프링만 있으면 AOP를 적용할 수 있기 때문에 스프링 AOP는 런타임 방식을 사용
 
 </details>
@@ -625,8 +544,7 @@ __주요 용어__
 
 <br>
 
-### POJO
-
+### AOP 적용 과정
 
 <details>
    <summary> 예비 답안 보기 (👈 Click)</summary>
@@ -634,9 +552,50 @@ __주요 용어__
 
 -----------------------
 
-평범한 구식 자바 객체로, __프레임워크 인터페이스나 클래스를 구현하거나 확장하지 않은 단순 클래스__ 를 의미한다.  
-JAVA에서 제공하는 API외에는 종속되지 않아 __코드가 간결하고 테스트 자동화에 유리__ 하다.  
-Spring에서는 __도메인과 비즈니스 로직을 수행하는 대상__ 이 POJO 대상이 될 수 있다.
+![aop](./image/spring/aop.png)  
+
+1. 스프링 빈 대상이 되는 객체를 생성한다.(@Bean, 콤포넌트 스캔 대상)
+2. 생성된 객체를 빈 저장소에 등록하기 직전에 빈 후처리기에 전달한다.
+3. 모든 Advisor 빈을 조회합니다.
+4. @Aspect Advisor 빌더 내부에 저장된 모든 Advisor를 조회합니다.
+5. 3,4에서 조회한 Advisor에 포함되어 있는 포인트컷을 통해 클래스와 메서드 정보를 매칭하면서 프록시를 적용할 대상인지 아닌지 판단합니다.
+6. 여러 Advisor의 하나라도 포인트컷의 조건을 만족한다면 프록시를 생성하고 원본 빈 대신 프록시를 빈 저장소로 반환합니다.
+7. 만약 프록시 생성 대상이 아니라면 들어온 빈 그대로 빈 저장소로 반환합니다.
+8. 빈 저장소는 객체를 받아서 빈으로 등록합니다.
+
+Advisor 빈을 조회하고 @Aspect Advisor 빌더 내부에 저장된 모든 Advisor를 조회하여 대상이 된다면 프록시를 원본 빈 대신에 반환하는 로직이 추가된 것을 확인할 수 있습니다.
+
+</details>
+
+-----------------------
+
+<br>
+
+<br>
+
+### jdk 동적 프록시 vs CGLIB
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
+
+#### jdk 동적 프록시
+![jdk](./image/spring/jdk.png)  
+
+JDK 동적 프록시의 경우 대상의 인터페이스가 있으면 해당 인터페이스의 구현체로 프록시를 생성한다. 따라서 실제로 구현된 다른 JDK 동적 프록시의 구현체로 타입 캐스팅이 불가능하다.
+
+
+#### cglib
+![cglib](./image/spring/cglib.png)  
+
+CGLIB은 구현체를 상속받아 프록시를 생성하기 때문에 구현체로 타입 캐스팅이 가능하다.  
+CGLIB 라이브러리에는 부모 생성자 2번 호출 문제, final 키워드 클래스, 메서드 사용 문제 등이 있었지만 spring에서 자체적으로 위 문제를 해결했다.  
+
+**그래서 결과적으로 spring boot는 기본적으로 CGLIB를 채택한다.**
+
 
 </details>
 
@@ -645,7 +604,7 @@ Spring에서는 __도메인과 비즈니스 로직을 수행하는 대상__ 이 
 <br>
 
 
-### DAO, DTO
+### DAO, DTO, VO
 
 <details>
    <summary> 예비 답안 보기 (👈 Click)</summary>
@@ -659,10 +618,9 @@ Spring에서는 __도메인과 비즈니스 로직을 수행하는 대상__ 이 
 + DTO
     - 계층간의 데이터 교환을 위한 객체
     - 로직을 갖지 않는 순수 데이터 객체로 getter, setter만 포함
-    - VO
-        - DTO와 동일한 개념
-        - Read Only로 수정 불가
-        - getter, setter 이외의 추가 로직 포함 가능
++ VO
+    - 읽기 전용으로 불변 객체
+    - getter, setter(불변이므로 setter가 없음) 이외의 추가 로직 포함 가능
 
 
 </details>
@@ -867,7 +825,7 @@ DataSource와 같은 맥락이다.
 
 <br>
 
-### 트랜잭션 동기화 매니저
+### @Transactional 동작 방식
 
 
 <details>
@@ -876,6 +834,12 @@ DataSource와 같은 맥락이다.
 
 -----------------------
 
+spring의 @Transactional는 AOP로 구성되어 있다. 즉, 프록시로 동작하므로 오버라이딩 개념으로 동작한다.  
+따라서 __클래스에 붙으면 클래스의 전체 public 메서드에 트랜잭션 처리가 된 프록시가 빈으로 등록된다.__ 단, private 메서드에는 적용이 불가능하며, 같은 클래스 내의 함수에서 함수간 호출의 경우 트랜잭션이 적용되지 않을 수 있다.
+
+예를 들어, 트랜잭션이 붙지 않은 함수에서 트랜잭션이 붙은 다른 함수를 내부적으로 호출하는 경우 적용되지 않는다. 이와 같은 경우는 함수를 다른 클래스로 각각 분리해서 호출해야 한다.  
+
+<br>
 
 보통 서비스 단에서 트랜잭션을 시작하고 끝낸다.  
 그렇다면 __하나의 트랜잭션 내에서는 같은 커넥션을 사용__ 해야 하는데 과정이 다음과 같다.  
@@ -885,129 +849,9 @@ DataSource와 같은 맥락이다.
 
 __하나의 트랜잭션에서 같은 커넥션을 사용하도록 도움을 주는 기능을 제공한다고 보면 된다.__  
 
-</details>
-
------------------------
-
 <br>
 
 
-### 선언적 트랜잭션 vs 프로그래밍 방식 트랜잭션
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-
-선언적 트랜잭션은 @Transactional을 의미한다.  
-프로그래밍 방식 트랜잭션은 트랜잭션 매니저나 트랜잭션 템플릿 등을 직접 사용해서 프로그래밍 코드를 작성하는 방식이다.  
-@Transactional을 사용하면 프록시(메서드 오버라이딩 개념)를 사용하기 때문에 추가적인 코드를 작성할 필요 없이 간편하게 사용할 수 있으므로 대부분 선언적 트랜잭션을 사용한다.  
-
-</details>
-
------------------------
-
-<br>
-
-
-
-### @Transactional
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-@Transactional AOP로 구성되어 있다.  
-즉, 프록시로 동작하므로 오버라이딩 개념으로 동작한다.  
-메서드에 @Transactional을 붙이면 해당 클래스가 빈으로 등록될 때 @Transactional이 붙은 메서드만 트랜잭션 처리되는 메서드로 오버라이딩 한 프록시 객체가 빈으로 등록된다.  
-__클래스에 붙으면 클래스의 전체 public 메서드에 트랜잭션 처리가 된 프록시가 빈으로 등록된다.__  
-__public이 아닌 다른 접근제한자가 붙은 메서드의 경우는 트랜잭션처리가 되지 않는데 이유는 프록시가 오버라이딩 개념이기 때문에 public으로 열려있지 않고 private 메서드 같은 경우에는 적용이 불가능하다.__  
-
-
-### 내부 호출 문제
-@Transactional이 붙은 클래스는 프록시로 빈으로 등록된다.  
-따라서 주입받은 객체를 사용할 경우 프록시가 들어오게 되고 접근 시 프록시 객체를 통한 호출이 이뤄진다.  
-```java
-public class UserService {
-
-    @Transactional
-    public void createUserListWithTrans(){
-        for (int i = 0; i < 10; i++) {
-            createUser(i);
-        }
-            
-        throw new RuntimeException(); 
-    }
-
-    @Transactional
-    public User createUser(int index){
-        User user = User.builder()
-                .name("testname::"+index)
-                .email("testemail::"+index)
-                .build();
-        
-        userRepository.save(user);
-        return user;
-    }
-}
-```
-createUserListWithTrans에서 createUser를 호출한다.  
-둘다 @Transactional이 붙어있다.  
-서로 트랜잭션이 붙어있기에 createUser에서 save 처리를 했으므로 예외가 발생하더라도 다 저장되었을 것이라고 생각할 수 있지만 틀렸다.  
-이유는 트랜잭션이 붙은 상태로 동작하려면 프록시를 통해 접근해야 하는데 위는 실제 코드 자체를 호출한 것이기 때문이다.  
-즉, 프록시를 사용하려면 userService.XXX 형식으로 호출해야된다는 뜻이다.  
-따라서 createUserListWithTrans를 호출할 경우 아래와 프록시 객체로 동작한다.
-```java
-public void createUserListWithTrans(){
-    EntityTransaction tx = em.getTransaction();
-    tx.begin();
-    
-    super.createUserListWithTrans();
-    
-    tx.commit();
-}
-```
-createUserListWithTrans에 붙은 @Transactional만 동작하게 된다.  
-즉, 하나의 트랜잭션 안에서 동작하게 되는 것이다.  
-만약 트랜잭션이 붙은 프록시를 호출해서 사용하다가 다른 트랜잭션이 붙은 프록시 클래스를 호출할 경우 이때부터는 트랜잭션 전파 속성에 따라 트랜잭션이 동작한다.  
-<br>
-
-앞서 다 설명했지만 한번 더 집고 넘어가자.  
-진입점에 Trasactional이 없고 안에서 호출되는 메서드에만 Transactional이 있는 경우다. 
-```java
-public class UserService {
-
-    public void createUserListWithTrans(){
-        for (int i = 0; i < 10; i++) {
-            createUser(i);
-        }
-            
-        throw new RuntimeException(); 
-    }
-
-    @Transactional
-    public User createUser(int index){
-        User user = User.builder()
-                .name("testname::"+index)
-                .email("testemail::"+index)
-                .build();
-        
-        userRepository.save(user);
-        return user;
-    }
-}
-
-
-// AopApplication.java
-userService.createUserListWithoutTrans();
-```
-Userservice는 createUser에 붙은 @Transactional 때문에 프록시가 빈으로 등록된다.  
-userService는 프록시이지만 createUserListWithTrans는 트랜잭션이 붙어있지 않으므로 트랜잭션이 처리되지 않는 것을 호출하게 되고 내부적으로 createUser을 호출하게 되어 트랜잭션 없이 호출하게 된다.  
-실행결과를 보면 user가 10개 생성되게 되는데 이는 @Transactional이 없기 때문에 createUser가 각각 insert하면서 DB의 기본 설정대로 auto commit이 true로 인한 동작 결과이다.(@Transactional은 auto commit을 false로 하고 마지막에 commit한다.)  
 
 
 </details>
@@ -1025,10 +869,61 @@ userService는 프록시이지만 createUserListWithTrans는 트랜잭션이 붙
 
 -----------------------
 
+트랜잭션 전파란 __트랜잭션의 경계에서 이미 트랜잭션이 진행 중인 트랜잭션이 있을 때 어떻게 동작할지를 결정하는 것__ 입니다.    
 
-전파 단계는 트랜잭션 동작 도중 다른 트랜잭션을 호출하는 상황에서 선택할 수 있는 옵션이다.  
-디폴트는 required로 트랜잭션이 없으면 새로 생성하고, 부모 트랜잭션 내에 실행하면 부모 트랜잭션 내에서 수행한다.  
-자세한 내용은 [여기](https://backtony.github.io/interview/2021-11-24-interview-9/#transaction-%EC%A0%84%ED%8C%8C-%ED%83%80%EC%9E%85)를 참고하자.  
+![propagation-1](./image/spring/propagation-1.PNG)
+
+#### REQUIRED
+
+![required](./image/spring/required.PNG)  
+
+```java
+@Transactional(propagation=Propagation.REQUIRED)
+```
+디폴트 설정은 REQUIRED입니다.  
+진행중인 트랜잭션이 없다면 새로 트랜잭션이 생성하여 사용합니다.  
+이미 시작된 트랜잭션이 있다면 해당 트랜잭션의 중간에 참여하여 실행되게 됩니다.  
+따라서 두 메서드가 하나의 트랜잭션으로 실행되기 때문에 어느 곳에서라도 문제가 발생하면 전부 롤백됩니다.
+
+#### REQUIRES_NEW
+```java
+@Transactional(propagation=Propagation.REQUIRES_NEW)
+```
+진행중인 트랜잭션이 없다면 새로운 트랜잭션을 만들어 동작하고, 진행중인 트랜잭션이 존재한다면 해당 트랜잭션을 잠시 보류시키고 자신이 만든 트랜잭션을 실행합니다.
+
+#### SUPPORTS
+```java
+@Transactional(propagation=Propagation.SUPPORTS)
+```
+진행중인 트랜잭션이 없다면 트랜잭션 없이 메서드를 실행하고, 진행중인 트랜잭션이 있다면 REQUIRED처럼 해당 트랜잭션에 참여합니다.
+
+#### NOT_SUPPORTED
+```java
+@Transactional(propagation=Propagation.NOT_SUPPORTED)
+```
+진행중인 트랜잭션이 없다면 트랜잭션이 없이 진행하고, 진행중인 트랜잭션이 있다면 해당 트랜잭션을 보류하고 트랜잭션 없이 진행합니다.
+
+#### MANDATORY
+```java
+@Transactional(propagation=Propagation.MANDATORY)
+```
+진행중인 트랜잭션이 없다면 예외가 발생하고, 진행중인 트랜잭션이 있다면 참여합니다.
+
+#### NEVER
+```java
+@Transactional(propagation=Propagation.NEVER)
+```
+진행중인 트랜잭션이 없다면 트랜잭션 없이 진행하고, 진행중인 트랜잭션이 있다면 예외를 발생시킵니다.
+
+#### NESTED
+![nested](./image/spring/nested.PNG)  
+
+```java
+@Transactional(propagation=Propagation.NESTED)
+```
+진행중인 트랜잭션이 없다면 새로운 트랜잭션을 만들어 수행하고, 진행중인 트랜잭션이 있다면 새로운 트랜잭션을 만들고 진행중인 트랜잭션 내에 삽입합니다. 새로 만든 트랜잭션은 부모 트랜잭션의 커밋, 롤백에는 영향을 받지만 부모 트랜잭션은 새로 만든 트랜잭션의 커밋과 롤백에는 영향을 받지 않습니다.
+
+
 
 </details>
 
@@ -1115,15 +1010,16 @@ userService는 프록시이지만 createUserListWithTrans는 트랜잭션이 붙
 <br />
 
 -----------------------
-N+1 문제는 하위 엔티티들을 첫 쿼리 실행 시 한 번에 가져오지 않고, 지연 로딩으로 프록시가 들어온 상태에서 후에 이것을 사용하면서 조회 쿼리가 다시 나가게 되어 발생하는 문제이다.  
-예를 들어, 학생(N)과 팀(1)에서 양방향관계를 갖고 DB에서 팀을 10개를 꺼낸다고 가정해보자.  
-첫 쿼리는 팀 10개를 꺼내는 쿼리가 하나의 쿼리가 나가게 되고 이때, 팀 기준 OneToMany이므로 Lazy로 동작하여 학생은 프록시로 들어오게 된다.  
-이게 가져온 각각의 팀에 대해 학생들에게 접근하는 로직이 있다면 각 팀마다 학생들을 조회하는 쿼리가 1개씩 더 나가게 된다. 즉, 10개의 쿼리가 더 나가게된다.  
-그래서 1개의 쿼리가 나가고 이후에 N개의 쿼리가 더 나간다고 해서 N+1 문제라고 한다.  
+
+N+1 문제란, 연관관계를 Lazy하게 매핑해놓은 상태로 조회한 여러개의 엔티티가 있을때, 여러 엔티티에서 Lazy하게 가져온 연관관계 객체에 접근하는 경우, 쿼리가 여러번 나가는 현상을 의미한다.
+첫번째로 여러 엔티티를 조회했을때는 1번의 쿼리가 발생했지만, 여러 엔티티의 Lazy한 객체에 접근하면서 N번의 쿼리가 더 발생한다는 의미이다.
+
 이에 대한 해결책은 Fetch Join과 Batch Size가 있다.  
 Fetch Join을 사용하면 Lazy로딩으로 프록시로 들어오던 것을 join으로 한 번에 땡겨올 수 있다.  
 Batch Size는 N+1문제가 발생하던 것 처럼 프록시로 가져오고 학생들 가져오게 될 때 쿼리가 한번 더 나가게 되는데 이때 in쿼리로 Batch size 개수만큼 가져온다.  
-가져온 팀이 10개이고 Batch size가 5라면, 최초에 학생을 가져오는 쿼리에서 where 조건문 in 쿼리로 5개의 team id값을 넣어서 쿼리를 날린다. 이렇게 되면 결과적으로 학생을 가져오는 쿼리는 2번 나가게 되어 총 쿼리는 3(팀 가져오는 쿼리 + 학생 가져오는 쿼리)개의 쿼리가 나가게 된다.  
+
+예를 들어, 하나의 팀에 여러 학생이 있을때, 가져온 팀이 10개이고 Batch size가 5라면, 최초에 학생을 가져오는 쿼리에서 where 조건문 in 쿼리로 5개의 team id값을 넣어서 쿼리를 날린다. 이렇게 되면 결과적으로 학생을 가져오는 쿼리는 2번 나가게 되어 총 쿼리는 3(팀 가져오는 쿼리 + 학생 가져오는 쿼리)개의 쿼리가 나가게 된다.  
+
 참고로 @EntityGraph를 사용해도 Fetch join으로 가져올 수 있다.  
 
 </details>
@@ -1147,46 +1043,26 @@ Batch Size는 N+1문제가 발생하던 것 처럼 프록시로 가져오고 학
     - 하이버네이트는 허용하지만 가급적이면 사용하지 않는게 좋다.
     - fetch join은 나의 연관된 것들을 다 끌고오겠다는 의미로 설계된 것이기 때문에 대상을 where문과 on에서 사용하게 되면 필터링이 되므로 의도된 설계와 맞지 않는다.
 + __둘 이상의 컬렉션은 fetch join 할 수 없다.__ 
-    - 둘 이상 컬렉션과 진행시 카테시안 곱이 되어 정합성이 맞지 않는다.
-+ OneToMany의 경우 페이징 쿼리 성능 이슈
-
-</details>
-
------------------------
-
-<br>
+    - 2개 이상의 컬렉션을 Fetch join으로 땡겨오면 데이터 정합성 문제가 발생한다.(MultipleBagFetchException)
+    - 해결책은 자주 사용하는 컬렉션 쪽에 Fetch join을 걸어주고 나머지는 Lazy Loading을 걸어둔 상태에서 Batch Size로 처리한다.
++ OneToMany의 경우 여러 이슈가 있다. 
+  + 페이징 쿼리는 성능 이슈가 있다.
+  + 페이징 쿼리가 아닌 경우, 반드시 distinct를 사용해야 한다.
 
 
+#### OneToMany 이슈 
+ManyToOne의 경우 애초에 Many에 One을 끼워넣기 때문에 최대 Many의 데이터 개수만큼만 조회된다. 반면에 OneToMany의 경우 One에 Many를 끼워넣기 때문에 기존 One의 개수 만큼의 데이터가 아니라 더 많은 데이터가 조회된다.(뻥튀기 된다.)
 
-### OneToMany fetch join 페이징 쿼리 성능 이슈
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-ManyToOne의 경우 애초에 Many에 One을 끼워넣기 때문에 최대 Many의 데이터 개수만큼만 조회된다.  
-반면에 OneToMany의 경우 One에 Many를 끼워넣기 때문에 기존 One의 개수 만큼의 데이터가 아니라 더 많은 데이터가 조회된다.(뻥튀기 된다.)  
 ![fetch](./image/spring/fetch.PNG)  
 
-팀A에 학생1, 학생2가 연관된 데이터가 DB에 있다고 했을 때, 개발자의 의도는 팀A에 연결된 모든 Member를 모두 꺼내오는 식으로 페이징을 1로 주고 쿼리를 oneToMany에서 fetch Join을 날리게 되면 DB단에서는 OneToMany이므로 Team쪽 데이터가 뻥튀기되면서 (팀A, 회원1), (팀A, 회원2)로 구성되고 여기서 페이징하게 되면 (팀A, 회원1)의 데이터만 나오게 된다.  
-따라서 JPA는 이를 판단할 수 없기 때문에 애초에 나가는 쿼리를 살펴보면 페이징 쿼리가 제거되서 나가고 연관된 데이터를 전부다 끌고오는 쿼리가 나가게 된다.  
-그리고 해당 데이터를 메모리에 적재해서 페이징을 시작한다.  
-만약 테이블에 100만개의 데이터가 있다는 그걸 다 땡겨온 상태에서 페이징을 진행한다는 의미다.  
-결과적으로는 의도대로 동작할 지라도 엄청난 성능에 악영향을 주기 때문에 사용해서는 안된다.  
-이러한 성능 이슈 때문에 이를 경고하는 메시지가 콘솔에 찍힌다.  
-따라서 OneToMany에서 페이징 쿼리를 날리고 싶다면 batch size를 사용해야 한다.  
+팀A에 학생1, 학생2가 연관된 데이터가 DB에 있다고 했을 때, 개발자의 의도는 팀A에 연결된 모든 Member를 모두 꺼내오는 식으로 페이징을 1로 주고 쿼리를 oneToMany에서 fetch Join을 날리게 되면 DB단에서는 OneToMany이므로 Team쪽 데이터가 뻥튀기되면서 (팀A, 회원1), (팀A, 회원2)로 구성되고 여기서 페이징하게 되면 (팀A, 회원1)의 데이터만 나오게 된다. 따라서 **JPA는 이를 판단할 수 없기 때문에 애초에 나가는 쿼리를 살펴보면 페이징 쿼리가 제거되서 나가고 연관된 데이터를 전부다 끌고오는 쿼리가 나가게 된다. 그리고 해당 데이터를 메모리에 적재해서 페이징을 시작한다.**  
+
+만약 테이블에 100만개의 데이터가 있다는 그걸 다 땡겨온 상태에서 페이징을 진행한다는 의미다. 결과적으로는 의도대로 동작할 지라도 엄청난 성능에 악영향을 주기 때문에 사용해서는 안된다. 이러한 성능 이슈 때문에 이를 경고하는 메시지가 콘솔에 찍힌다. 따라서 OneToMany에서 페이징 쿼리를 날리고 싶다면 batch size를 사용해야 한다.  
+
 <br>
 
-페이징 쿼리를 사용하지 않고 OneToMany를 사용할 때 주의할 점도 있다.  
-앞서 설명했듯이 OneToMany에서 fetch Join을 하면 DB에서는 데이터가 뻥튀기 된 상태로 넘어온다.  
-이걸 애플리케이션 단에서 받으면 당연히 아무처리 없이 뻥튀기 된 상태로 받게 된다.  
-즉, (팀A, 회원1), (팀A, 회원2) 이렇게 받게 되는 문제가 발생하는 것이다.  
-이를 해결하기 위해서는 쿼리에 distinct를 명시하면 된다.  
-DB단에서는 당연히 행 데이터가 서로 다르기 때문에 distinct가 동작하지 않지만 애플리케이션 단으로 데이터가 넘어오면 JPA에서 distinct로 식별자가 같은 것을 걸러서 컬렉션으로 꽂아주는 기능을 제공해준다.  
-따라서 OneToMany 관계에서 fetch join을 사용한다면 반드시 distinct를 명시해야 한다.  
-   
+페이징 쿼리를 사용하지 않고 OneToMany를 사용할 때 주의할 점도 있다. 앞서 설명했듯이 OneToMany에서 fetch Join을 하면 DB에서는 데이터가 뻥튀기 된 상태로 넘어온다. 이걸 애플리케이션 단에서 받으면 당연히 아무처리 없이 뻥튀기 된 상태로 받게 된다. 즉, (팀A, 회원1), (팀A, 회원2) 이렇게 받게 되는 문제가 발생하는 것이다. 이를 해결하기 위해서는 쿼리에 distinct를 명시하면 된다. DB단에서는 당연히 행 데이터가 서로 다르기 때문에 distinct가 동작하지 않지만 애플리케이션 단으로 데이터가 넘어오면 JPA에서 distinct로 식별자가 같은 것을 걸러서 컬렉션으로 꽂아주는 기능을 제공해준다. 따라서 OneToMany 관계에서 fetch join을 사용한다면 반드시 distinct를 명시해야 한다.
+
 > hibernate 6.0 버전부터는 default로 distinct가 들어가기 때문에 문제가 해결되었다.
 > https://docs.jboss.org/hibernate/orm/6.0/migration-guide/migration-guide.html#query-sqm-distinct
 
@@ -1195,32 +1071,6 @@ DB단에서는 당연히 행 데이터가 서로 다르기 때문에 distinct가
 -----------------------
 
 <br>
-
-
-
-### MultipleBagFetchException
-
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-XXToOne과 같이 단일 관계의 자식 테이블에는 Fetch Join 여러 번 사용해도 된다.  
-하지만 XXToMany의 경우 2개 이상의 OneToMany 자식 테이블에 Fetch Join을 선언했을때 MultipleBagFetchException이 발생한다.  
-쉽게 말하면, 2개 이상의 컬렉션을 Fetch join으로 땡겨오면 데이터 정합성 문제가 발생한다.  
-해결책은 Batch Size를 이용하는 것이다.  
-자주 사용하는 컬렉션 쪽에는 Fetch join을 걸어주고, 나머지는 Lazy Loading으로 땡겨온다.  
-Lazy Loading으로 인해 프록시로 땡겨온 부분을 접근할 때 Batch Size로 인해 in쿼리로 땡겨오는 식으로 해결해야 한다.  
-
-</details>
-
------------------------
-
-<br>
-
-
 
 ### OneToOne 양방향 관계 Lazy 로딩 주의
 
@@ -1299,9 +1149,7 @@ __또한 임베디드 타입은 서로 다른 엔티티가 공유하게 되면 S
 -----------------------
 
 
-+ QueryDsl을 사용하면 컴파일 타임에 오류를 잡을 수 있고, 동적 쿼리를 쉽게 작성할 수 있다.  
-+ 원하는 필드만 뽑아서 DTO로 만드는 기능도 지원한다.
-+ where 조건절을 함수로 추상화하여 재활용할 수 있다.
++ 컴파일 타임에 오류를 잡을 수 있고, 동적 쿼리를 쉽게 작성할 수 있다.  
 
 </details>
 
@@ -1365,12 +1213,33 @@ __또한 임베디드 타입은 서로 다른 엔티티가 공유하게 되면 S
     - itemWriter
         - jpaItemWriter
             - JPA 엔티티 기반으로 데이터를 처리하고 엔티티를 하나씩 insert한다.
+            - usePersist 옵션을 true로 두고 properties에 별도 설정을 하면 batchSize만큼 한번에 insert 할 수 있긴 하다.
         - JdbcBatchItemWriter
             - Jpa처럼 단건 처리가 아닌 일괄 bulk insert 처리한다.
         - __ChunkSize 만큼 데이터를 커밋하기 때문에 Chunk size가 곧 Commit Interval(커밋 간격)이 된다.__
 
 + chunkSize 만큼 데이터를 한 번에 처리하고 다음 chunkSize는 새로운 트랜잭션으로 동작한다.
 + repeat, retry, skip을 통해서 반복 및 오류 제어를 할 수 있다.
+
+
+```yml
+# jpaWriter 한번에 insert 옵션
+spring:
+    jpa:
+        show-sql: false
+        generate-ddl: false
+        hibernate:
+            ddl-auto: validate
+        database: mysql
+        database-platform: org.hibernate.dialect.MySQL8Dialect
+        open-in-view: false
+        properties:
+            hibernate:
+                order_inserts: true
+                order_updates: true
+                jdbc:
+                    batch_size: 1000
+```
 
 </details>
 
@@ -1388,14 +1257,12 @@ __또한 임베디드 타입은 서로 다른 엔티티가 공유하게 되면 S
 
 -----------------------
 
-일반적인 경우에는 차이가 없으나 2개 이상의 컬렉션을 땡겨와야 하는 경우 차이가 발생한다.  
-2개 이상의 컬렉션을 땡겨오는 경우 MultipleBagFetchException을 피하기 위해 fetch join을 먹이고 다른 쪽에는 batchSize 옵션을 먹이게 된다.  
-다른 PagingItemReader의 경우 문제가 없으나 JpaPagingItemReader의 경우만 batchSize 옵션이 적용되지 않는다.  
-이유는 다른 PagingItemReader는 트랜잭션을 Chunk에 맡기지만 JpaPagingItemReader의 경우 트랜잭션이 doReadPage 메서드 안에서 읽기에 관한 트랜잭션을 먼저 처리해버리기 때문이다.  
-doReadPage 메서드를 까보면 트랜잭션을 가져와서 flush, clear 해버리고 데이터를 읽어온 뒤 마지막에 트랜잭션 커밋을 해버리면서 데이터를 읽은 트랜잭션이 종료되버린다.  
-processor 부분에서 지연 로딩의 N+1문제를 막기 위해서 BatchSize 옵션을 걸어버린 것인데 processor에 오기 전에 해당 트랜잭션이 종료되어 버리므로 processor에서는 batchSize 옵션이 적용되지 않고 N+1 문제가 발생해버린다.  
-__정리하면, 일반적인 경우에는 상관 없으나 컬렉션 2개 이상의 조인을 해야하는 경우 JpaPagingItemReader의 N+1 이슈가 있으니 잘 알고 사용해야 한다.__  
-[참고](https://jojoldu.tistory.com/414)
+> [참고](https://jojoldu.tistory.com/414)
+
+
+스프링 배치는 일반적으로 Chunk 단위로 트랜잭션이 관리된다. 하지만 JpaItemReader의 경우, doReadPage 메서드 안에서 읽기에 관한 트랜잭션을 처리한다. jpaItemReader의 경우 페이지를 읽을 때마다 flush, clear로 트랜잭션을 비워버린다. 따라서 영속성 컨텍스트에 이전 페이지에서 읽은 데이터가 남아있지 않는다. 따라서 chunkSize와 페이징 사이즈가 다른 경우, batchSize를 주더라도 processor에서 N+1문제가 발생할 수 있다.  
+
+hibernateItemReader는 위와 같은 이슈가 없다. 즉, chunkSize와 페이징 사이즈를 일치시키면 이런 이슈도 없다. 
 
 </details>
 
@@ -1439,27 +1306,3 @@ __정리하면, 일반적인 경우에는 상관 없으나 컬렉션 2개 이상
 
 <br>
 
-
-
-## DDD 구조
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-
-+ DDD란 비즈니스 도메인 별로 나눠서 설계하는 방식으로 여러 도메인들이 서로 상호작용하도록 도메인을 중심으로 설계하는 것을 말한다.
-+ DDD의 핵심 목표는 모듈간의 의존성을 최소화하고 응집성은 최대화하는 것이다.
-+ Presentation, application, domain, infrastructure 계층으로 구분되어 있다.
-    - presentation -> application -> domain -> infrastructure
-    - 하위 계층으로만 의존함으로서 구조가 복잡하여 발생할 수 있는 순환참조를 막을 수 있다.
-    - 단방향으로 구성되어있기에 각 계층별 로직을 쉽게 이해할 수 있다.
-    - infrastructure는 domain의 추상화를 구현하는 계층으로 DIP의 활용을 극대화할 수 있다.
-
-</details>
-
------------------------
-
-<br>

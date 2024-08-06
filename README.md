@@ -90,16 +90,16 @@
 + Bean 정의 
     - 생명주기
     - 스코프
-+ 싱글톤 vs 스프링 싱글톤
-+ Annotation
 + Spring Annotation
 + 웹 서버와 웹 애플리케이션 서버
 + 서블릿
 + 서블릿 컨테이너
 + MVC 패턴
 + AOP(Aspect Oriented Programming)
-+ POJO
-+ DAO, DTO
++ AOP 적용 시점
++ AOP 적용 방식
++ JDK 동적 프록시 vs CGLIB
++ DAO, DTO, VO
 + Filter vs Interceptor
 + AOP vs Interceptor
 + 레이어드 아키텍처
@@ -108,8 +108,7 @@
 + DataSource
 + 트랜잭션을 추상화하는 이유
 + 트랜잭션 동기화 매니저
-+ 선언적 트랜잭션 vs 프로그래밍 방식 트랜잭션
-+ @Transactional
++ @Transactional 동작 방식
 + Propagation 전파단계
 + ORM
 + 영속성 컨텍스트
@@ -122,7 +121,6 @@
 + QueryDsl을 사용하는 이유
 + Spring batch
 + MSA vs Monolithic(모놀리식)
-+ DDD 구조
 
 <br>
 
