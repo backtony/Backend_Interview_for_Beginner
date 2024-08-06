@@ -125,11 +125,8 @@
 <br>
 
 ## :bulb: Database [Link](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/Database.md)
-
-+ DBMS
-+ 스키마
-+ 뷰
-+ 키
+ 
++ 트랜잭션
 + 트랜잭션 ACID
 + 트랜잭션 격리수준
 + Commit
@@ -138,17 +135,17 @@
 + 갱신 분실 문제
 + 조인
 + 트리거
++ DDL, DML, DCL
 + 힌트
 + 인덱스
     - Cluster 인덱스
     - Non-Cluster 인덱스
     - 멀티 인덱스
+    - 커버링 인덱스
     - B 트리
 + 정규화, 반정규화
 + 커넥션 풀
 + 관계형 DB vs NoSQL
-+ Redis, MongoDB, Memcached
-+ Elastic search
 + 클러스터링
 + 레플리케이션
 + 수직 파티셔닝
@@ -156,7 +153,8 @@
 + SQL Injection
 + 행의 개수가 많은 테이블 설계
 + Statement, PreparedStatement
-+ RabbitMQ와 Kafka
++ Redis, MongoDB, Memcached
++ Elastic search
 
 <br>
 
