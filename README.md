@@ -81,6 +81,7 @@
 
 ## :bulb: Spring & JPA [Link](https://github.com/backtony/Backend_Interview_for_Beginner/blob/master/Spring%20%26%20JPA.md)
 
++ 세션과 쿠키
 + 프레임워크와 라이브러리
 + Spring 정의 및 장점
 + DI (Dependency Injection)
@@ -131,10 +132,11 @@
 + 트랜잭션 격리수준
 + Commit
 + Rollback
-+ Locking
 + 갱신 분실 문제
++ Locking
++ 스토리지 엔진 락
++ MVCC(다중 버전 동시성 제어)과 락
 + 조인
-+ 트리거
 + DDL, DML, DCL
 + 힌트
 + 인덱스
@@ -151,9 +153,9 @@
 + 수직 파티셔닝
 + 샤딩(수평 파티셔닝)
 + SQL Injection
-+ 행의 개수가 많은 테이블 설계
++ 대용량 테이블 고려
 + Statement, PreparedStatement
-+ Redis, MongoDB, Memcached
++ Redis, Memcached
 + Elastic search
 
 <br>
