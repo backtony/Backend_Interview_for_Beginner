@@ -169,20 +169,20 @@
 + 포트와 소켓
 + CIDR(사이더)
 + 서브넷
-+ 캐스트
-+ MTU
 + TCP, UDP
 + HTTP, HTTPS
 + HTTP 1.0 vs HTTP 1.1 vs HTTP 2.0
++ HTTP Method
++ HTTP Code
 + CORS
 + REST API
 + 쿠키, 세션
 + JWT
 + OAuth
-+ URI, URL, URN
-+ 중간자 공격
 + WebSocket과 Socket.io
-+ gRPC
++ 중간자 공격
++ CSRF
+
 
 <br>
 
