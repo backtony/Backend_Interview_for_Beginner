@@ -350,8 +350,10 @@ G1는 Garbage First의 줄임말으로 Heap을 일정 크기의 Region으로 나
 
 + public : 접근에 제한이 없음
 + private : 자기 자신 클래스 내에서만 접근 가능
-+ default : 동일한 패키지 내에서만 접근 가능
++ default : 동일한 패키지 내에서만 접근 가능(기본)
 + protected : 동일한 패키지 내에서만 접근 가능 + 상속을 이용한 접근 가능
+
+코틀린의 경우 default는 사라지고 public이 기본값으로 대체되었습니다. 그리고 같은 모듈에서만 사용 가능하도록 하는 internal이 추가되었습니다.
 
 </details>
 

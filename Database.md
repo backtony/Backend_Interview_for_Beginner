@@ -646,6 +646,24 @@ __반정규화는 성능 향상을 위해 중복, 통합하는 기법으로 조�
 둘다 캐시에 사용되며 redis가 복제와 다양한 자료 구조를 지원하기 때문에 다양한 시나리오에 더 적합하다.
 
 
+#### redis 자료구조
+* string : key-value 형태
+* List : 링크드 리스트 자료구조
+* set : 중복을 허용하지 않는 자료구조
+* sorted set(ZSet) : set 자료구조에 score을 주고 이를 기준으로 순서 유지
+* hash : key 내부에 key value 형태의 Map 구조
+* Bit arrays, HyperLogLogs, Streams..
+
+
+#### redis 구성 방식
+* replication 아키텍처
+  * master-slave 구조로 장애시 수동 복구
+* sentinel 아키텍처
+  * sentinel, master, slave 구조로 sentinel이 master를 모니터링하고 문제 발생시 자동으로 failover
+* cluster 아키텍처
+  * 클러스터에 포함된 노드들이 서로 통신하면서 HA를 유지하며 샤딩을 기본으로 사용 
+  * 3.0버전부터 지원
+
 </details>
 
 -----------------------
