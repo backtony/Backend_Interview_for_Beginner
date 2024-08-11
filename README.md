@@ -202,13 +202,12 @@
 + Deadlock
 + Critical Section(임계영역)
 + 경쟁 상태(Race Condition)
-+ 수준 스레드
 + 사용자 모드와 커널 모드
-+ 프로세스 스케줄러 종류
++ 커널 수준, 사용자 수준 스레드 
 + CPU Scheduling
 + 인터럽트
 + 시스템 콜
-+ 메모리 관리
++ 메모리 관리 전략
 + 가상 메모리
 + Trashing
 + 캐시의 지역성
