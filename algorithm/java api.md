@@ -813,164 +813,95 @@ Arrays.binarySearch는 두 번째 인자를 첫 번째 인자(배열)에서 찾�
 
 <br>
 
+
+> 중복, 조합 코드는 코틀린입니다. 
+
 ## 순열
 ---
-```java
-public class Percent {
-    static List<List<Integer>> permutations = new ArrayList<>();
-    static int[] arr = {1, 2, 3};
+```kotlin
+fun <T> permutation(arr: List<T>, r: Int): List<List<T>> {
+  if (arr.size < r) {
+    return emptyList()
+  }
 
-    public static void main(String[] args) {
-        boolean[] visited = new boolean[3];
-
-        permutation(arr.length, 2, visited, new LinkedList<Integer>());
-        for (List<Integer> permutation : permutations) {
-            for (Integer integer : permutation) {
-                System.out.print(integer + " ");
-            }
-            System.out.println();
-        }
+  val result = mutableListOf<List<T>>()
+  fun permute(currentPermutation: List<T>, remainingElements: List<T>) {
+    if (currentPermutation.size == r) {
+      result.add(currentPermutation)
+      return
     }
-
-    private static void permutation(int n, int r, boolean[] visited, LinkedList<Integer> temp) {
-        
-        // 순열 연결 리스트가 꽉차면 순열 하나 완성
-        if (r == 0) {
-            permutations.add(new ArrayList<>(temp));
-            return;
-        }
-
-        // 순열 만드는 로직
-        for (int idx = 0; idx < n; idx++) {
-            if (visited[idx] == false) {
-                visited[idx] = true;
-                temp.add(arr[idx]);
-                permutation(n, r - 1, visited, temp);
-                temp.pollLast();
-                visited[idx] = false;
-            }
-        }
+    for (i in remainingElements.indices) {
+      permute(currentPermutation + remainingElements[i], remainingElements - remainingElements[i])
     }
+  }
+  permute(listOf(), arr)
+  return result
 }
+
 ```
-순열은 방문 확인 배열을 사용합니다.  
-순열은 순서를 고려하기 때문에 for문을 매번 0부터 돌리면서 순열에 포함되지 않은 것들을 골라 처리합니다.
 <br>
 
 ## 중복 순열
 ---
-```java
-public class Percent {
-    static List<List<Integer>> rePermutations = new ArrayList<>();
-    static int[] arr = {1, 2, 3};
-
-    public static void main(String[] args) {
-        // 중복해서 사용 가능하므로 앞선 순열과 달리 visited 배열이 필요 없다.
-        rePermutation(arr.length, 2, new LinkedList<Integer>());
-        for (List<Integer> permutation : rePermutations) {
-            for (Integer integer : permutation) {
-                System.out.print(integer + " ");
-            }
-            System.out.println();
-        }
+```kotlin
+fun <T> permutationWithRepetition(arr: List<T>, r: Int): List<List<T>> {
+  val result = mutableListOf<List<T>>()
+  fun permute(currentPermutation: List<T>) {
+    if (currentPermutation.size == r) {
+      result.add(currentPermutation)
+      return
     }
-
-    private static void rePermutation(int n, int r, LinkedList<Integer> temp) {
-
-        if (r == 0) {
-            rePermutations.add(new ArrayList<>(temp));
-            return;
-        }
-
-        for (int idx = 0; idx < n; idx++) {
-            temp.add(arr[idx]);
-            rePermutation(n, r - 1, temp);
-            temp.pollLast();
-        }
+    for (i in arr.indices) {
+      permute(currentPermutation + arr[i])
     }
+  }
+  permute(listOf())
+  return result
 }
 ```
 
 ## 조합
 ---
-```java
-public class Percent {
-    static List<List<Integer>> combinations = new ArrayList<>();
-    static int[] arr = {1, 2, 3};
+```kotlin
+fun <T> combination(arr: List<T>, r: Int): List<List<T>> {
+  if (arr.size < r) {
+    return emptyList()
+  }
 
-    public static void main(String[] args) {
+  val result = mutableListOf<List<T>>()
 
-        combination(arr.length, 2, 0, new LinkedList<Integer>());
-        for (List<Integer> combination : combinations) {
-            for (Integer integer : combination) {
-                System.out.print(integer);
-                System.out.print(" ");
-            }
-            System.out.println();
-
-        }
+  fun combine(start: Int, current: List<T>) {
+    if (current.size == r) {
+      result.add(current)
+      return
     }
 
-    private static void combination(int n, int r, int next, LinkedList<Integer> temp) {
-        // 조합 하나 완성
-        if (r == 0) {
-            combinations.add(new ArrayList<>(temp));
-            return;
-        }
-
-        // 조합을 완성하지 못했는데 인덱스 범위를 초과한 경우
-        if (next >= n)
-            return;
-
-        // 현재 next를 포함한 경우
-        temp.add(arr[next]);
-        combination(n, r - 1, next + 1, temp);
-
-        // 현재 next를 포함하지 않는 경우
-        temp.pollLast();
-        combination(n, r, next + 1, temp);
+    for (i in start..current.lastIndex) {
+      combine(i + 1, current + arr[i])
     }
+  }
+  combine(0, listOf())
+  return result
 }
 ```
-조합부터는 check 배열을 사용할 필요가 없습니다.  
-이유는 순열은 순서를 고려하기 때문에 매번 0부터 다시 확인하는 과정이 있었지만, 조합은 순서를 고려하지 않기 때문에 0부터 다시 처리하지 않고 다음 재귀에서는 현재 처리한 것 바로 다음 순서부터 처리하면 되기 때문입니다.  
 
 <br>
 
 ## 중복 조합
 ---
-```java
-public class Percent {
-    static List<List<Integer>> reCombinations = new ArrayList<>();
-    static int[] arr = {1, 2, 3};
-
-    public static void main(String[] args) {
-
-        reCombination(arr.length, 2, 0, new LinkedList<Integer>());
-        for (List<Integer> combination : reCombinations) {
-            for (Integer integer : combination) {
-                System.out.print(integer);
-                System.out.print(" ");
-            }
-            System.out.println();
-
-        }
+```kotlin
+fun <T> combinationWithRepetition(arr: List<T>, r: Int): List<List<T>> {
+  val result = mutableListOf<List<T>>()
+  fun combine(start: Int, currentCombination: List<T>) {
+    if (currentCombination.size == r) {
+      result.add(currentCombination)
+      return
     }
-
-    private static void reCombination(int n, int r, int next, LinkedList<Integer> temp) {
-        if (r == 0) {
-            reCombinations.add(new ArrayList<>(temp));
-            return;
-        }
-
-        if (next >= n)
-            return;
-
-        temp.add(arr[next]);
-        reCombination(n, r - 1, next, temp);
-
-        temp.pollLast();
-        reCombination(n, r, next + 1, temp);
+    for (i in start until arr.size) {
+      combine(i, currentCombination + arr[i])
     }
+  }
+  combine(0, listOf())
+  return result
 }
 ```
