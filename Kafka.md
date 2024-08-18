@@ -380,3 +380,70 @@ eager나 cooperative 모드 둘다 리밸런싱 되는 경우, 전체/일부 컨
 
 -----------------------
 
+<br>
+
+### 처리량 높이기
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+> redhat kafka 옵션 : https://docs.redhat.com/ko/documentation/red_hat_streams_for_apache_kafka/2.7/html-single/kafka_configuration_tuning/index#con-producer-config-properties-throughput-str
+> aws h/w 스펙에 따른 처리량 : https://aws.amazon.com/ko/blogs/big-data/best-practices-for-right-sizing-your-apache-kafka-clusters-to-optimize-performance-and-cost/
+> 성능 옵션 결과 : https://pattersonconsultingtn.com/blog/throughput_testing_kafka.html
+
+* producer 성능 옵션
+  * compression.type : 압축 옵션
+    * 압축을 사용하면 producer가 메시지 압축에 사용된 cpu 시간 때문에 대기 시간을 추가하지만 잠재적 디스크 쓰기를 줄여 처리량을 높일 수 있다.
+  * batch.size(단일 배치 사이즈 크기) 와 linger.ms(배치로 메시지를 보내기 위한 최대 대기 시간)
+    * batch.size가 꽉 차거나 linger.ms 시간에 도달하면 메시지를 전송하기 때문에 두 옵션의 조절로 처리량이 높은 단일 생성 요청에 더 많은 메시지를 배치할 수 있다.
+  * buffer.memory : 버퍼에 사용할 총 메모리 양(Record accumulator의 전체 메모리 사이즈)
+     * 버퍼 크기는 배치 크기만큼 커야하며 버퍼링, 압축 및 진행 중 요청을 수용할 수 있을 정도의 크기여야 한다.
+  * max.request.size : 브로커에게 보낼 수 있는 전체 합산 최대 메시지 크기
+    * batch.size를 늘린다면 그에 맞춰 더 늘려야 한다.
+  * send.buffer.bytes : 카프카 브로커와 통신할 때 사용하는 TCP 소켓의 버퍼 크기
+    * 이 버퍼는 프로듀서가 메시지를 네트워크를 통해 브로커로 보내기 전에 데이터를 일시적으로 저장하는 공간
+    * 네트워크 환경이 불안정하거나 지연이 발생할 때, 이 버퍼 크기를 늘리면 프로듀서가 더 많은 데이터를 일시적으로 저장하고 네트워크 전송 대기 시간을 줄일 수 있어 전송 성능이 향상
+* consumer 옵션
+  * fetch.min.bytes : 컨슈머가 브로커에서 데이터를 읽어들이기 위해 기다리는 최소 데이터 크기
+    * 브로커는 지정된 만큼 새로운 메시지가 쌓일때까지 전송하지 않는다.
+    * 이 값을 높이면 컨슈머가 더 많은 데이터를 한 번에 가져와 처리할 수 있으므로, 네트워크 호출 횟수를 줄이고 효율성을 높일 수 있다. 다만, 너무 높게 설정하면 지연이 발생
+  * max.partition.fetch.bytes : 컨슈머가 파티션별로 가져올 수 있는 최대 데이터 크기를 설정
+    * 여러 파티션에서 데이터를 동시에 가져올 때, 이 값을 높이면 한 번에 더 많은 데이터를 가져올 수 있어 처리량이 증가할 수 있다. fetch.max.bytes에 제약을 받는다.
+  * fetch.max.bytes : 컨슈머가 한 번에 가져올 수 있는 최대 데이터 크기
+    * 이 값을 늘리면 더 많은 데이터를 한 번에 가져올 수 있어 처리량이 증가할 수 있으나 시스템 메모리와 네트워크 대역폭을 고려해 적절하게 설정
+  * fetch.wait.max.ms : fetch.min.bytes 조건이 충족될 때까지 브로커가 대기하는 최대 시간
+    * 컨슈머가 데이터를 가져오기 위해 너무 오래 기다리지 않도록 하여 성능을 향상
+  * receive.buffer.bytes : 컨슈머가 데이터를 읽을 때 사용하는 TCP 수신 버퍼의 크기
+    * 이 값을 늘리면 네트워크에서 수신하는 데이터 처리 성능이 향상될 수 있으나 시스템 메모리 사용량에 영향을 줄 수 있으므로 적절하게 설정
+  * max.poll.records : fetcher의 버퍼로부터 컨슈머가 한 번에 poll로 가져올 수 있는 레코드의 최대 개수
+    * 이 값을 늘리면 컨슈머가 더 많은 레코드를 한 번에 가져와 처리할 수 있으므로, 처리량이 증가할 수 있으나 처리량이 증가하면서 메모리 사용량도 증가할 수 있으므로 주의
+    * 하지만 이 옵션보다는 fetch.max.bytes와 max.partition.fetch.bytes 설정이 더 큰 영향을 준다.
+  * max.poll.interval.ms : poll 호출 간의 최대 대기 시간을 설정
+* 리밸런싱의 영향 최소화
+  * max.poll.records 옵션 줄이기
+    * 해당 옵션은 fetcher의 버퍼로부터 컨슈머가 한 번에 poll로 가져올 수 있는 레코드의 최대 수이기 때문에 줄여도 큰 영향이 없다.(fetcher의 버퍼로부터 가져오는 것이기 때문)
+    * 이 옵션을 줄여서 빠르게 poll한 데이터만 처리한 후 조인 요청을 하여 리밸런싱한다.
+
+적절한 조정이 필요하겠지만 보통 대기시간(latency)를 낮추려면 위 옵션들의 값을 줄여야하고 처리량을 높이려면 값을 높여야한다.
+
+
+<br>
+
+일반적으로 kafka는 producer 단에서는 전송만 하면 되기 때문에 문제가 없지만 컨슈머쪽에서는 메시지를 소비해서 실질적인 로직을 처리하기 때문에 소비 속도를 판단하여 조치를 취하지 않는다면 lag이 쌓이게 된다. 이를 위해서 컨슈머 쪽에서는 다음과 같은 방안을 취할 수 있다.
+
+* 멀티 쓰레드 컨슈머
+  * 파티션과 컨슈머는 N:1 관계이지만 컨슈머의 개수를 파티션 개수와 일치시킨다면 1:1 매핑이 되어 처리량을 늘릴 수 있다.
+  * 실제로 다수의 프로세스를 띄워서 다수의 컨슈머를 만들어도 되지만 spring kafka 에서는 concurrency 옵션으로 멀티 스레드 컨슈머를 만들 수 있다.
+  * OOM을 주의해야 한다.
+* 멀티 워커 쓰레드
+  * 배치로 레코드를 소비한 뒤, ExecutorService를 사용하여 별도의 스레드 풀로 처리를 위임하여 병렬 처리하는 형태
+  * 병렬 처리로 인해 처리 순서가 섞일 수 있기 때문에 처리 순서가 중요하다면 메시지 키별로 동일한 스레드를 할당받도록 하는 별도의 추가 로직을 구성해야 한다.
+  * executorService를 사용할 경우, 메인 스레드는 기다리지 않기 때문에 별도의 대기 후 offset을 수동 커밋해줘야 한다.
+  
+
+
+</details>
+
+-----------------------
