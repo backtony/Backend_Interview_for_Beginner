@@ -178,6 +178,66 @@ class Solution {
 }
 ```
 
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(relation: Array<Array<String>>): Int {
+        val answer = mutableSetOf<Set<Int>>()
+        val columnCnt = relation.first().size
+        val columnNumbers = List(columnCnt) { it }
 
+        for (cnt in 1..columnCnt) {
+            // 열 조합
+            val combination = combination(columnNumbers, cnt)
+
+            combination.forEach combine@{ columnNums ->
+                // 이미 최소키가 있다면
+                if (answer.any { columnNums.containsAll(it) }) {
+                    return@combine
+                }
+                val keyCandidates = mutableSetOf<String>()
+
+                relation.forEach { row ->
+                    var key = ""
+                    columnNums.forEach { num ->
+                        key += row[num]
+                    }
+
+                    if (key in keyCandidates) {
+                        return@combine
+                    } else {
+                        keyCandidates.add(key)
+                    }
+                }
+                
+                // 유일키 등록
+                answer.add(columnNums.toSet())
+            }
+        }
+
+        return answer.size
+    }
+
+    fun <T> combination(arr: List<T>, r: Int): List<List<T>> {
+        if (arr.size < r) {
+            return emptyList()
+        }
+        val result = mutableListOf<List<T>>()
+
+        fun combine(start: Int, current: List<T>) {
+            if (current.size == r) {
+                result.add(current)
+                return
+            }
+
+            for (i in start..arr.lastIndex) {
+                combine(i + 1, current + arr[i])
+            }
+        }
+        combine(0, listOf())
+        return result
+    }
+}
+```
 
 

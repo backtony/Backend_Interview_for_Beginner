@@ -68,3 +68,33 @@ class Solution {
 ```
 이보다 더 숏코딩이 가능하겠지만 클래스를 사용해서 좀 더 우아한 코드를 작성하고 싶어서 클래스로 만들었다.
 
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(progresses: IntArray, speeds: IntArray): IntArray {
+        val answer = mutableListOf<Int>()
+        var release = 0
+
+        progresses.zip(speeds).forEach {
+            val progress = it.first
+            val speed = it.second
+
+            if ((progress + speed * release) >= 100) {
+                answer[answer.lastIndex] += 1
+                return@forEach
+            }
+
+            release = if ((100 - progress) % speed != 0) {
+                ((100 - progress) / speed) + 1
+            } else {
+                (100 - progress) / speed
+            }
+
+            answer.add(1)
+        }
+
+        return answer.toIntArray()
+    }
+}
+```

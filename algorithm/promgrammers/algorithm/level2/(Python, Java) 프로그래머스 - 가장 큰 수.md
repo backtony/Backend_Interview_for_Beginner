@@ -43,3 +43,21 @@ class Solution {
 ```
 두 숫자를 문자로 더해서 큰 경우를 우선적으로 정렬하는 방식이다.
 
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(numbers: IntArray): String {
+        if (numbers.all { it == 0 }) return "0"
+
+        return numbers.sortedWith(
+            Comparator { o1, o2 ->
+                // 1을 리턴하면 순서가 바뀐다.
+                val first = (o1.toString() + o2.toString()).toInt()
+                val second = (o2.toString() + o1.toString()).toInt()
+                // compareTo는 호출자가 비교자보다 크면 1
+                second.compareTo(first)
+            }
+        ).joinToString("")
+    }
+}
+```

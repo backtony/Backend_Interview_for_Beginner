@@ -198,3 +198,84 @@ class Solution {
 ```
 
 
+## kotlin 풀이
+```kotlin
+import java.util.*
+
+class Solution {
+    fun solution(places: Array<Array<String>>): IntArray {
+        val answer = mutableListOf<Int>()
+
+        places.forEach { place ->
+            // 사람 위치
+            var result = 1
+            val people = mutableListOf<Pair<Int, Int>>()
+            place.forEachIndexed { x, row ->
+                row.forEachIndexed { y, c ->
+                    if (c == 'P') {
+                        people.add(Pair(x, y))
+                    }
+                }
+            }
+
+            for (person in people) {
+
+                val bfs = bfs(place, Position(person.first, person.second, 0))
+                if (bfs == 0) {
+                    result = 0
+                    break
+                }
+            }
+
+            answer.add(result)
+        }
+
+        return answer.toIntArray()
+    }
+
+    private fun bfs(place: Array<String>, position: Position): Int {
+        val visited = MutableList(5) { MutableList(5) { false } }
+        visited[position.x][position.y] = true
+        val queue = LinkedList<Position>()
+            .apply { add(position) }
+
+        val bx = listOf(0, 1, 0, -1)
+        val by = listOf(1, 0, -1, 0)
+
+        while (queue.isNotEmpty()) {
+            val newPosition = queue.poll()
+            if (newPosition.cost == 2) {
+                continue
+            }
+
+            for (move in bx.zip(by)) {
+                val px = newPosition.x + move.first
+                val py = newPosition.y + move.second
+
+                if (0 <= px && px <= 4 && 0 <= py && py <= 4) {
+                    if (visited[px][py] == false && newPosition.cost < 2) {
+                        when (place[px][py]) {
+                            'P' -> {
+                                return 0
+                            }
+
+                            'O' -> {
+                                visited[px][py] = true
+                                queue.add(Position(px, py, newPosition.cost + 1))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return 1
+    }
+
+    class Position(
+        val x: Int,
+        val y: Int,
+        val cost: Int,
+    )
+}
+```
+

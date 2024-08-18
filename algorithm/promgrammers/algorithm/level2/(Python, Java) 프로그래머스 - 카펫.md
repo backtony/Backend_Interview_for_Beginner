@@ -40,3 +40,30 @@ class Solution {
     }
 }
 ```
+
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(brown: Int, yellow: Int): IntArray {
+        val answer = mutableListOf<Int>()
+        val total = brown + yellow
+        val half = Math.sqrt(total.toDouble()).toInt()
+
+        for (i in 1..half) {
+            if (total % i == 0) {
+                val x = total / i
+                val y = i
+
+                if ((x-2) * (y-2) == yellow) {
+                    answer.add(x)
+                    answer.add(y)
+                    break
+                }
+            }
+        }
+
+        return answer.toIntArray()
+    }
+}
+```

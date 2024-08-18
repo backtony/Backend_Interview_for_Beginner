@@ -59,3 +59,51 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(record: Array<String>): Array<String> {
+        val records = mutableListOf<Record>()
+        val idNameMap = mutableMapOf<String, String>()
+
+        record.forEach {
+            val token = it.split(" ")
+            val newRecord = if (token[0] == "Leave") {
+                Record(token[0], token[1], null)
+            } else {
+                Record(token[0], token[1], token[2])
+            }
+
+            records.add(
+                newRecord
+            )
+
+            if (newRecord.action != "Leave") {
+                idNameMap[token[1]] = token[2]
+            }
+        }
+
+        return records.mapNotNull { reocrd ->
+            val name = "${idNameMap[reocrd.id]}"
+            when (reocrd.action) {
+                "Enter" -> {
+                    "${name}님이 들어왔습니다."
+                }
+
+                "Leave" -> {
+                    "${name}님이 나갔습니다."
+                }
+
+                else -> null
+            }
+        }.toTypedArray()
+    }
+
+    data class Record(
+        val action: String,
+        val id: String,
+        val name: String?,
+    )
+}
+```

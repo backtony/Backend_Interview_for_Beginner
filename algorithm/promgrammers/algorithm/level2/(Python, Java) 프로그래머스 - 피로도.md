@@ -79,6 +79,56 @@ class Solution {
 }
 ```
 
+## kotlin 풀이
+```kotlin
+import kotlin.math.max
 
+class Solution {
+    fun solution(k: Int, dungeons: Array<IntArray>): Int {
+        var answer: Int = -1
+
+
+        val permutations = permutation(List(dungeons.size) { it }, dungeons.size)
+        permutations.forEach permutations@{ dungeonPermutation ->
+            var cnt = 0
+            var current = k
+
+            dungeonPermutation.forEach { dungeonNum ->
+                val dungeon = dungeons[dungeonNum]
+                if (dungeon.first() <= current) {
+                    cnt++
+                    current -= dungeon[1]
+                } else {
+                    answer = max(answer, cnt)
+                    return@permutations
+                }
+            }
+            answer = max(answer, cnt)
+        }
+        return answer
+    }
+
+    fun <T> permutation(arr: List<T>, r: Int): List<List<T>> {
+        if (arr.size < r) {
+            return emptyList()
+        }
+
+        val result = mutableListOf<List<T>>()
+
+        fun permute(current: List<T>, remain: List<T>) {
+
+            if (current.size == r) {
+                result.add(current)
+                return
+            }
+            for (index in 0..remain.lastIndex) {
+                permute(current + remain[index], remain - remain[index])
+            }
+        }
+        permute(listOf(), arr)
+        return result
+    }
+}
+```
 
 

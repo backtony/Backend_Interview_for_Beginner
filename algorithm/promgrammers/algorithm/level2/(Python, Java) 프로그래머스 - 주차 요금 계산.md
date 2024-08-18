@@ -119,3 +119,56 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+import kotlin.math.ceil
+
+class Solution {
+    fun solution(fees: IntArray, records: Array<String>): IntArray {
+        val cars = records.groupBy { it.split(" ")[1] }.map {
+            val minutes = if (it.value.size % 2 != 0) {
+                it.value.toMutableList().apply { add("23:59 ${it.key} OUT") }
+            } else {
+                it.value
+            }.windowed(size = 2, step = 2).sumOf { record ->
+                record[1].split(" ")[0].split(":").let {
+                    it.first().toInt() * 60 + it.last().toInt()
+                }.minus(
+                    record[0].split(" ")[0].split(":").let {
+                        it.first().toInt() * 60 + it.last().toInt()
+                    }
+                )
+            }
+
+            Car(
+                id = it.key,
+                minutes = minutes
+            )
+        }
+
+        val baseTime = fees[0]
+        val baseAmount = fees[1]
+        val perMin = fees[2]
+        val perFee = fees[3]
+        return cars.sortedBy { it.id }.map { it.fee(baseTime, baseAmount, perMin, perFee) }.toIntArray()
+    }
+
+    data class Car(
+        val id: String,
+        val minutes: Int,
+    ) {
+        fun fee(baseTime: Int, baseFee: Int, perMinute: Int, perFee: Int): Int {
+
+            if (minutes <= baseTime) {
+                return baseFee
+            }
+
+            val extraTime = minutes - baseTime
+            val extraFee = (ceil((extraTime / perMinute.toDouble())) * perFee).toInt()
+
+            return baseFee + extraFee
+        }
+    }
+}
+```

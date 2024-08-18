@@ -68,3 +68,43 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(arr: Array<IntArray>): IntArray {
+        val answer: IntArray = intArrayOf(0,0)
+
+        check(arr, arr.size, Pair(0,0), answer)
+
+        return answer
+    }
+
+    fun check(arr: Array<IntArray>, size: Int, position: Pair<Int, Int>, answer: IntArray) {
+        val currentX = position.first
+        val currentY = position.second
+        val target  = arr[currentX][currentY]
+
+        if (size == 1) {
+            answer[target] += 1
+            return
+        }
+
+        for (x in 0 until size) {
+            for (y in 0 until size) {
+                if (target != arr[currentX+x][currentY+y]){
+                    // 쪼개기
+                    val half = size / 2
+                    check(arr,half, Pair(currentX,currentY), answer)
+                    check(arr,half, Pair(currentX+half,currentY), answer)
+                    check(arr,half, Pair(currentX,currentY+half), answer)
+                    check(arr,half, Pair(currentX+half,currentY+half), answer)
+                    return
+                }
+            }
+        }
+
+        answer[target] += 1
+    }
+}
+```

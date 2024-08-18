@@ -62,4 +62,49 @@ class Solution {
     }
 }
 ```
-자바의 경우 substring이 out of index가 발생하면 안되므로 이에 대한 처리가 따로 필요했다.  
+자바의 경우 substring이 out of index가 발생하면 안되므로 이에 대한 처리가 따로 필요했다.
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): Int {
+        var answer = Int.MAX_VALUE
+        for (cnt in 1..s.length) {
+            var letter = ""
+            var idx = 0
+            var buffer = ""
+            var duplicated = 1
+            while (idx < s.length) {
+                if (idx + cnt > s.length) {
+                    buffer += s.slice(idx..s.lastIndex)
+                    break
+                }
+                val slice = s.slice(idx until idx + cnt)
+                if (slice == buffer) {
+                    duplicated++
+                } else {
+                    if (duplicated > 1) {
+                        letter += duplicated.toString() + buffer
+                    } else {
+                        letter += buffer
+                    }
+
+                    duplicated = 1
+                    buffer = slice
+                }
+                idx += cnt
+            }
+
+            if (duplicated > 1) {
+                letter += duplicated.toString() + buffer
+            } else {
+                letter += buffer
+            }
+
+            answer = Math.min(answer, letter.length)
+        }
+
+        return answer
+    }
+}
+```

@@ -97,3 +97,57 @@ class Solution {
 }
 ```
 
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(numbers: String): Int {
+        val answer = mutableSetOf<Int>()
+
+        for (cnt in 1..numbers.length) {
+            permutation(numbers.toList(), cnt).forEach { candidate ->
+                val num = candidate.joinToString("").toInt()
+
+                if (isPrime(num)) {
+                    answer.add(num)
+                }
+            }
+        }
+
+        return answer.size
+    }
+
+    fun isPrime(n: Int): Boolean {
+        if (n == 1 || n == 0) {
+            return false
+        }
+        val half = Math.sqrt(n.toDouble()).toInt()
+
+        for (i in 2..half) {
+            if (n % i == 0) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    fun <T> permutation(arr: List<T>, r: Int): List<List<T>> {
+        val result = mutableListOf<List<T>>()
+
+        fun permute(current: List<T>, remain: List<T>) {
+            if (current.size == r) {
+                result.add(current)
+                return
+            }
+
+            for (idx in remain.indices) {
+                permute(current + remain[idx], remain - remain[idx])
+            }
+        }
+
+        permute(listOf(), arr)
+        return result
+    }
+}
+```
+

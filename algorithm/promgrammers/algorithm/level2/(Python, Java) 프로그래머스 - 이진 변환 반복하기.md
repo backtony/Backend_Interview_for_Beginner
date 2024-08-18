@@ -45,3 +45,22 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): IntArray {
+        val answer = mutableListOf(0,0)
+        var target = s
+        while (target != "1") {
+            val count = target.count { it == '0' }
+            answer[1] += count
+            answer[0] += 1
+
+            target = target.replace("0", "").length
+                .toString(2)
+        }
+        return answer.toIntArray()
+    }
+}
+```

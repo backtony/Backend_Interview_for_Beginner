@@ -108,6 +108,71 @@ class Solution {
 ```
 
 
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(p: String): String {
+        if (p.isBlank()) {
+            return ""
+        }
+
+        val balanceIndex = extractBalanceIndex(p)
+        val u = p.substring(0, balanceIndex+1)
+        val v = p.substring(balanceIndex+1)
+
+        if (isCorrectLetters(u)) {
+            return "$u${solution(v)}"
+        } else {
+            val reversed = u.substring(1, u.lastIndex).map {
+                if (it == '(') {
+                    ')'
+                } else {
+                    '('
+                }
+            }.joinToString("")
+
+            return "(${solution(v)})$reversed"
+        }
+    }
+
+    private fun extractBalanceIndex(p: String): Int {
+        var left = 0
+        var right = 0
+        p.forEachIndexed { index, letter ->
+            if (letter == '(') {
+                left += 1
+            } else {
+                right += 1
+            }
+
+            if (left == right) {
+                return index
+            }
+        }
+
+        return -1
+    }
+
+    private fun isCorrectLetters(letters: String): Boolean {
+        val stack = mutableListOf<Char>()
+
+        letters.forEach {
+            if (it == '(') {
+                stack.add(it)
+            } else {
+                if (stack.isEmpty()) {
+                    return false
+                }
+
+                stack.removeLast()
+            }
+        }
+
+        return stack.isEmpty()
+    }
+}
+```
+
 
 
 

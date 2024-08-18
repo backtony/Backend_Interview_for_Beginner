@@ -97,4 +97,47 @@ class Solution {
 }
 ```
 
+## kotlin 풀이
+```kotlin
+import kotlin.math.absoluteValue
+import kotlin.math.min
 
+class Solution {
+    fun solution(n: Int, wires: Array<IntArray>): Int {
+        var answer: Int = Int.MAX_VALUE
+
+        for (wire in wires) {
+
+            // 간선 하나 제거
+            val tempWires = wires.toMutableList() - wire
+
+            val graph = mutableMapOf<Int, MutableSet<Int>>()
+            tempWires.forEach {
+                graph[it[0]] = graph.getOrDefault(it[0], mutableSetOf()).apply { add(it[1]) }
+                graph[it[1]] = graph.getOrDefault(it[1], mutableSetOf()).apply { add(it[0]) }
+            }
+
+            // dfs로 가서 방문한 것 도출
+            val visited = MutableList(n+1) {false}
+            dfs(graph, visited, 1)
+            val visitCount = visited.count { it }
+            
+            answer = min(answer, ((n - visitCount) - visitCount).absoluteValue)
+        }
+
+        return answer
+    }
+
+    private fun dfs(graph: MutableMap<Int, MutableSet<Int>>, visited: MutableList<Boolean>, position: Int) {
+        if (visited[position]) {
+            return
+        }
+
+        visited[position] = true
+
+        for (newPosition in graph[position] ?: emptySet()) {
+            dfs(graph, visited, newPosition)
+        }
+    }
+}
+```

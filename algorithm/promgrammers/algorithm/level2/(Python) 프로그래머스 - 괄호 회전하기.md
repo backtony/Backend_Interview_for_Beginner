@@ -29,7 +29,56 @@ def solution(s):
     return answer
 ```
 
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): Int {
+        if (s.length <= 1) {
+            return 0
+        }
 
+        var answer = 0
+        val brackets = mapOf(
+            '(' to ')',
+            '{' to '}',
+            '[' to ']',
+        )
+
+        IntRange(0, s.lastIndex).forEach { move ->
+            val letters = "${s.substring(move)}${s.substring(0, move)}"
+            val stack = mutableListOf<Char>()
+
+            letters.forEachIndexed { index, letter ->
+
+                // 첫번째가 오른쪽인 경우
+                if (letter in brackets.values) {
+                    if (stack.isEmpty()) {
+                        return@forEach
+                    }
+
+                    
+                    val right = brackets.entries.find { it.value == letter }!!.key
+                    // 닫히지 않는다면
+                    if (right != stack.last()) {
+                        return@forEach
+                    } else {
+                        // 닫힌다면
+                        stack.removeLast()
+                    }
+                } else {
+                    stack.add(letter)
+                }
+            }
+
+            if (stack.isEmpty()) {
+                answer += 1
+            }
+        }
+
+        return answer
+    }
+}
+```
 
 
 

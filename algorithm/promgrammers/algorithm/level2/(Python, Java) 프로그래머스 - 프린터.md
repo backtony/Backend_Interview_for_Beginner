@@ -113,3 +113,32 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(priorities: IntArray, location: Int): Int {
+        var answer = 0
+        val temp = priorities.mapIndexed { index, i ->
+            Pair(i, index)
+        }.toMutableList()
+
+        while(true) {
+            val (prority, index) = temp.first()
+            val maxPriority = temp.maxOf { it.first }
+            if (prority == maxPriority) {
+                answer++
+                if (index == location) {
+                    break
+                }
+                temp.removeFirst()
+            } else {
+                temp.add(temp.first())
+                temp.removeFirst()
+            }
+        }
+
+        return answer
+    }
+}
+```

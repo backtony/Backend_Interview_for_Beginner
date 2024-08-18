@@ -37,3 +37,18 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): String {
+        return s.split(" ").joinToString(" ") {
+            if (it.length > 1) {
+                it.first().uppercase().plus(it.substring(1).lowercase())
+            } else {
+                it.uppercase()
+            }
+        }
+    }
+}
+```

@@ -36,3 +36,21 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(n: Int): Int {
+        val table = MutableList(n + 1) { it }
+        if (n <= 1) {
+            return table[n]
+        }
+
+        for (idx in 2..n) {
+            table[idx] = (table[idx - 2] + table[idx - 1]).mod(1234567)
+        }
+
+        return table[n]
+    }
+}
+```

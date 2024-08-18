@@ -63,3 +63,60 @@ def solution(expression):
 
 
 
+## kotlin 풀이
+```kotlin
+import kotlin.math.absoluteValue
+import kotlin.math.max
+
+class Solution {
+    fun solution(expression: String): Long {
+        val operationCases = listOf(
+            listOf("*", "+", "-"),
+            listOf("*", "-", "+"),
+            listOf("+", "*", "-"),
+            listOf("+", "-", "*"),
+            listOf("-", "*", "+"),
+            listOf("-", "+", "*")
+        )
+        val parsedExpression = expression
+            .replace("+", " + ")
+            .replace("-", " - ")
+            .replace("*", " * ")
+            .split(" ")
+        var answer = 0L
+
+        for (operations in operationCases) {
+            var result = parsedExpression.toMutableList()
+
+            for (operation in operations) {
+                while (result.indexOf(operation) != -1) {
+                    val foundIndex = result.indexOf(operation)
+                    result[foundIndex - 1] = calculate(operation, result[foundIndex-1], result[foundIndex+1])
+
+                    result =
+                        (result.slice(0..foundIndex - 1) + result.slice(foundIndex + 2..result.lastIndex)).toMutableList()
+                }
+            }
+
+            answer = max(answer, result.first().toLong().absoluteValue)
+        }
+
+        return answer
+    }
+
+    fun calculate(operation: String, a: String, b: String): String {
+
+        return when (operation) {
+            "*" -> {
+                a.toLong().times(b.toLong())
+            }
+            "+" -> {
+                a.toLong().plus(b.toLong())
+            }
+            else -> {
+                a.toLong().minus(b.toLong())
+            }
+        }.toString()
+    }
+}
+```

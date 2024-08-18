@@ -54,3 +54,24 @@ class Solution {
 }
 ```
 
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(number: String, k: Int): String {
+        val answer = mutableListOf<Int>()
+        var cnt = k
+        for (numChar in number) {
+            val num = numChar.digitToInt()
+            while (cnt > 0 && answer.isNotEmpty() && answer.last() < num) {
+                answer.removeLast()
+                cnt--
+            }
+            answer.add(num)
+        }
+
+        val tempAnswer = answer.joinToString("")
+        return tempAnswer.substring(0, tempAnswer.length - cnt)
+    }
+}
+```
+

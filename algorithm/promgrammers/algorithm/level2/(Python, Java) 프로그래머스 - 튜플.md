@@ -55,3 +55,23 @@ class Solution {
 
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): IntArray {
+        val answer = mutableListOf<Int>()
+        s.substring(1, s.lastIndex - 1).split("},")
+            .map { it.substring(1,).split(",").map { it.toInt() } }
+            .sortedBy { it.size }
+            .forEach { tuple ->
+                tuple.forEach {
+                    if (answer.contains(it).not()) {
+                        answer.add(it)
+                    }
+                }
+            }
+        return answer.toIntArray()
+    }
+}
+```

@@ -37,7 +37,57 @@ def dijkstra(graph, N):
     return distance
 ```
 
+## kotlin 풀이
+```kotlin
+import java.util.*
 
+class Solution {
+    fun solution(N: Int, road: Array<IntArray>, k: Int): Int {
+
+        // a to (b, cost)
+        val graph = mutableMapOf<Int, MutableList<Node>>()
+        road.forEach {
+            graph[it[0]] = graph.getOrDefault(it[0], mutableListOf()).apply { add(Node(it[1], it[2])) }
+            graph[it[1]] = graph.getOrDefault(it[1], mutableListOf()).apply { add(Node(it[0], it[2])) }
+        }
+
+        // distance
+        val distance = IntArray(N + 1) { Int.MAX_VALUE }
+        distance[1] = 0
+        
+        // dijkstra 
+        val queue = PriorityQueue<Node>(
+            compareBy { it.cost }
+        )
+
+        queue.add(Node(1, 0))
+
+        while (queue.isNotEmpty()) {
+            val node = queue.poll()
+            if (distance[node.id] < node.cost) {
+                continue
+            }
+
+            for (newNode in graph.getOrDefault(node.id, mutableListOf())) {
+                val newDistance = node.cost + newNode.cost
+                if (distance[newNode.id] > newDistance) {
+                    distance[newNode.id] = newDistance
+                    queue.add(Node(newNode.id, newDistance))
+                }
+            }
+        }
+
+        return distance.count {
+            it <= k
+        }
+    }
+
+    class Node(
+        val id: Int,
+        val cost: Int,
+    )
+}
+```
 
 
 

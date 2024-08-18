@@ -112,6 +112,59 @@ class Solution {
 ```
 
 
+## kotlin 풀이
+```kotlin
+import kotlin.math.min
+
+class Solution {
+    fun solution(name: String): Int {
+        
+        // 미리 해당 칸에서 얼마나 조이스틱을 돌려야하는지 계산
+        val target = name.toMutableList().map {
+            min(it - 'A', 'Z' - it + 1)
+        }.toMutableList()
+
+        return dfs(target, 0, 0)
+    }
+
+    fun dfs(target: MutableList<Int>,position: Int, tot: Int): Int {
+        var answer = tot
+        answer += target[position]
+        target[position] = 0
+
+        // 매칭 완료
+        if (target.sum() == 0) {
+            return answer
+        }
+
+        // 오른쪽 이동
+        var newPosition = position
+        var cnt = 0
+        while(target[newPosition] == 0) {
+            newPosition = (newPosition + 1) % target.size
+            cnt++
+        }
+        var temp = target[newPosition]
+        val right = dfs(target, newPosition, answer + cnt)
+        target[newPosition] = temp
+
+        // 왼쪽 이동
+        newPosition = position
+        cnt = 0
+        while(target[newPosition] == 0) {
+            newPosition = (newPosition -1 + target.size) % target.size
+            cnt++
+        }
+        temp = target[newPosition]
+        val left = dfs(target, newPosition, answer + cnt)
+        target[newPosition] = temp
+        
+        // 오른쪽 이동과 왼쪽 이동 시 최소 값
+        return min(left, right)
+    }
+}
+```
+
 
 
 

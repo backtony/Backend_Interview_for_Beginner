@@ -22,3 +22,14 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(s: String): String {
+        val split = s.split(" ").map { it.toInt() }
+
+        return "${split.minOrNull()} ${split.maxOrNull()}"
+    }
+}
+```

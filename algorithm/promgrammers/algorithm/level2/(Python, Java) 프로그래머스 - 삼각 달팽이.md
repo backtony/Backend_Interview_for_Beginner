@@ -89,3 +89,60 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(n: Int): IntArray {
+        if (n == 1) {
+            return intArrayOf(1)
+        }
+        val graph = mutableListOf<MutableList<Int>>()
+
+        // 피라미드 채우기
+        for (floor in 1..n) {
+            graph.add(MutableList(floor) { Int.MAX_VALUE })
+        }
+
+        var x = 0
+        var y = 0
+        var direction = "D"
+        var cnt = 1
+        while (graph[y][x] == Int.MAX_VALUE) {
+            graph[y][x] = cnt
+            cnt++
+            when (direction) {
+                "D" -> {
+                    if (y + 1 == n || graph[y + 1][x] != Int.MAX_VALUE) {
+                        direction = "R"
+                        x++
+                    } else {
+                        y++
+                    }
+                }
+
+                "R" -> {
+                    if (x + 1 > y || graph[y][x + 1] != Int.MAX_VALUE) {
+                        direction = "U"
+                        y--
+                        x--
+                    } else {
+                        x++
+                    }
+                }
+
+                "U" -> {
+                    if (graph[y - 1][x - 1] != Int.MAX_VALUE) {
+                        direction = "D"
+                        y++
+                    } else {
+                        x--
+                        y--
+                    }
+                }
+            }
+        }
+        return graph.flatten().toIntArray()
+    }
+}
+```

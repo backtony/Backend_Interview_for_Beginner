@@ -77,4 +77,43 @@ class Solution {
 }
 ```
 
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(bridge_length: Int, weight: Int, truck_weights: IntArray): Int {
+        var cnt = 0
+
+        // 다리 채우기
+        val bridge = mutableListOf<Int>()
+        repeat(bridge_length) {
+            bridge.add(0)
+        }
+
+        truck_weights.forEach { truck ->
+
+            // 진입 불가능한 경우
+            while (weight < bridge.slice(1..bridge.lastIndex).sum() + truck) {
+                cnt += 1
+
+                bridge.removeFirst()
+                bridge.add(0)
+            }
+            
+            // 진입 가능한 경우
+            cnt += 1
+            bridge.removeFirst()
+            bridge.add(truck)
+        }
+        
+        // 마지막 차 빼기
+        while(bridge.sum() != 0) {
+            cnt += 1
+            bridge.removeFirst()
+        }
+
+        return cnt
+    }
+}
+```
+
 

@@ -100,3 +100,56 @@ class Solution {
 }
 ```
 
+## kotlin 풀이
+```kotlin
+class Solution {
+
+    fun solution(orders: Array<String>, course: IntArray): Array<String> {
+
+        val answer = mutableListOf<String>()
+        course.forEach { cnt ->
+            val candidates = mutableMapOf<String, Int>()
+
+            orders.forEach { order ->
+                val arr = order.toList().sorted()
+                val menues = combination(arr, cnt)
+
+                menues.forEach { menu ->
+                    val key = menu.joinToString("")
+                    candidates[key] = candidates.getOrDefault(key,0) + 1
+                }
+            }
+
+            val max = candidates.values.maxOrNull()
+            answer.addAll(
+                candidates.filter { it.value >= 2 }
+                    .filter { it.value == max }
+                    .map { it.key }
+            )
+        }
+
+        return answer.sorted().toTypedArray()
+    }
+
+    fun <T> combination(arr: List<T>, r: Int): List<List<T>> {
+        if (arr.size < r) {
+            return emptyList()
+        }
+
+        val result = mutableListOf<List<T>>()
+        fun combine(start: Int, currentCombine: List<T>) {
+            if (currentCombine.size == r) {
+                result.add(currentCombine)
+                return
+            }
+
+            for (i in start..arr.lastIndex) {
+                combine(i+1, currentCombine + arr[i])
+            }
+        }
+        combine(0, listOf())
+        return result
+    }
+}
+```
+

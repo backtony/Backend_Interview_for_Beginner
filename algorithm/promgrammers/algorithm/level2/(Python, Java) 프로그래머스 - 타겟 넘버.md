@@ -43,3 +43,40 @@ class Solution {
     }
 }
 ```
+
+## kotlin
+```kotlin
+class Solution {
+    fun solution(numbers: IntArray, target: Int): Int {
+        var answer = 0
+        // 중복 순열을 만들고 계산
+        permutationWithDuplicated(listOf("+", "-"), numbers.size).forEach { permutaion ->
+            val sum = numbers.zip(permutaion) { number, modifier -> "$modifier$number".toInt() }
+                .sum()
+
+            if (sum == target) {
+                answer++
+            }
+        }
+        return answer
+    }
+
+    fun<T> permutationWithDuplicated(arr:List<T>, r: Int ): List<List<T>> {
+        val result = mutableListOf<List<T>>()
+
+        fun permute(current: List<T>){
+            if (current.size == r) {
+                result.add(current)
+                return
+            }
+
+            for (element in arr) {
+                permute(current + element)
+            }
+        }
+
+        permute(listOf())
+        return result
+    }
+}
+```

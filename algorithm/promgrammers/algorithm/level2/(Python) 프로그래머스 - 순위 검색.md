@@ -52,6 +52,3 @@ def solution(info, query):
 
 
 
-
-
-

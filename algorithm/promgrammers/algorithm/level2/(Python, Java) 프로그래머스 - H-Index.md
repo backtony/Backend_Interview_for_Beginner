@@ -56,7 +56,18 @@ class Solution {
 }
 ```
 
+## kotlin 풀이
+```kotlin
+import kotlin.math.min
 
+class Solution {
+        fun solution(citations: IntArray): Int {
+            return citations.sortedDescending().mapIndexed {
+                    idx, item -> min(idx + 1, item)
+            }.maxOrNull()!!
+        }
+}
+```
 
 
 

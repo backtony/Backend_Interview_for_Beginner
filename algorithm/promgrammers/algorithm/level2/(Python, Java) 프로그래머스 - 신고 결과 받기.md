@@ -110,3 +110,30 @@ class Solution {
 }
 ```
 시간이 좀 오래걸린다.
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun solution(id_list: Array<String>, report: Array<String>, k: Int): IntArray {
+
+        val abusers = mutableMapOf<String,MutableSet<String>>()
+        report.forEach {
+            val (reporter, abuser) = it.split(" ")
+            abusers[abuser] = abusers.getOrDefault(abuser, mutableSetOf()).apply { add(reporter) }
+        }
+
+        // associate 연산은 linkedHashMap을 리턴
+        val idMap = id_list.associateWith { 0 }
+            .toMutableMap()
+
+        abusers.filter { it.value.size >= k }
+            .forEach { abuser ->
+                abuser.value.forEach {
+                    idMap[it] = idMap.getValue(it) + 1
+                }
+            }
+
+        return idMap.values.toIntArray()
+    }
+}
+```
