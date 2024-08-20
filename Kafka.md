@@ -79,9 +79,8 @@
 
 카프카에서의 데이터는 레코드라는 단위로 표현한다.  
 
-하나의 토픽은 여러 개의 파티션으로 구성되어있고 레코드는   
-데이터를 구분하기 위해 토픽으로 데이터를 분류한다. 해당 토픽으로 들어온 데이터는  
 
+하나의 토픽은 여러 개의 파티션으로 구성되어있고 레코드는 파티션들에 분산되어 저장된다.   
 
 </details>
 
@@ -298,27 +297,6 @@ producer는 acks=1 or all 인 경우, 레코드를 전송하고 브로커에서 
 
 <br>
 
-### assigner
-
-<details>
-   <summary> 예비 답안 보기 (👈 Click)</summary>
-<br />
-
------------------------
-
-* RoundRobinAssignor : 파티션을 하나씩 순차적으로 컨슈머에 할당
-* RangeAssigner : 파티션 번호 range에 따라 같은 range에 있다면 같은 컨슈머에 할당
-* StickyAssignor : RoundRobinAssignor와 동일하나 리밸선싱 시에 Eager로 다 초기화되더라도 재분배 시 이전 매핑을 그대로 가져가며 사라진 컨슈머에 대해서만 RoundRobinAssignor 방식을 다시 사용
-* CoorperativeStickyAssignor : RoundRobinAssignor와 동일하나 Cooperative이기 때문에 죽은 컨슈머에 붙어있던 파티션만 RoundRobinAssignor 방식으로 동작
-
-
-</details>
-
------------------------
-
-<br>
-
-
 ### 리밸런싱
 
 <details>
@@ -355,7 +333,6 @@ producer는 acks=1 or all 인 경우, 레코드를 전송하고 브로커에서 
 
 <br>
 
-
 #### 배포 고려 사항
 
 ![rebalance-2](image/kafka/rebalance-2.webp)  
@@ -381,6 +358,28 @@ eager나 cooperative 모드 둘다 리밸런싱 되는 경우, 전체/일부 컨
 -----------------------
 
 <br>
+
+
+### assigner
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
+* RoundRobinAssignor : 파티션을 하나씩 순차적으로 컨슈머에 할당
+* RangeAssigner : 파티션 번호 range에 따라 같은 range에 있다면 같은 컨슈머에 할당
+* StickyAssignor : RoundRobinAssignor와 동일하나 리밸선싱 시에 Eager로 다 초기화되더라도 재분배 시 이전 매핑을 그대로 가져가며 사라진 컨슈머에 대해서만 RoundRobinAssignor 방식을 다시 사용
+* CoorperativeStickyAssignor : RoundRobinAssignor와 동일하나 Cooperative이기 때문에 죽은 컨슈머에 붙어있던 파티션만 RoundRobinAssignor 방식으로 동작
+
+
+</details>
+
+-----------------------
+
+<br>
+
 
 ### 처리량 높이기
 
