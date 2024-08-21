@@ -83,6 +83,13 @@ channel에는 resolver와 LB를 설정할 수 있다.
 
 > cf) 기본적으로 gRPC 채널은 하나의 TCP 커넥션을 사용하지만 로드밸런싱이나 특정 네트워크 구성을 위해 여러 커넥션이 존재할 수 있다.
 
+channel로 맺은 커넥션은 별도의 설정이 없다면 끊어지지 않고 계속 유지된다.
+* client 단에서 처리
+  * keepAlive 옵션을 stub에 추가하여 지속적인 ping 프레임으로 연결 실패시 커넥션을 닫고 신규로 연결하는 작업을 할 수 있다.
+* server 단에서 처리
+  * maxConnectionIdle or idleTimeoutMillis(Armeria) 설정으로 유휴 상태인 커넥션을 끊어낼 수 있다.
+
+<br>
 
 #### keepAlive 옵션
 > 기본적으로 비활성화되어있다.
