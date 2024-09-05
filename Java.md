@@ -418,6 +418,8 @@ Char의 경우 값이 같다면 ==(동일성) 비교를 사용할 수 있지만,
     - 두 객체의 내부 값이 같은지 내용을 비교한다.
     - 기본 타입(Primitive Type)에 대해서는 적용할 수 없다.
     - 객체 비교시 override해서 원하는 방식으로 수정할 수 있다.
+    - `equals는 재정의를 하지 않으면 기본적으로 object의 equals를 사용하게 되고 이는 참조값(주소)를 비교하게 된다.`
+      - string은 equals가 override되어서 내부를 비교하도록 되어있는 것이고, kotlin의 data class는 equals와 hashCode를 내부적으로 override해서 내용물을 비교하도록 해준다.
 
 
 </details>
