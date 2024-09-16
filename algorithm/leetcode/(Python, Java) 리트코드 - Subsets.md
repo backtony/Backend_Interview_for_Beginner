@@ -55,3 +55,39 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun subsets(nums: IntArray): List<List<Int>> {
+
+        val result = mutableListOf<List<Int>>().apply { add(emptyList()) }
+        for (num in 1..nums.size) {
+            result.addAll(
+                combination(nums.toList(), num)
+            )
+        }
+
+        return result
+    }
+
+    fun <T> combination(arr: List<T>, r: Int): List<List<T>> {
+        val result = mutableListOf<List<T>>()
+
+        fun comb(current: List<T>, start: Int) {
+            if (current.size == r) {
+                result.add(current)
+                return
+            }
+
+            for (next in start..arr.lastIndex) {
+                comb(current + arr[next], next + 1)
+            }
+        }
+
+        comb(listOf(), 0)
+
+        return result
+    }
+}
+```

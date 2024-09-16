@@ -33,3 +33,23 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun searchMatrix(matrix: Array<IntArray>, target: Int): Boolean {
+
+        for (row in matrix) {
+            if (row.first() <= target && row.last() >= target && row.firstOrNull { it == target } != null) {
+                return true
+            }
+
+            if (row.first() > target) {
+                break
+            }
+        }
+
+        return false
+    }
+}
+```

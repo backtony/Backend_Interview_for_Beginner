@@ -29,3 +29,23 @@ class Solution {
 ```
 메모이제이션 누적으로 풀 수 있다.  
 이전 값이 음수라면 현재 인덱스부터 다시 누적하면 되므로 0을 더해주도록 한다.
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun maxSubArray(nums: IntArray): Int {
+        for ((index, num) in nums.withIndex()) {
+            if (index == 0) {
+                continue
+            }
+
+            if (nums[index - 1] >= 0) {
+                nums[index] = nums[index - 1] + num
+            }
+        }
+
+        return nums.max()
+    }
+}
+```
+

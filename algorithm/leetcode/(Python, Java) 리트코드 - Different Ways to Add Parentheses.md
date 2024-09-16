@@ -86,3 +86,55 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun diffWaysToCompute(expression: String): List<Int> {
+
+        if (expression.toIntOrNull() != null) {
+            return listOf(expression.toInt())
+        }
+
+        val result = mutableListOf<Int>()
+        for ((idx, letter) in expression.withIndex()) {
+
+            if (isUnit(letter)) {
+                // 왼쪽 expression의 모든 경우의 수
+                val left = diffWaysToCompute(expression.slice(0..idx - 1))
+                // 오른쪽 expression의 모든 경우의 수
+                val right = diffWaysToCompute(expression.slice(idx + 1..expression.lastIndex))
+                result.addAll(calculate(letter, left, right))
+            }
+        }
+
+        return result
+    }
+
+    private fun calculate(letter: Char, left: List<Int>, right: List<Int>): List<Int> {
+        val calculated = mutableListOf<Int>()
+        for (i in left) {
+            for (j in right) {
+                calculated.add(
+                    when (letter) {
+                        '+' -> {
+                            i + j
+                        }
+
+                        '-' -> {
+                            i - j
+                        }
+
+                        else -> {
+                            i * j
+                        }
+                    }
+                )
+            }
+        }
+        return calculated
+    }
+
+    private fun isUnit(letter: Char) = letter == '*' || letter == '-' || letter == '+'
+}
+```

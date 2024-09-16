@@ -40,3 +40,26 @@ class Solution {
 ```
 자바에서 컬렉션 관련 기능이 필요할 때는 Collections를 찾아도록 하자.  
 __마지막에 리턴문은 기억할 필요가 있다.__
+
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun mostCommonWord(paragraph: String, banned: Array<String>): String {
+        val tokens = paragraph.lowercase()
+            .replace(Regex("[!?',;.]+")," ")
+            .replace(Regex("\\s+")," ")
+            .split(" ")
+        val counter = mutableMapOf<String, Int>()
+
+        for (token in tokens) {
+            if (token in banned || token.isBlank()) {
+                continue
+            }
+            counter[token] = counter.getOrDefault(token, 0) + 1
+        }
+
+        return counter.maxBy { it.value }.key
+    }
+}
+```

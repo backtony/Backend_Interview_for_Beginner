@@ -39,3 +39,21 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun groupAnagrams(strs: Array<String>): List<List<String>> {
+        val answer = mutableMapOf<String,MutableList<String>>()
+
+        strs.groupBy { it.length }.forEach { (_, values) ->
+            for (value in values) {
+                val sortedValue = value.toCharArray().sorted().joinToString("")
+                answer[sortedValue] = answer.getOrDefault(sortedValue, mutableListOf()).apply { add(value) }
+            }
+        }
+
+        return answer.values.toList()
+    }
+}
+```

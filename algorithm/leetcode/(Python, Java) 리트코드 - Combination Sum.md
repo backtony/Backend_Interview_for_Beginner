@@ -73,3 +73,43 @@ class Solution {
 }
 ```
 조합에서는 for문이 필요 없다는 것을 기억하자.
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
+        val answer = mutableListOf<List<Int>>()
+        for (i in 1..40) {
+            answer.addAll(combinationWithRepeat(candidates.toList(), i, target))
+        }
+
+        return answer.toList()
+    }
+
+    fun combinationWithRepeat(arr: List<Int>, r: Int, target: Int): List<List<Int>> {
+
+        val answer = mutableListOf<List<Int>>()
+
+        fun comb(current: List<Int>, start: Int) {
+            if (current.sum() > target) {
+                return
+            }
+
+            if (current.size == r) {
+                if (current.sum() == target) {
+                    answer.add(current)
+                }
+                return
+            }
+
+            for (next in start..arr.lastIndex) {
+                comb(current + arr[next], next)
+            }
+        }
+
+        comb(listOf(), 0)
+
+        return answer
+    }
+}
+```

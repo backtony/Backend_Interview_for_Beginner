@@ -49,5 +49,48 @@ class Solution {
         return c == '1';
     }
 }
+```
 
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun numIslands(grid: Array<CharArray>): Int {
+        var answer = 0
+
+        val maxY = grid.lastIndex
+        val maxX = grid.first().lastIndex
+        for (y in 0..maxY) {
+            for (x in 0..maxX) {
+
+                if (grid[y][x] == '1') {
+                    dfs(grid, x,y)
+                    answer++
+                }
+            }
+        }
+
+        return answer
+    }
+
+    fun dfs(grid: Array<CharArray>, x: Int, y: Int) {
+        grid[y][x] = '0'
+
+        val maxY = grid.lastIndex
+        val maxX = grid.first().lastIndex
+
+        val dx = listOf(1,0,-1,0)
+        val dy = listOf(0,1,0,-1)
+
+        for (move in dx.zip(dy)) {
+            val px = x + move.first
+            val py = y + move.second
+
+            if (px in 0..maxX && py in 0..maxY) {
+                if (grid[py][px] == '1') {
+                    dfs(grid, px,py)
+                }
+            }
+        }
+    }
+}
 ```

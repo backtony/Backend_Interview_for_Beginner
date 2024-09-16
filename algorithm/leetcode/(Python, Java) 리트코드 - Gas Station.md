@@ -50,3 +50,30 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun canCompleteCircuit(gas: IntArray, cost: IntArray): Int {
+        if (gas.sum() < cost.sum()) {
+            return -1
+        }
+        var answer = 0
+        var remain = 0
+
+        for (start in 0..gas.lastIndex) {
+
+            // 다음 주유소를 갈 수 있는가?
+            if (remain + gas[start] < cost[start]) {
+                // 못 간다면 현재까지의 인덱스는 시작지점이 될 수 없다.
+                remain = 0
+                answer = start + 1
+            } else {
+                remain += gas[start] - cost[start]
+            }
+        }
+
+        return answer
+    }
+}
+```

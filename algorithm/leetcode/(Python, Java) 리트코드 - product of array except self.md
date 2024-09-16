@@ -52,3 +52,41 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun productExceptSelf(nums: IntArray): IntArray {
+
+        val leftTimes = MutableList(nums.size) { 1 }
+        val rightTimes = MutableList(nums.size) { 1 }
+
+        for (idx in nums.indices) {
+            if (idx == 0) {
+                leftTimes[idx] *= nums[idx]
+                rightTimes[nums.lastIndex - idx] *= nums[nums.lastIndex - idx]
+                continue
+            }
+
+            leftTimes[idx] = leftTimes[idx-1] * nums[idx]
+            rightTimes[nums.lastIndex - idx] = nums[nums.lastIndex - idx] * rightTimes[nums.lastIndex - idx + 1]
+        }
+
+        val answer = MutableList(nums.size) { 0 }
+        for (idx in answer.indices) {
+            if (idx == 0) {
+                answer[idx] = rightTimes[idx+1]
+                continue
+            }
+
+            if (idx == answer.lastIndex) {
+                answer[idx] = leftTimes[idx-1]
+                continue
+            }
+
+            answer[idx] = leftTimes[idx-1] * rightTimes[idx+1]
+        }
+        return answer.toIntArray()
+    }
+}
+```

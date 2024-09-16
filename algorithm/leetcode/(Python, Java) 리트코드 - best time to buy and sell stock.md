@@ -30,3 +30,23 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun maxProfit(prices: IntArray): Int {
+
+        var min = prices[0]
+        val result = MutableList(prices.size) { 0 }
+
+        prices.forEachIndexed { index, price ->
+            result[index] = price - min
+            if (min > price) {
+                min = price
+            }
+        }
+
+        return result.max()
+    }
+}
+```

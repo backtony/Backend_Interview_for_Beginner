@@ -38,3 +38,24 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun climbStairs(n: Int): Int {
+        val accumulatedCount = MutableList(n+1) {1}
+        if (n == 1) {
+            return 1
+        }
+
+        var idx = 1
+
+        while(idx != n) {
+            idx++
+            accumulatedCount[idx] = accumulatedCount[idx-1] + accumulatedCount[idx-2]
+        }
+
+        return accumulatedCount[n]
+    }
+}
+```

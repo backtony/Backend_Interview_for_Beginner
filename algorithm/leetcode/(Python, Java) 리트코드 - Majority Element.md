@@ -28,3 +28,18 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun majorityElement(nums: IntArray): Int {
+        val counter = mutableMapOf<Int, Int>()
+
+        nums.forEach {
+            counter[it] = counter.getOrDefault(it, 0) + 1
+        }
+
+        return counter.entries.first { it.value > nums.size / 2 }.key
+    }
+}
+```

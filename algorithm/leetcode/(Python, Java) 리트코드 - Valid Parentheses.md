@@ -54,3 +54,42 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun isValid(s: String): Boolean {
+
+        val parenthesesList = listOf(
+            Parentheses('{', '}'),
+            Parentheses('(', ')'),
+            Parentheses('[', ']'),
+        )
+
+        val stack = mutableListOf<Char>()
+        for (letter in s) {
+
+            val parentheses = parenthesesList.find { it.left == letter || it.right == letter }!!
+
+            val isLeft = parentheses.left == letter
+            if (isLeft) {
+                stack.add(letter)
+                continue
+            }
+
+            if (stack.isEmpty() || stack.last() != parentheses.left) {
+                return false
+            }
+
+            stack.removeLast()
+        }
+
+        return stack.isEmpty()
+    }
+
+    data class Parentheses(
+        val left: Char,
+        val right: Char,
+    )
+}
+```

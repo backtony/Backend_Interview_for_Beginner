@@ -45,3 +45,28 @@ class Solution {
     }
 }
 ```
+
+
+## kotlin 풀이
+```kotlin
+import kotlin.math.max
+
+class Solution {
+    fun lengthOfLongestSubstring(s: String): Int {
+        var temp = ""
+        var answer = 0
+
+        for (letter in s) {
+
+            if (temp.contains(letter)) {
+                answer = max(answer, temp.length)
+                temp = temp.substring(temp.lastIndexOf(letter) + 1) + letter
+            } else {
+                temp += letter
+            }
+        }
+
+        return max(answer, temp.length)
+    }
+}
+```

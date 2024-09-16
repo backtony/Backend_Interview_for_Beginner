@@ -72,3 +72,34 @@ class Solution {
     }
 }
 ```
+
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun removeDuplicateLetters(s: String): String {
+
+        val stack = mutableListOf<Char>()
+        val counter = mutableMapOf<Char, Int>()
+        s.forEach {
+            counter[it] = counter.getOrDefault(it, 0) + 1
+        }
+
+        for (letter in s) {
+            counter[letter] = counter.getOrDefault(letter, 0) - 1
+
+            if (stack.contains(letter)) {
+                continue
+            }
+
+            while (stack.isNotEmpty() && stack.last() > letter && counter.getOrDefault(stack.last(), 0) >= 1) {
+                stack.removeLast()
+            }
+
+            stack.add(letter)
+        }
+
+        return stack.joinToString("")
+    }
+}
+```

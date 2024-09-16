@@ -61,3 +61,41 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+import kotlin.math.absoluteValue
+import kotlin.math.min
+
+class Solution {
+    fun leastInterval(tasks: CharArray, n: Int): Int {
+
+        val counter = mutableMapOf<Char, Int>()
+        for (task in tasks) {
+            counter[task] = counter.getOrDefault(task, 0) + 1
+        }
+
+        // 제일 많은 것을 기준으로 유휴시간을 계산
+        val max = counter.maxBy { it.value }
+        var idleTime = (max.value - 1).times(n)
+
+        // tasks를 그대로 수행해도 될지, 사이에 추가 유휴시간이 필요할지 계산
+        for (entry in counter) {
+
+            if (entry.key == max.key) {
+                continue
+            }
+
+            // 개수가 max.value랑 같은 경우라면 한개 적게 처리해서 유효시간 계산
+            idleTime -= min(entry.value, max.value - 1)
+        }
+
+        // 유휴시간이 필요한 경우
+        if (idleTime > 0) {
+            return tasks.size + idleTime.absoluteValue
+        }
+
+        return tasks.size
+    }
+}
+```

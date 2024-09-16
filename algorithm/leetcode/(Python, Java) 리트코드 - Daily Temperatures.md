@@ -46,3 +46,29 @@ class Solution {
 
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun dailyTemperatures(temperatures: IntArray): IntArray {
+
+        val answer = MutableList(temperatures.size) {0}
+        val q = mutableListOf<Pair<Int, Int>>()
+
+        for ((idx, temperature) in temperatures.withIndex()) {
+            if (q.isEmpty()) {
+                q.add(Pair(idx, temperature))
+                continue
+            }
+
+            while(q.isNotEmpty() && q.last().second < temperature) {
+                val last = q.removeLast()
+                answer[last.first] = idx - last.first
+            }
+            q.add(Pair(idx, temperature))
+        }
+
+        return answer.toIntArray()
+    }
+}
+```

@@ -25,3 +25,14 @@ class Solution {
   
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun isPalindrome(s: String): Boolean {
+        val palindrome = s.lowercase().replace("[^a-z0-9]".toRegex(), "")
+
+        return palindrome.reversed() == palindrome
+    }
+}
+```

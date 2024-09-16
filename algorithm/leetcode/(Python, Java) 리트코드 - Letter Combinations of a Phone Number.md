@@ -63,3 +63,48 @@ class Solution {
 }
 ```
 파이썬으로는 쉽게 풀었지만 자바로는 항상 순열, 조합 문제는 어려운 것 같다.  
+
+
+## kotlin
+```kotlin
+class Solution {
+    fun letterCombinations(digits: String): List<String> {
+        if (digits.isBlank()) {
+            return emptyList()
+        }
+
+        val letters = mapOf(
+            '2' to "abc".toCharArray(),
+            '3' to "def".toCharArray(),
+            '4' to "ghi".toCharArray(),
+            '5' to "jkl".toCharArray(),
+            '6' to "mno".toCharArray(),
+            '7' to "pqrs".toCharArray(),
+            '8' to "tuv".toCharArray(),
+            '9' to "wxyz".toCharArray()
+        )
+
+        val arrayList = digits.map { letters[it]!! }
+
+        return combinations(arrayList)
+    }
+
+    private fun combinations(arrayList: List<CharArray>): List<String> {
+        val answer = mutableListOf<String>()
+
+        fun comb(arrayList: List<CharArray>, current: List<Char>) {
+            if (arrayList.isEmpty()) {
+                answer.add(current.joinToString(""))
+                return
+            }
+
+            for (letter in arrayList.first()) {
+                comb(arrayList - arrayList.first(), current + letter)
+            }
+        }
+
+        comb(arrayList, listOf())
+        return answer
+    }
+}
+```

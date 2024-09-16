@@ -45,3 +45,33 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun findContentChildren(g: IntArray, s: IntArray): Int {
+        if (s.isEmpty()) return 0
+
+        val cookies = s.sorted()
+        val children = g.sorted()
+        var answer = 0
+        var idx = 0
+
+        for (child in children) {
+
+            while (idx <= cookies.lastIndex && cookies[idx] < child) {
+                idx++
+            }
+
+            if (idx > cookies.lastIndex) {
+                break
+            }
+
+            answer++
+            idx++
+        }
+
+        return answer
+    }
+}
+```

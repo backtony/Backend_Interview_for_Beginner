@@ -44,3 +44,25 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+import kotlin.math.max
+
+class Solution {
+    fun rob(nums: IntArray): Int {
+        if (nums.size == 1) return nums[0]
+        if (nums.size == 2) return nums.max()
+
+        val accumulated = MutableList(nums.size) {0}
+        accumulated[0] = nums[0]
+        accumulated[1] = max(nums[1], nums[0])
+
+        for (idx in 2..nums.lastIndex) {
+            accumulated[idx] = max(accumulated[idx-1], accumulated[idx-2] + nums[idx])
+        }
+
+        return accumulated.last()
+    }
+}
+```

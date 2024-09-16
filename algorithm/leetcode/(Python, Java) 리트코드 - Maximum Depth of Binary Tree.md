@@ -27,3 +27,23 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun maxDepth(root: TreeNode?): Int {
+        if (root == null) return 0
+
+        return max(calculateDepth(root.left), calculateDepth(root.right)) + 1
+    }
+
+    fun calculateDepth(root: TreeNode?): Int {
+
+        if (root == null) {
+            return 0
+        }
+
+        return max(calculateDepth(root.left), calculateDepth(root.right)) + 1
+    }
+}
+```

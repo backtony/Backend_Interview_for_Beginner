@@ -69,3 +69,22 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```shell
+class Solution {
+    fun reconstructQueue(people: Array<IntArray>): Array<IntArray> {
+
+        val answer = mutableListOf<IntArray>()
+
+        people.sortedWith(
+            compareByDescending<IntArray> { it[0] }.thenBy { it[1] }
+        ).forEach {
+            answer.add(it[1], it)
+        }
+        
+        return answer.toTypedArray()
+    }
+}
+```
+개수는 

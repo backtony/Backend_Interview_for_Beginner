@@ -91,3 +91,47 @@ class Solution {
     }
 }
 ```
+
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun canFinish(numCourses: Int, prerequisites: Array<IntArray>): Boolean {
+
+        val preCourses = MutableList<MutableList<Int>>(numCourses) { mutableListOf() }
+        val inCnt = MutableList(numCourses) { 0 }
+        prerequisites.forEach {
+            val mainCourse = it[0]
+            val preCourse = it[1]
+            
+            // 해당 수업에 의존하고 있는 수업들
+            preCourses[preCourse].apply { add(mainCourse) }
+            // 특정 수업에 필요한 사전 수업 개수
+            inCnt[mainCourse] += 1
+        }
+
+        // pre 코스 없이 수행할 수 있는 수업
+        val q = mutableListOf<Int>()
+        for ((idx, cnt) in inCnt.withIndex()) {
+            if (cnt == 0) {
+                q.add(idx)
+            }
+        }
+
+        while (q.isNotEmpty()) {
+            val current = q.removeFirst()
+
+            for (mainCourse in preCourses[current]) {
+                // 사전 수업 개수 줄이기
+                inCnt[mainCourse] -= 1
+
+                if (inCnt[mainCourse] == 0) {
+                    q.add(mainCourse)
+                }
+            }
+        }
+
+        return inCnt.sum() == 0
+    }
+}
+```

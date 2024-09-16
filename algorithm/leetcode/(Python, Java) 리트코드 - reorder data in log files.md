@@ -56,3 +56,39 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun reorderLogFiles(logs: Array<String>): Array<String> {
+
+        val digitLog = mutableListOf<Log>()
+        val charLog = mutableListOf<Log>()
+
+        for (log in logs) {
+            val (key, body) = log.split(" ", limit = 2)
+            if (body[0].isDigit()) {
+                digitLog.add(Log(key, body))
+                continue
+            }
+
+            charLog.add(Log(key, body))
+        }
+
+        charLog.sortWith(
+            compareBy<Log> { it.log }.thenBy { it.id }
+        )
+
+        return (charLog.map { it.fullLog() } + digitLog.map { it.fullLog() }).toTypedArray()
+    }
+
+    data class Log(
+        val id: String,
+        val log: String,
+    ) {
+        fun fullLog(): String {
+            return "$id $log"
+        }
+    }
+}
+```

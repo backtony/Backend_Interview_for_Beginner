@@ -37,3 +37,32 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun search(nums: IntArray, target: Int): Int {
+
+        var min = 0
+        var max = nums.lastIndex
+
+        while (min <= max) {
+            val half = (min + max) / 2
+
+            when {
+                nums[half] == target -> return half
+                nums[half] < target -> {
+                    min = half + 1
+                }
+
+                else -> {
+                    max = half - 1
+                }
+            }
+
+        }
+
+        return -1
+    }
+}
+```

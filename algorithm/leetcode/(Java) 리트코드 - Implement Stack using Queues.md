@@ -80,3 +80,34 @@ class MyStack {
 }
 ```
 큐 2개를 이용한 삽입 O(1), 삭제 O(n) 복잡도
+
+## kotlin 풀이
+```kotlin
+import java.util.LinkedList
+import java.util.Queue
+
+class MyStack() {
+
+    val q : Queue<Int> = LinkedList()
+
+    fun push(x: Int) {
+        val size = q.size
+        q.add(x)
+        repeat(size) {
+            q.add(q.poll())
+        }
+    }
+
+    fun pop(): Int {
+        return q.poll()
+    }
+
+    fun top(): Int {
+        return q.peek()
+    }
+
+    fun empty(): Boolean {
+        return q.isEmpty()
+    }
+}
+```

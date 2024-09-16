@@ -48,3 +48,28 @@ class Solution {
 }
 ```
 map을 사용해서도 풀 수 있다.
+
+## kotlin
+```kotlin
+class Solution {
+    fun twoSum(nums: IntArray, target: Int): IntArray {
+
+        val numMap = mutableMapOf<Int, Int>()
+        for ((idx, num) in nums.withIndex()) {
+            numMap[num] = idx
+        }
+
+        for (firstIdx in 0..nums.lastIndex) {
+
+            val second = target - nums[firstIdx]
+
+            val secondIdx = numMap[second]
+            if (secondIdx != null && secondIdx != firstIdx) {
+                return  intArrayOf(firstIdx+1, secondIdx+1)
+            }
+        }
+
+        return intArrayOf(0, 0)
+    }
+}
+```

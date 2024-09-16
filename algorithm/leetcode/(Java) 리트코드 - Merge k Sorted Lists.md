@@ -35,3 +35,32 @@ class Solution {
     }
 }
 ```
+
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun mergeKLists(lists: Array<ListNode?>): ListNode? {
+        val q = PriorityQueue<ListNode>(compareBy { it.`val` })
+
+        lists.forEach {
+            var node = it
+            while(node != null) {
+                q.add(node)
+                node = node.next
+            }
+        }
+
+        val answer = ListNode(0)
+        var temp = answer
+        while(q.isNotEmpty()) {
+            val poll = q.poll()
+            temp.next = poll
+            temp = poll
+        }
+        temp.next = null
+
+        return answer.next
+    }
+}
+```

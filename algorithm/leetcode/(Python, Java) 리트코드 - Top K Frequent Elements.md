@@ -40,3 +40,22 @@ class Solution {
 }
 ```
 comparingByValue() 다음에 .reversed가 자동완성으로 나오는데 사용할 수 없고 인자로 reverseOrder를 줘야 한다.
+
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun topKFrequent(nums: IntArray, k: Int): IntArray {
+
+        val counter = mutableMapOf<Int, Int>()
+        for (num in nums) {
+            counter[num] = counter.getOrDefault(num, 0) + 1
+        }
+
+        return counter.entries.sortedByDescending { it.value }
+            .take(k)
+            .map { it.key }
+            .toIntArray()
+    }
+}
+```

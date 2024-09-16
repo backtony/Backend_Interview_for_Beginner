@@ -71,3 +71,40 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun longestPalindrome(s: String): String {
+
+        var answer = ""
+        for (start in 0..s.lastIndex) {
+            val even = palindrome(s, start, start+1)
+            val odd = palindrome(s, start, start+2)
+
+            answer = listOf(even, odd, answer).maxBy { it.length }
+        }
+
+        return answer
+    }
+
+    fun palindrome(s: String, left: Int, right: Int): String {
+
+        var newLeft = left
+        var newRight = right
+        var palindrome = s[0].toString() // 예외 케이스
+
+        while (newLeft >= 0 && newRight <= s.lastIndex) {
+            if (s[newLeft] == s[newRight]) {
+                palindrome = s.substring(newLeft, newRight + 1)
+                newLeft--
+                newRight++
+            } else {
+                break
+            }
+        }
+
+        return palindrome
+    }
+}
+```

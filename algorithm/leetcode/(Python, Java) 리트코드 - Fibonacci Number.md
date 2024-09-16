@@ -32,3 +32,22 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun fib(n: Int): Int {
+        if (n == 0) return 0
+        if (n == 1) return 1
+
+        val fib = MutableList(n+1) {0}
+        fib[1] = 1
+
+        for (i in 2..n) {
+            fib[i] = fib[i-1] + fib[i-2]
+        }
+
+        return fib[n]
+    }
+}
+```

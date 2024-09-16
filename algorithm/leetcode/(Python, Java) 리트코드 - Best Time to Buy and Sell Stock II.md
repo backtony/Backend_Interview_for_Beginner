@@ -31,3 +31,39 @@ class Solution {
 }
 ```
 다음날 이익이 난다면 파는 형식의 그리디 알고리즘이다.
+
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun maxProfit(prices: IntArray): Int {
+        val q = mutableListOf<Int>()
+        var answer = 0
+
+        for (price in prices) {
+
+            if (q.isEmpty()) {
+                q.add(price)
+                continue
+            }
+
+            if (q.last() <= price) {
+                q.add(price)
+                continue
+            }
+
+            if (q.size >= 2) {
+                answer += q.last() - q.first()
+            }
+
+            q.clear()
+            q.add(price)
+        }
+        
+        if (q.isNotEmpty()) {
+            answer += q.last() - q.first()
+        }
+        return answer
+    }
+}
+```

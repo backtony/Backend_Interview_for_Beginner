@@ -110,3 +110,56 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+import java.util.PriorityQueue
+
+class Solution {
+    fun networkDelayTime(times: Array<IntArray>, n: Int, k: Int): Int {
+
+        // make graph
+        val graph = mutableMapOf<Int, MutableList<Move>>()
+        for (time in times) {
+            val from = time[0]
+            val to = time[1]
+            val distance = time[2]
+            graph[from] = graph.getOrDefault(from, mutableListOf()).apply { add(Move(to, distance)) }
+        }
+
+        // dijkstra
+        val distance = MutableList(n+1) {Int.MAX_VALUE}
+        distance[0] = 0
+
+        val q = PriorityQueue<Move>(compareBy { it.distance })
+        q.add(Move(k, 0))
+
+        while(q.isNotEmpty()) {
+            val currentMove = q.poll()
+            if (distance[currentMove.to] < currentMove.distance) {
+                continue
+            }
+
+            distance[currentMove.to] = currentMove.distance
+
+            for (nextMove in graph[currentMove.to] ?: emptyList()) {
+
+                if (nextMove.distance + currentMove.distance < distance[nextMove.to]) {
+                    q.add(Move(nextMove.to, nextMove.distance + currentMove.distance))
+                }
+            }
+        }
+
+        if (distance.any { it == Int.MAX_VALUE }) {
+            return -1
+        }
+
+        return distance.max()
+    }
+
+    class Move(
+        val to: Int,
+        val distance: Int
+    )
+}
+```

@@ -47,3 +47,23 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun largestNumber(nums: IntArray): String {
+
+        val result = nums.map { it.toString() }
+            .sortedWith(
+                Comparator { o1, o2 -> (o2 + o1).compareTo((o1 + o2)) }
+            )
+            .joinToString("")
+        
+        if (result[0] == '0') {
+            return "0"
+        }
+        
+        return result
+    }
+}
+```

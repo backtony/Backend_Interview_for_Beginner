@@ -1,5 +1,3 @@
-
-
 [문제 링크](https://leetcode.com/problems/jewels-and-stones/)
 
 
@@ -39,6 +37,18 @@ class Solution {
         }
         return count;
 
+    }
+}
+```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun numJewelsInStones(jewels: String, stones: String): Int {
+        val charStones = stones.toCharArray()
+        return jewels.map { jewel ->
+            charStones.count { it == jewel }
+        }.sum()
     }
 }
 ```

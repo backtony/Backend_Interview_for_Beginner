@@ -62,3 +62,31 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+import kotlin.math.max
+
+class Solution {
+    fun characterReplacement(s: String, k: Int): Int {
+
+        val accumulated = mutableMapOf<Char, Int>()
+        var start = 0
+        var answer = 0
+
+        for ((idx, letter) in s.withIndex()) {
+            accumulated[letter] = accumulated.getOrDefault(letter, 0) + 1
+
+            val threshold = (idx - start + 1) - accumulated.values.max()
+            if (threshold > k) {
+                accumulated[s[start]] = accumulated.getOrDefault(s[start], 0) - 1
+                start+=1
+            } else {
+                answer = max(answer, idx - start + 1)
+            }
+        }
+
+        return answer
+    }
+}
+```

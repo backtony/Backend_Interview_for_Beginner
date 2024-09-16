@@ -87,3 +87,54 @@ class Solution {
 ```
 3개를 구해야 하므로 정렬시키고 1개를 기준으로 잡고 2개는 투포인터로 진행한다.  
 중복 처리하는 경우를 제거해줘야하는 것을 유의해야 한다.
+
+## kotlin
+```kotlin
+class Solution {
+    fun threeSum(nums: IntArray): List<List<Int>> {
+        val answer = mutableListOf<List<Int>>()
+        val sortedNums = nums.sorted()
+        for (firstIdx in 0..sortedNums.lastIndex - 2) {
+            var left = firstIdx + 1
+            var right = sortedNums.lastIndex
+            
+            // 중복 제거
+            if (firstIdx > 0 && sortedNums[firstIdx] == sortedNums[firstIdx - 1]) {
+                continue
+            }
+
+            while (left < right) {
+                val result = sortedNums[left] + sortedNums[right] + sortedNums[firstIdx]
+
+                when {
+                    result == 0 -> {
+                        answer.add(listOf(sortedNums[firstIdx], sortedNums[left], sortedNums[right]))
+                        left++
+                        right--
+
+                        while (left < right && sortedNums[left] == sortedNums[left - 1]) {
+                            left++
+                        }
+                        while (left < right && sortedNums[right] == sortedNums[right + 1]) {
+                            right--
+                        }
+                    }
+
+                    result > 0 -> {
+                        right--
+                    }
+
+                    result < 0 -> {
+                        left++
+                    }
+                }
+
+
+            }
+        }
+        return answer
+
+    }
+}
+```
+combination을 사용할 경우 시간 초과

@@ -25,3 +25,12 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    fun reverseString(s: CharArray): Unit {
+        s.reverse()
+    }
+}
+```

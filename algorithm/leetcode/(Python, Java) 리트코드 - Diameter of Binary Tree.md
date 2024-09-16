@@ -47,3 +47,26 @@ class Solution {
     }
 }
 ```
+
+## kotlin 풀이
+```kotlin
+class Solution {
+    var ans = 0
+
+    fun diameterOfBinaryTree(root: TreeNode?): Int {
+        maxDepth(root)
+        return ans
+    }
+
+    fun maxDepth(root: TreeNode?): Int {
+        if (root == null) {
+            return 0
+        }
+
+        val right = maxDepth(root.right)
+        val left = maxDepth(root.left)
+        ans = maxOf(ans, left + right)
+        return max(right, left) + 1
+    }
+}
+```
