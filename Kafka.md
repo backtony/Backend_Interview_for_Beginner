@@ -237,6 +237,20 @@ all 옵션을 사용할 경우, min.insync.replicas 옵션(최소 ISR 그룹 파
 
 producer의 권장 옵션은 브로커 3개라고 가정했을때, acks=all, 파티션 복제 3, min.insync.replicas 2이다. 
 
+
+<br>
+
+일반적인 메시징 보상 수준을 다음과 같이 나타내기도 한다.
+* At Most Once(최대 1회 전달)
+  * ack = 0
+  * 메시지가 유실될 수 있지만, 중복 메시지가 발행되진 않는다.
+* At Least Once(최소 1회 전달)
+  * ack=all or ack=1
+  * 결과는 적어도 한 번은 전달되며 중복 가능성이 있다.
+* Exactly once(정확히 1회 전달)
+  * acks=all, idempotence=true
+  * 중복없이 정확히 한번 전달된다.
+
 </details>
 
 -----------------------
