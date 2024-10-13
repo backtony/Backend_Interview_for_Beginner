@@ -1,5 +1,4 @@
-[문제 링크](https://leetcode.com/problems/reverse-linked-list/description/)
-
+[문제 링크](https://leetcode.com/problems/linked-list-cycle/description/)
 
 ## kotlin 풀이
 ```kotlin

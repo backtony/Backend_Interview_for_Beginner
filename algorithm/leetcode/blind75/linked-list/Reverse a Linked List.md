@@ -1,4 +1,4 @@
-[문제 링크](https://leetcode.com/problems/linked-list-cycle/description/)
+[문제 링크](https://leetcode.com/problems/reverse-linked-list/description/)
 
 
 ## kotlin 풀이
