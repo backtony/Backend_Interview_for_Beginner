@@ -973,7 +973,6 @@ inline fun <reified T> fuc() {
 상속|RuntimeException 상속 X| RuntimeException 상속
 확인 시점|컴파일 시점|런타임 시점
 처리 여부|반드시 예외처리|명시적으로 하지 않아도 됨
-트랜잭션 처리|예외 발생시 롤백 X|예외 발생시 롤백 해야함
 종류|IOException,SQLException..|NullPointException,ArrayIndexOutOfBounds...
 
 대부분 Checked Exception보다는 Unchecked Exception 사용을 권장한다.  
