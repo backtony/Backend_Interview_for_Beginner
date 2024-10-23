@@ -219,6 +219,33 @@ invokeSuspend 함수 호출부가 바로 앞서 만들었던 makeHelloWorld 함�
 
 <br>
 
+
+### Jar 파일 실행 과정
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
+
+java로 작성된 애플리케이션을 빌드하면 jar파일이 생성된다. jar 파일은 애플리케이션의 클래스 파일, 리소스 파일, 메타데이터가 압축된 파일이다. 실행될 때는 JRE가 이를 처리하여 실행된다.
+
+1. JRE(java runtime environment)가 실행을 위한 필수 환경을 제공한다.
+2. JVM 초기화
+3. 클래스 로더가 jar 파일 내의 클래스와 라이브러리를 로딩하여 메모리 적재
+4. 로딩된 클래스 파일의 바이트 코드 검증
+5. JIT(Just in time) 컴파일러를 사용하여 자주 실행되는 코드의 바이트코드를 네이티브 머신 코드로 변화해서 성능 최적화
+6. 애플리케이션 실행
+
+
+</details>
+
+-----------------------
+
+<br>
+
+
 ### JVM 메모리(Runtime Data Area) 구조
 
 <details>
@@ -880,6 +907,25 @@ inline fun <reified T> fuc() {
 + 역직렬화
     - 바이트로 변환된 데이터를 다시 객체로 변환하는 기술
     - ObjectInputStream 객체를 이용
+
+<br>
+
+java에서 직렬화에 사용하는 인터페이스는 2가지가 있다.
+
+* Serializable 
+  * 기본 직렬화 인터페이스로 특별한 메서드 없이 객체를 자동으로 직렬화 해준다.
+  * transient를 사용하면 특정 필드는 직렬화 되지 않는다.
+  * serialVersionUID를 정의해주는 것이 좋다.
+    * 직렬화된 객체가 역직렬화될 때, 클래스의 버전이 동일한지 검사하기 위해 사용된다.
+    * 직렬화된 객체와 클래스의 serialVersionUID가 다르면 역직렬화가 실패한다.
+    * 이를 지정하지 않으면 java 컴파일러가 자동으로 생성한다. 하지만 클래스의 구조가 변경될 때마다 값이 달라질 수 있기 때문에 명시적으로 설정하는 것이 좋다.
+* Externalizable
+  * Serializable와 달리 (역)직렬화를 직접 제어한다.
+  * 아무 인자도 없는 기본 생성자가 필수다.
+  * writeExternal(ObjectOutput out), readExternal(ObjectInput in) 메서드를 구현하여 어떤 데이터를 어떻게 직렬화할지 명시한다. 이를 통해 성능을 최적화하거나 필요한 데이터만 선택적으로 직렬화할 수 있다.
+  * Serializable보다 직접 구현해야한다는 점에서 복잡하긴 하지만 Serializable는 클래스 구조가 바뀌면 호환성 문제가 생길 수 있지만 이는 직접 제어하기 때문에 호환성을 유지할 수 있는 유연성이 더 높다.
+
+
 
 </details>
 

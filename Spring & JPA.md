@@ -1272,7 +1272,129 @@ hibernateItemReader는 위와 같은 이슈가 없다. 즉, chunkSize와 페이�
 
 <br>
 
+### Spring Security
 
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
+Spring Security는 웹 애플리케이션에서 인증(Authentication)과 인가(Authorization)를 제공하는 강력한 보안 프레임워크이다.
+
+기본적으로 spring security는 **필터 체인**을 기반으로 동작한다. 클라이언트로부터 요청이 들어오면 여러 보안 필터가 연속적으로 실행되면서 인증과 인가를 처리한다. 
+
+필터 체인은 DelegatingFilterProxy라는 서블릿 필터로 시작되며, 여기서 Spring Security의 각종 보안 필터들이 순서대로 실행된다.
+
+중요한 필터로는 UsernamePasswordAuthenticationFilter, BasicAuthenticationFilter 등이 있다.
+
+
+
+</details>
+
+-----------------------
+
+
+
+<br>
+
+### Spring OAuth 2.0
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
+사용자가 애플리케이션에게 자신을 대신하여 특정 자원에 접근할 수 있는 권한을 부여하는 것을 목적으로 하는 인가를 위한 표준 프로토콜
+
+OAuth 2.0 인증 프로토콜이 아니지만, OpenID Connect 프로토콜을 통해서 OAuth 2.0를 기반으로 하여 인증을 제공하는 기능을 추가한다.
+
+
+![grant-type](./image/spring/grant-type.png)  
+
+대표적으로 OAuth 2.0의 방식으로 code grant type이 있다.
+
+로그인을 시도하면 oauth server를 권한 부여 승인 코드를 콜백 서버(리다이렉트 url)로 전달하고 콜백서버에서 부여받은 승인 코드를 기반으로 다시 oauth 서버로 요청을 보내서 access token을 전달받아가는 방식이다.
+
+
+</details>
+
+-----------------------
+
+
+<br>
+
+
+### Spring webflux
+
+<details>
+   <summary> 예비 답안 보기 (👈 Click)</summary>
+<br />
+
+-----------------------
+
+![mvc-thread](./image/spring/mvc-thread.png)
+
+mvc의 경우 default 스레드 200개가 사용되고 각 요청마다 하나의 스레드가 할당되고 I/O작업 중에는 블로킹되기 때문에 대기하는 시간이 많다.
+
+<br>
+
+
+![webflux](./image/spring/webflux.png)
+
+
+webflux는 event loop 모델로 동작한다. event loop는 하나의 스레드가 특정 작업(ex i/o 작업)들을 반복적으로 감지하고 처리하는 역할을 의미한다. 사용자들의 요청이나 애플리케이션 내부에서 처리해야하는 작업은 모두 event라는 단위로 관리되고, event 큐에 적재되어 순서대로 처리되는 구조다. 
+
+webflux는 tomcat이 아닌 netty를 사용하는데 스레드풀의 스레드 개수는 cpu 코어수의 2배이다.
+webflux는 요청을 받는 boss group과 worker group으로 이벤트 루프 그룹이 구성된다.
+
+* boss group(부모 그룹)
+  * 클라이언트 연결 요청을 수신하고 처리
+  * 새로운 연결 요청이 들어오면 이를 처리하고 worker group 중 하나에 해당 연결을 할당
+  * 일반적으로 webflux에서는 **하나의 event loop(스레드)** 를 사용
+* worker group(자식 그룹)
+  * 실제 데이터 송수신 작업을 처리
+  * cpu * 2배로, 4코어라면 8개의 event loop(스레드)가 여러 클라이언트 연결을 동시에 처리
+
+
+전반적인 flow을 정리하면 다음과 같다.
+
+1. 클라이언트 연결 요청 수신(Boss Group)
+   * netty 서버에 연결을 시도하면 서버의 소켓 채널에 도착한다.
+   * Boss Group의 단일 이벤트 루프(스레드)가 새로운 연결 요청을 수신하고 연결 설정 작업을 수행하여 새로운 클라이언트 연결을 channel 객체로 래핑한다.
+2. 연결을 worker group에 할당
+  * 이 연결을 worker group의 이벤트 루프 중 하나에 할당하고 이후부터는 할당된 worker group의 이벤트 루프가 해당 클라이언트와의 연결을 관리한다.
+3. worker group의 이벤트 루프가 데이터 수신 및 이벤트 큐 처리
+   * 데이터 수신은 비동기 논블로킹 방식으로 이뤄지며, 클라이언트가 데이터를 전송할 때마다 worker 이벤트 루프는 이를 감지하고 작업 단위를 이벤트로 만들어 이벤트 큐에 적재한다.
+   * 이벤트 루프는 이벤트 큐를 순차적으로 모니터링하면서 큐에 등록된 작업을 하나씩 비동기로 처리한다.
+4. pipeline에서 요청 처리
+   * netty의 각 channel은 pipeline을 가지고 있다.
+   * pipeline에는 여러 handler가 등록되어 있고 데이터가 pipeline을 통해 흐르면서 다양한 처리가 이뤄진다.
+     * 데이터가 수신되면 pipeline을 통해 inbound 핸들러들이 순차적으로 호출되어 데이터를 처리하기도 하고, 디코더가 바이트 스트림을 읽고 의미있는 객체로 변환하고 비즈니스 로직 핸들러가 요청을 처리한 후 응답을 생성할 수도 있다.
+   * 응답 데이터는 outbount 핸들러로 전달되어 클라이언트가 이해할 수 있는 형식(ex json)으로 인코딩되어 전송된다.
+5. 연결 종료 및 자원 해제
+   * worker group의 이벤트 루프는 해당 채널을 닫고 자원을 해제한다.
+
+<br>
+
+![webflux-flow](./image/spring/webflux-flow.png)
+
+mvc는 스레드가 block되어 i/o가 끝날 때까지 대기하지만, webflux는 event loop를 기반으로 논블로킹 비동기로 진행되기 때문에 스레드가 블록되지 않는다. 또한 비교적 적은 스레드 개수를 기반으로 동작하기 때문에 context switch 오버헤드가 줄어들고 코어를 차지하기 위한 경합도 줄어든다. 
+
+즉, webflux의 핵심 장점은 적은 자원(스레드와 메모리)으로 더 많은 동시성을 처리할 수 있다는 점이다.
+
+
+webflux는 상대적으로 적은 수의 스레드 풀을 유지하기 때문에 cpu 집약적인 작업이나 blocking i/o를 이용하여 프로그래밍한다면 스레드가 cpu를 점유하면서 event loop가 빠르게 queue에 있는 작업을 처리할 수 없다. 예를 들어, 암호화 모듈로 인크립트, 디크립트 하거나 인코딩 하는 작업의 경우 webflux에 적절하지 않다.
+
+
+
+</details>
+
+-----------------------
+
+
+<br>
 
 ### MSA vs Monolithic(모놀리식)
 
