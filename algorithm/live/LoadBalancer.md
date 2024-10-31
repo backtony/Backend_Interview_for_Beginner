@@ -21,4 +21,6 @@ class LoadBalancer() {
         return serverConfigs[serverIdx]
     }
 }
+
+data class ServerConfig(val server: Server, val ratio: Int)
 ```
